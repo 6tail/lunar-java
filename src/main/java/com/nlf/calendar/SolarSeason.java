@@ -51,6 +51,37 @@ public class SolarSeason {
   }
 
   /**
+   * 通过指定日期获取阳历季度
+   *
+   * @param date 日期
+   * @return 阳历季度
+   */
+  public static SolarSeason fromDate(Date date){
+    return new SolarSeason(date);
+  }
+
+  /**
+   * 通过指定日历获取阳历季度
+   *
+   * @param calendar 日历
+   * @return 阳历季度
+   */
+  public static SolarSeason fromCalendar(Calendar calendar){
+    return new SolarSeason(calendar);
+  }
+
+  /**
+   * 通过指定年月获取阳历季度
+   *
+   * @param year 年
+   * @param month 月
+   * @return 阳历季度
+   */
+  public static SolarSeason fromYm(int year,int month){
+    return new SolarSeason(year,month);
+  }
+
+  /**
    * 获取年
    *
    * @return 年

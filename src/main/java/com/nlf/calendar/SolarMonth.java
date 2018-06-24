@@ -55,6 +55,37 @@ public class SolarMonth{
   }
 
   /**
+   * 通过指定日期获取阳历月
+   *
+   * @param date 日期
+   * @return 阳历月
+   */
+  public static SolarMonth fromDate(Date date){
+    return new SolarMonth(date);
+  }
+
+  /**
+   * 通过指定日历获取阳历月
+   *
+   * @param calendar 日历
+   * @return 阳历月
+   */
+  public static SolarMonth fromCalendar(Calendar calendar){
+    return new SolarMonth(calendar);
+  }
+
+  /**
+   * 通过指定年月获取阳历月
+   *
+   * @param year 年
+   * @param month 月
+   * @return 阳历月
+   */
+  public static SolarMonth fromYm(int year,int month){
+    return new SolarMonth(year,month);
+  }
+
+  /**
    * 获取年
    * 
    * @return 年

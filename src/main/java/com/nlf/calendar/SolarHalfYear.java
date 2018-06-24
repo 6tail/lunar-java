@@ -51,6 +51,37 @@ public class SolarHalfYear {
   }
 
   /**
+   * 通过指定日期获取阳历半年
+   *
+   * @param date 日期
+   * @return 阳历半年
+   */
+  public static SolarHalfYear fromDate(Date date){
+    return new SolarHalfYear(date);
+  }
+
+  /**
+   * 通过指定日历获取阳历半年
+   *
+   * @param calendar 日历
+   * @return 阳历半年
+   */
+  public static SolarHalfYear fromCalendar(Calendar calendar){
+    return new SolarHalfYear(calendar);
+  }
+
+  /**
+   * 通过指定年月获取阳历半年
+   *
+   * @param year 年
+   * @param month 月
+   * @return 阳历半年
+   */
+  public static SolarHalfYear fromYm(int year,int month){
+    return new SolarHalfYear(year,month);
+  }
+
+  /**
    * 获取年
    *
    * @return 年

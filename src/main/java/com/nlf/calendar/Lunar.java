@@ -32,10 +32,10 @@ public class Lunar{
 
   /**
    * 通过农历年月日初始化
-   * 
-   * @param year 年
-   * @param month 月
-   * @param day 日
+   *
+   * @param year 年（农历）
+   * @param month 月（农历），1到12
+   * @param day 日（农历），1到31
    */
   public Lunar(int year,int month,int day){
     this.year = year;
@@ -90,6 +90,28 @@ public class Lunar{
     year = lunarY;
     month = lunarM;
     day = lunarD;
+  }
+
+  /**
+   * 通过指定日期获取农历
+   *
+   * @param date 日期
+   * @return 农历
+   */
+  public static Lunar fromDate(Date date){
+    return new Lunar(date);
+  }
+
+  /**
+   * 通过指定农历年月日获取农历
+   *
+   * @param year 年（农历）
+   * @param month 月（农历），1到12
+   * @param day 日（农历），1到31
+   * @return 农历
+   */
+  public static Lunar fromYmd(int year,int month,int day){
+    return new Lunar(year,month,day);
   }
 
   /**

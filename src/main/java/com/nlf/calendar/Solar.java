@@ -70,6 +70,38 @@ public class Solar{
   }
 
   /**
+   * 通过指定日期获取阳历
+   *
+   * @param date 日期
+   * @return 阳历
+   */
+  public static Solar fromDate(Date date){
+    return new Solar(date);
+  }
+
+  /**
+   * 通过指定日历获取阳历
+   *
+   * @param calendar 日历
+   * @return 阳历
+   */
+  public static Solar fromCalendar(Calendar calendar){
+    return new Solar(calendar);
+  }
+
+  /**
+   * 通过指定年月日获取阳历
+   *
+   * @param year 年
+   * @param month 月，1到12
+   * @param day 日，1到31
+   * @return 阳历
+   */
+  public static Solar fromYmd(int year,int month,int day){
+    return new Solar(year,month,day);
+  }
+
+  /**
    * 是否闰年
    * 
    * @return true/false 闰年/非闰年

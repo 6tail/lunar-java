@@ -68,6 +68,41 @@ public class SolarWeek {
   }
 
   /**
+   * 通过指定日期获取阳历周
+   *
+   * @param date 日期
+   * @param start 星期几作为一周的开始，1234560分别代表星期一至星期天
+   * @return 阳历周
+   */
+  public static SolarWeek fromDate(Date date,int start){
+    return new SolarWeek(date,start);
+  }
+
+  /**
+   * 通过指定日历获取阳历周
+   *
+   * @param calendar 日历
+   * @param start 星期几作为一周的开始，1234560分别代表星期一至星期天
+   * @return 阳历周
+   */
+  public static SolarWeek fromCalendar(Calendar calendar,int start){
+    return new SolarWeek(calendar,start);
+  }
+
+  /**
+   * 通过指定年月日获取阳历周
+   *
+   * @param year 年
+   * @param month 月，1到12
+   * @param day 日，1到31
+   * @param start 星期几作为一周的开始，1234560分别代表星期一至星期天
+   * @return 阳历周
+   */
+  public static SolarWeek fromYmd(int year,int month,int day,int start){
+    return new SolarWeek(year,month,day,start);
+  }
+
+  /**
    * 获取年
    *
    * @return 年

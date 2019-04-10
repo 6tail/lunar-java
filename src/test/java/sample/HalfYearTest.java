@@ -51,8 +51,6 @@ public class HalfYearTest {
 
     @org.junit.Test
     public void test() {
-//    SolarHalfYear halfYear = new SolarHalfYear();
-//    System.out.println(halfYear.next(1));
 
         for (Object[] test : data) {
             SolarHalfYear halfYear = new SolarHalfYear(Integer.parseInt(test[1].toString()), Integer.parseInt(test[0].toString()));

@@ -1,10 +1,7 @@
 package sample;
 
 import com.nlf.calendar.Solar;
-import com.nlf.calendar.SolarMonth;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+
 
 import static org.junit.Assert.assertEquals;
 
@@ -57,7 +54,7 @@ public class SolarTest {
     public void test() {
         for (Object[] test : data) {
             Solar date = new Solar(Integer.parseInt(test[2].toString()), Integer.parseInt(test[0].toString()), Integer.parseInt(test[1].toString()));
-            assertEquals(test[3].toString(),date.next(1).toString() );
+            assertEquals(test[3].toString(), date.next(1).toString());
         }
     }
 

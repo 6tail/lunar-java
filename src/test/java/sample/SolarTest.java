@@ -1,26 +1,61 @@
 package sample;
 
 import com.nlf.calendar.Solar;
-import org.junit.Test;
+
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * 阳历示例
  */
-public class SolarTest {
 
-  @Test
-  public void test(){
-    //阳历今天
-    Solar date = new Solar();
-    //输出阳历信息
-    System.out.println(date.toFullString());
-    //输出阴历信息
-    System.out.println(date.getLunar().toFullString());
-    System.out.println();
-    //指定某个阳历日期
-    date = new Solar(1986,5,29);
-    System.out.println(date.toFullString());
-    System.out.println(date.getLunar().toFullString());
-  }
+public class SolarTest {
+    private Object[][] data = new Object[][]{
+            //强一般等价类 P73
+            {6, 14, 2000, "2000-06-15"},
+            {6, 14, 1996, "1996-06-15"},
+            {6, 14, 2002, "2002-06-15"},
+            {6, 29, 2000, "2000-06-30"},
+            {6, 29, 1996, "1996-06-30"},
+            {6, 29, 2002, "2002-06-30"},
+            {6, 30, 2000, "2000-07-01"},
+            {6, 30, 1996, "1996-07-01"},
+            {6, 30, 2002, "2002-07-01"},
+            {6, 31, 2000, "2000-07-02"},
+            {6, 31, 1996, "1996-07-02"},
+            {6, 31, 2002, "2002-07-02"},
+            {7, 14, 2000, "2000-07-15"},
+            {7, 14, 1996, "1996-07-15"},
+            {7, 14, 2002, "2002-07-15"},
+            {7, 29, 2000, "2000-07-30"},
+            {7, 29, 1996, "1996-07-30"},
+            {7, 29, 2002, "2002-07-30"},
+            {7, 30, 2000, "2000-07-31"},
+            {7, 30, 1996, "1996-07-31"},
+            {7, 30, 2002, "2002-07-31"},
+            {7, 31, 2000, "2000-08-01"},
+            {7, 31, 1996, "1996-08-01"},
+            {7, 31, 2002, "2002-08-01"},
+            {2, 14, 2000, "2000-02-15"},
+            {2, 14, 1996, "1996-02-15"},
+            {2, 14, 2002, "2002-02-15"},
+            {2, 29, 2000, "2000-03-01"},
+            {2, 29, 1996, "1996-03-01"},
+            {2, 29, 2002, "2002-03-02"},
+            {2, 30, 2000, "2000-03-02"},
+            {2, 30, 1996, "1996-03-02"},
+            {2, 30, 2002, "2002-03-03"},
+            {2, 31, 2000, "2000-03-03"},
+            {2, 31, 1996, "1996-03-03"},
+            {2, 31, 2002, "2002-03-04"},
+    };
+
+    @org.junit.Test
+    public void test() {
+        for (Object[] test : data) {
+            Solar date = new Solar(Integer.parseInt(test[2].toString()), Integer.parseInt(test[0].toString()), Integer.parseInt(test[1].toString()));
+            assertEquals(test[3].toString(), date.next(1).toString());
+        }
+    }
 
 }

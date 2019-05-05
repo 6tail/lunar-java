@@ -9,6 +9,8 @@ import java.util.List;
 
 /**
  * 阳历周
+ *
+ * @author 6tail
  */
 public class SolarWeek {
   /** 年 */
@@ -266,6 +268,7 @@ public class SolarWeek {
     return l;
   }
 
+  @Override
   public String toString(){
     return year+"."+month+"."+getIndex();
   }

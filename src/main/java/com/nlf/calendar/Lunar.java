@@ -9,7 +9,7 @@ import com.nlf.calendar.util.SolarUtil;
 
 /**
  * 农历日期
- * 
+ *
  * @author 6tail
  *
  */
@@ -73,7 +73,9 @@ public class Lunar{
     int diff = 0;
     for(int i=startY;i<y;i++){
       diff += 365;
-      if(SolarUtil.isLeapYear(i)) diff += 1;
+      if(SolarUtil.isLeapYear(i)){
+        diff += 1;
+      }
     }
     for(int i=startM;i<m;i++){
       diff += SolarUtil.getDaysOfMonth(y,i);
@@ -84,7 +86,9 @@ public class Lunar{
     while(lunarD>lastDate){
       lunarD -= lastDate;
       lunarM = LunarUtil.nextMonth(lunarY,lunarM);
-      if(lunarM==1) lunarY++;
+      if(lunarM==1){
+        lunarY++;
+      }
       lastDate = LunarUtil.getDaysOfMonth(lunarY,lunarM);
     }
     year = lunarY;
@@ -116,7 +120,7 @@ public class Lunar{
 
   /**
    * 获取干
-   * 
+   *
    * @return 干，如辛
    */
   public String getGan(){
@@ -125,7 +129,7 @@ public class Lunar{
 
   /**
    * 获取支
-   * 
+   *
    * @return 支，如亥
    */
   public String getZhi(){
@@ -134,7 +138,7 @@ public class Lunar{
 
   /**
    * 获取生肖
-   * 
+   *
    * @return 生肖，如虎
    */
   public String getShengxiao(){
@@ -143,12 +147,15 @@ public class Lunar{
 
   /**
    * 获取中文的月
-   * 
+   *
    * @return 中文月，如正月
    */
   public String getMonthInChinese(){
-    if(month>0) return LunarUtil.MONTH[month];
-    else return "闰"+LunarUtil.MONTH[-month];
+    if(month>0){
+      return LunarUtil.MONTH[month];
+    }else{
+      return "闰"+LunarUtil.MONTH[-month];
+    }
   }
 
   /**
@@ -161,7 +168,7 @@ public class Lunar{
 
   /**
    * 获取中文日
-   * 
+   *
    * @return 中文日，如初一
    */
   public String getDayInChinese(){
@@ -170,7 +177,7 @@ public class Lunar{
 
   /**
    * 获取节
-   * 
+   *
    * @return 节
    */
   public String getJie(){
@@ -184,16 +191,24 @@ public class Lunar{
       index++;
     }
     int term = LunarUtil.JIE_MAP[solarMonth-1][4*index+ry%4];
-    if(ry==121&&solarMonth==4) term = 5;
-    if(ry==132&&solarMonth==4) term = 5;
-    if(ry==194&&solarMonth==6) term = 6;
-    if(solarDay==term) s = LunarUtil.JIE[solarMonth-1];
+    if(ry==121&&solarMonth==4){
+      term = 5;
+    }
+    if(ry==132&&solarMonth==4){
+      term = 5;
+    }
+    if(ry==194&&solarMonth==6){
+      term = 6;
+    }
+    if(solarDay==term){
+      s = LunarUtil.JIE[solarMonth-1];
+    }
     return s;
   }
 
   /**
    * 获取气
-   * 
+   *
    * @return 气
    */
   public String getQi(){
@@ -207,24 +222,30 @@ public class Lunar{
       index++;
     }
     int term = LunarUtil.QI_MAP[solarMonth-1][4*index+ry%4];
-    if(ry==171&&solarMonth==3) term = 21;
-    if(ry==181&&solarMonth==5) term = 21;
-    if(solarDay==term) s = LunarUtil.QI[solarMonth-1];
+    if(ry==171&&solarMonth==3){
+      term = 21;
+    }
+    if(ry==181&&solarMonth==5){
+      term = 21;
+    }
+    if(solarDay==term){
+      s = LunarUtil.QI[solarMonth-1];
+    }
     return s;
   }
 
   /**
    * 获取宿
-   * 
+   *
    * @return 宿
    */
   public String getXiu(){
-    return LunarUtil.XIU[day-1][month-1];
+    return LunarUtil.XIU[day-1][Math.abs(month)-1];
   }
 
   /**
    * 获取政
-   * 
+   *
    * @return 政
    */
   public String getZheng(){
@@ -257,19 +278,21 @@ public class Lunar{
 
   /**
    * 获取节日，有可能一天会有多个节日
-   * 
+   *
    * @return 春节等
    */
   public List<String> getFestivals(){
     List<String> l = new ArrayList<String>();
     String f = LunarUtil.FESTIVAL.get(month+"-"+day);
-    if(null!=f) l.add(f);
+    if(null!=f){
+      l.add(f);
+    }
     return l;
   }
 
   /**
    * 转换为阳历日期
-   * 
+   *
    * @return 阳历日期
    */
   private Solar toSolar(){
@@ -281,7 +304,9 @@ public class Lunar{
     while(true){
       diff += LunarUtil.getDaysOfMonth(y,m);
       m = LunarUtil.nextMonth(y,m);
-      if(m==1) y++;
+      if(m==1){
+        y++;
+      }
       if(y==year&&m==month){
         diff += day;
         break;
@@ -292,7 +317,7 @@ public class Lunar{
     c.add(Calendar.DATE,diff);
     return new Solar(c);
   }
-  
+
   public String toFullString(){
     StringBuilder s = new StringBuilder();
     s.append(toString());
@@ -321,13 +346,14 @@ public class Lunar{
     return s.toString();
   }
 
+  @Override
   public String toString(){
     return getGan()+getZhi()+"年"+getMonthInChinese()+"月"+getDayInChinese();
   }
 
   /**
    * 获取年份
-   * 
+   *
    * @return 如2015
    */
   public int getYear(){
@@ -336,7 +362,7 @@ public class Lunar{
 
   /**
    * 获取月份
-   * 
+   *
    * @return 1到12，负数为闰月
    */
   public int getMonth(){
@@ -345,7 +371,7 @@ public class Lunar{
 
   /**
    * 获取日期
-   * 
+   *
    * @return 日期
    */
   public int getDay(){

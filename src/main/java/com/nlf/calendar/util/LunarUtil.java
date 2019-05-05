@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 农历工具
- * 
+ * 农历工具，基准日期为1900年十一月十一，对应阳历1901年1月1日，最远仅支持到2099年
+ *
  * @author 6tail
  *
  */
@@ -204,9 +204,9 @@ public class LunarUtil{
 
   /**
    * 获取指定年月的下一个月是第几月
-   * @param y 年
-   * @param m 月
-   * @return 1到12，闰月为负
+   * @param y 农历年
+   * @param m 农历月，闰月为负数
+   * @return 1到12，闰月为负数
    */
   public static int nextMonth(int y,int m){
     int n = Math.abs(m)+1;
@@ -218,19 +218,20 @@ public class LunarUtil{
         n = -m;
       }
     }
-    if(n==13) n = 1;
+    if(n==13){
+      n = 1;
+    }
     return n;
   }
 
   /**
    * 获取某年某月有多少天
-   * 
-   * @param year 年
-   * @param month 月
+   *
+   * @param year 农历年
+   * @param month 农历月，闰月为负数
    * @return 天数
    */
   public static int getDaysOfMonth(int year,int month){
-    // 注意：闰月 lunarMonth < 0
     int index = year-BASE_YEAR+BASE_INDEX;
     int v,l,d=30;
     if(1<=month&&month<=8){

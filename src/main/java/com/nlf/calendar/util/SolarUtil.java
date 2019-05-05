@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 阳历工具
- * @author 6tail
+ * 阳历工具，基准日期为1901年1月1日，对应农历1900年十一月十一
  *
+ * @author 6tail
  */
 public class SolarUtil{
   /** 阳历基准年 */
@@ -57,21 +57,27 @@ public class SolarUtil{
 
   /**
    * 是否闰年
-   * 
+   *
    * @param year 年
    * @return true/false 闰年/非闰年
    */
   public static boolean isLeapYear(int year){
     boolean leap = false;
-    if(year%4==0) leap = true;
-    if(year%100==0) leap = false;
-    if(year%400==0) leap = true;
+    if(year%4==0){
+      leap = true;
+    }
+    if(year%100==0){
+      leap = false;
+    }
+    if(year%400==0){
+      leap = true;
+    }
     return leap;
   }
 
   /**
    * 获取某年某月有多少天
-   * 
+   *
    * @param year 年
    * @param month 月
    * @return 天数
@@ -99,6 +105,6 @@ public class SolarUtil{
     Calendar c = Calendar.getInstance();
     c.set(year,month-1,1);
     int week = c.get(Calendar.DAY_OF_WEEK)-1;
-    return (int)Math.ceil((days+week-start)/7D);
+    return (int)Math.ceil((days+week-start)*1D/WEEK.length);
   }
 }

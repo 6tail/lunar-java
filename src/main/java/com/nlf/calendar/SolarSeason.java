@@ -7,12 +7,16 @@ import java.util.List;
 
 /**
  * 阳历季度
+ *
+ * @author 6tail
  */
 public class SolarSeason {
   /** 年 */
   private int year;
   /** 月 */
   private int month;
+  /** 一个季度的月数 */
+  public static final int MONTH_COUNT = 3;
 
   /**
    * 默认当月
@@ -104,7 +108,7 @@ public class SolarSeason {
    * @return 季度序号，从1开始
    */
   public int getIndex(){
-    return (int)Math.ceil(month/3D);
+    return (int)Math.ceil(month*1D/MONTH_COUNT);
   }
 
   /**
@@ -118,7 +122,7 @@ public class SolarSeason {
     }
     Calendar c = Calendar.getInstance();
     c.set(year,month-1,1);
-    c.add(Calendar.MONTH,3*seasons);
+    c.add(Calendar.MONTH,MONTH_COUNT*seasons);
     return new SolarSeason(c);
   }
 
@@ -129,12 +133,13 @@ public class SolarSeason {
   public List<SolarMonth> getMonths(){
     List<SolarMonth> l = new ArrayList<SolarMonth>();
     int index = getIndex()-1;
-    for(int i=0;i<3;i++){
-      l.add(new SolarMonth(year,3*index+i+1));
+    for(int i=0;i<MONTH_COUNT;i++){
+      l.add(new SolarMonth(year,MONTH_COUNT*index+i+1));
     }
     return l;
   }
 
+  @Override
   public String toString(){
     return year+"."+getIndex();
   }

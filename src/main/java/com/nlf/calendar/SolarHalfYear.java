@@ -7,12 +7,17 @@ import java.util.List;
 
 /**
  * 阳历半年
+ *
+ * @author 6tail
  */
 public class SolarHalfYear {
   /** 年 */
   private int year;
   /** 月 */
   private int month;
+
+  /** 半年的月数 */
+  public static final int MONTH_COUNT = 6;
 
   /**
    * 默认当月
@@ -104,7 +109,7 @@ public class SolarHalfYear {
    * @return 半年序号，从1开始
    */
   public int getIndex(){
-    return (int)Math.ceil(month/6D);
+    return (int)Math.ceil(month*1D/MONTH_COUNT);
   }
 
   /**
@@ -118,7 +123,7 @@ public class SolarHalfYear {
     }
     Calendar c = Calendar.getInstance();
     c.set(year,month-1,1);
-    c.add(Calendar.MONTH,6*halfYears);
+    c.add(Calendar.MONTH,MONTH_COUNT*halfYears);
     return new SolarHalfYear(c);
   }
 
@@ -129,12 +134,13 @@ public class SolarHalfYear {
   public List<SolarMonth> getMonths(){
     List<SolarMonth> l = new ArrayList<SolarMonth>();
     int index = getIndex()-1;
-    for(int i=0;i<6;i++){
-      l.add(new SolarMonth(year,6*index+i+1));
+    for(int i=0;i<MONTH_COUNT;i++){
+      l.add(new SolarMonth(year,MONTH_COUNT*index+i+1));
     }
     return l;
   }
 
+  @Override
   public String toString(){
     return year+"."+getIndex();
   }

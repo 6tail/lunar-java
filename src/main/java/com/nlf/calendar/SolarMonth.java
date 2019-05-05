@@ -8,7 +8,7 @@ import com.nlf.calendar.util.SolarUtil;
 
 /**
  * 阳历月
- * 
+ *
  * @author 6tail
  *
  */
@@ -45,7 +45,7 @@ public class SolarMonth{
 
   /**
    * 通过年月初始化
-   * 
+   *
    * @param year 年
    * @param month 月
    */
@@ -87,7 +87,7 @@ public class SolarMonth{
 
   /**
    * 获取年
-   * 
+   *
    * @return 年
    */
   public int getYear(){
@@ -96,7 +96,7 @@ public class SolarMonth{
 
   /**
    * 获取月
-   * 
+   *
    * @return 月
    */
   public int getMonth(){
@@ -105,7 +105,7 @@ public class SolarMonth{
 
   /**
    * 获取本月的阳历日期列表
-   * 
+   *
    * @return 阳历日期列表
    */
   public List<Solar> getDays(){
@@ -118,7 +118,7 @@ public class SolarMonth{
     }
     return l;
   }
-  
+
   /**
    * 获取往后推几个月的阳历月，如果要往前推，则月数用负数
    * @param months 月数
@@ -131,6 +131,7 @@ public class SolarMonth{
     return new SolarMonth(c);
   }
 
+  @Override
   public String toString(){
     return year+"-"+month;
   }

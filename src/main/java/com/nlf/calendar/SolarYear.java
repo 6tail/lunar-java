@@ -7,13 +7,16 @@ import java.util.List;
 
 /**
  * 阳历年
- * 
+ *
  * @author 6tail
  *
  */
 public class SolarYear{
   /** 年 */
   private int year;
+
+  /** 一年的月数 */
+  public static final int MONTH_COUNT = 12;
 
   /**
    * 默认当年
@@ -40,7 +43,7 @@ public class SolarYear{
 
   /**
    * 通过年初始化
-   * 
+   *
    * @param year 年
    */
   public SolarYear(int year){
@@ -79,7 +82,7 @@ public class SolarYear{
 
   /**
    * 获取年
-   * 
+   *
    * @return 年
    */
   public int getYear(){
@@ -88,19 +91,19 @@ public class SolarYear{
 
   /**
    * 获取本年的阳历月列表
-   * 
+   *
    * @return 阳历月列表
    */
   public List<SolarMonth> getMonths(){
-    List<SolarMonth> l = new ArrayList<SolarMonth>(12);
+    List<SolarMonth> l = new ArrayList<SolarMonth>(MONTH_COUNT);
     SolarMonth m = new SolarMonth(year,1);
     l.add(m);
-    for(int i = 1;i<12;i++){
+    for(int i = 1;i<MONTH_COUNT;i++){
       l.add(m.next(i));
     }
     return l;
   }
-  
+
   /**
    * 获取往后推几年的阳历年，如果要往前推，则年数用负数
    * @param years 年数
@@ -108,11 +111,12 @@ public class SolarYear{
    */
   public SolarYear next(int years){
     Calendar c = Calendar.getInstance();
-    c.set(year,0,1);
+    c.set(year,Calendar.JANUARY,1);
     c.add(Calendar.YEAR,years);
     return new SolarYear(c);
   }
 
+  @Override
   public String toString(){
     return year+"";
   }

@@ -18,7 +18,7 @@ public class SolarTest {
     System.out.println(date.getLunar().toFullString());
     System.out.println();
     //指定某个阳历日期
-    date = new Solar(1986,5,29);
+    date = new Solar(2016,9,8);
     System.out.println(date.toFullString());
     System.out.println(date.getLunar().toFullString());
   }

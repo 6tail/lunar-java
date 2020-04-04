@@ -157,6 +157,20 @@ public class Solar{
   }
 
   /**
+   * 获取非正式的节日，有可能一天会有多个节日
+   *
+   * @return 非正式的节日列表，如中元节
+   */
+  public List<String> getOtherFestivals(){
+    List<String> l = new ArrayList<String>();
+    List<String> fs = SolarUtil.OTHER_FESTIVAL.get(month+"-"+day);
+    if(null!=fs){
+      l.addAll(fs);
+    }
+    return l;
+  }
+
+  /**
    * 获取星座
    *
    * @return 星座
@@ -250,6 +264,11 @@ public class Solar{
     s.append("星期");
     s.append(getWeekInChinese());
     for(String f:getFestivals()){
+      s.append(" (");
+      s.append(f);
+      s.append(")");
+    }
+    for(String f:getOtherFestivals()){
       s.append(" (");
       s.append(f);
       s.append(")");

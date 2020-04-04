@@ -17,7 +17,7 @@ public class SolarTest {
     Assert.assertEquals("2019-05-01",date.toString());
     Assert.assertEquals("2019-05-01 星期三 (劳动节) 金牛座",date.toFullString());
     Assert.assertEquals("己亥年叁月廿七",date.getLunar().toString());
-    Assert.assertEquals("己亥年叁月廿七 猪年 西方白虎 娄金狗",date.getLunar().toFullString());
+    Assert.assertEquals("己亥年叁月廿七 猪年戊辰月戊戌日 (七殿泰山王诞) 西方白虎 娄金狗 彭祖[戊不受田田主不祥 戌不吃犬作怪上床]",date.getLunar().toFullString());
   }
 
 }

@@ -34,7 +34,7 @@ public class Lunar{
    * 通过农历年月日初始化
    *
    * @param year 年（农历）
-   * @param month 月（农历），1到12
+   * @param month 月（农历），1到12，闰月为负，即闰2月=-2
    * @param day 日（农历），1到31
    */
   public Lunar(int year,int month,int day){
@@ -110,7 +110,7 @@ public class Lunar{
    * 通过指定农历年月日获取农历
    *
    * @param year 年（农历）
-   * @param month 月（农历），1到12
+   * @param month 月（农历），1到12，闰月为负，即闰2月=-2
    * @param day 日（农历），1到31
    * @return 农历
    */
@@ -119,18 +119,18 @@ public class Lunar{
   }
 
   /**
-   * 获取干
+   * 获取年份的天干
    *
-   * @return 干，如辛
+   * @return 天干，如辛
    */
   public String getGan(){
     return LunarUtil.GAN[(year-4)%10+1];
   }
 
   /**
-   * 获取支
+   * 获取年份的地支
    *
-   * @return 支，如亥
+   * @return 地支，如亥
    */
   public String getZhi(){
     return LunarUtil.ZHI[(year-4)%12+1];
@@ -279,7 +279,7 @@ public class Lunar{
   /**
    * 获取节日，有可能一天会有多个节日
    *
-   * @return 春节等
+   * @return 节日列表，如春节
    */
   public List<String> getFestivals(){
     List<String> l = new ArrayList<String>();
@@ -291,31 +291,80 @@ public class Lunar{
   }
 
   /**
+   * 获取非正式的节日，有可能一天会有多个节日
+   *
+   * @return 非正式的节日列表，如中元节
+   */
+  public List<String> getOtherFestivals(){
+    List<String> l = new ArrayList<String>();
+    List<String> fs = LunarUtil.OTHER_FESTIVAL.get(month+"-"+day);
+    if(null!=fs){
+      l.addAll(fs);
+    }
+    return l;
+  }
+
+  /**
    * 转换为阳历日期
    *
    * @return 阳历日期
    */
   private Solar toSolar(){
-    int y = LunarUtil.BASE_YEAR;
-    int m = LunarUtil.BASE_MONTH;
-    int d = LunarUtil.BASE_DAY;
-    int diff = LunarUtil.getDaysOfMonth(y,m)-d;
-    m = LunarUtil.nextMonth(y,m);
-    while(true){
-      diff += LunarUtil.getDaysOfMonth(y,m);
-      m = LunarUtil.nextMonth(y,m);
-      if(m==1){
-        y++;
-      }
-      if(y==year&&m==month){
-        diff += day;
-        break;
-      }
-    }
+    int diff = LunarUtil.computeAddDays(year,month,day);
     Calendar c = Calendar.getInstance();
     c.set(SolarUtil.BASE_YEAR,SolarUtil.BASE_MONTH-1,SolarUtil.BASE_DAY);
     c.add(Calendar.DATE,diff);
     return new Solar(c);
+  }
+
+  /**
+   * 获取干支纪月
+   * <p>月天干口诀：甲己丙寅首，乙庚戊寅头。丙辛从庚寅，丁壬壬寅求，戊癸甲寅居，周而复始流。</p>
+   * <p>月地支：正月起寅</p>
+   *
+   * @return 干支纪月，如己卯
+   */
+  public String getMonthInGanZhi(){
+    int m = Math.abs(month)-1;
+    int yearGanIndex = (year-4)%10;
+    int offset = (yearGanIndex%5+1)*2;
+    String monthGan = LunarUtil.GAN[(m+offset)%10+1];
+    String monthZhi = LunarUtil.ZHI[(m+LunarUtil.BASE_MONTH_ZHI_INDEX)%12+1];
+    return monthGan+monthZhi;
+  }
+
+  /**
+   * 获取干支纪日
+   *
+   * @return 干支纪日，如己卯
+   */
+  public String getDayInGanZhi(){
+    int diff = LunarUtil.computeAddDays(year,month,day);
+    diff += LunarUtil.BASE_DAY_GANZHI_INDEX;
+    diff = diff%60;
+    return LunarUtil.GAN[diff%10+1]+LunarUtil.ZHI[diff%12+1];
+  }
+
+  /**
+   * 获取彭祖百忌天干
+   * @return 彭祖百忌天干
+   */
+  public String getPengZuGan(){
+    int diff = LunarUtil.computeAddDays(year,month,day);
+    diff += LunarUtil.BASE_DAY_GANZHI_INDEX;
+    diff = diff%60;
+    return LunarUtil.PENGZU_GAN[diff%10+1];
+  }
+
+  /**
+   * 获取彭祖百忌地支
+   * @return 彭祖百忌地支
+   */
+  public String getPengZuZhi(){
+    int diff = LunarUtil.computeAddDays(year,month,day);
+    diff += LunarUtil.BASE_DAY_GANZHI_INDEX;
+    diff = diff%60;
+    return LunarUtil.PENGZU_ZHI[diff%12+1];
   }
 
   public String toFullString(){
@@ -324,7 +373,16 @@ public class Lunar{
     s.append(" ");
     s.append(getShengxiao());
     s.append("年");
+    s.append(getMonthInGanZhi());
+    s.append("月");
+    s.append(getDayInGanZhi());
+    s.append("日");
     for(String f:getFestivals()){
+      s.append(" (");
+      s.append(f);
+      s.append(")");
+    }
+    for(String f:getOtherFestivals()){
       s.append(" (");
       s.append(f);
       s.append(")");
@@ -343,6 +401,11 @@ public class Lunar{
     s.append(getXiu());
     s.append(getZheng());
     s.append(getAnimal());
+    s.append(" 彭祖[");
+    s.append(getPengZuGan());
+    s.append(" ");
+    s.append(getPengZuZhi());
+    s.append("]");
     return s.toString();
   }
 

@@ -4,7 +4,7 @@ lunar is a calendar library for Solar and Chinese Lunar.
 
 > Support since java 1.5
 
-[简体中文](https://github.com/6tail/lunar-java/blob/master/README_ZH.md)
+[简体中文](https://github.com/6tail/lunar-java/blob/master/README.md)
 
 ### Release
 

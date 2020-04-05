@@ -281,7 +281,7 @@ public class LunarUtil{
       put("壬","丁");
     }
   };
-  /** 刹（逢巳日、酉日、丑日必煞东；亥日、卯日、未日必煞西；申日、子日、辰日必煞南；寅日、午日、戌日必煞北） */
+  /** 煞（逢巳日、酉日、丑日必煞东；亥日、卯日、未日必煞西；申日、子日、辰日必煞南；寅日、午日、戌日必煞北） */
   public static final Map<String,String> SHA = new HashMap<String,String>(){
     private static final long serialVersionUID = -1;
     {

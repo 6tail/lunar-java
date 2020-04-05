@@ -613,8 +613,8 @@ public class Lunar{
   }
 
   /**
-   * 获取刹
-   * @return 刹，如北
+   * 获取煞
+   * @return 煞，如北
    */
   public String getSha(){
     return LunarUtil.SHA.get(getDayZhi());
@@ -723,7 +723,7 @@ public class Lunar{
     s.append(")");
     s.append(" 冲[");
     s.append(getChongDesc());
-    s.append("] 刹[");
+    s.append("] 煞[");
     s.append(getSha());
     s.append("]");
     return s.toString();

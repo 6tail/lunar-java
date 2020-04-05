@@ -136,8 +136,18 @@ public class Lunar{
    * 获取年份的天干
    *
    * @return 天干，如辛
+   * @deprecated 使用getYearGan
    */
   public String getGan(){
+    return LunarUtil.GAN[(year-4)%10+1];
+  }
+
+  /**
+   * 获取年份的天干
+   *
+   * @return 天干，如辛
+   */
+  public String getYearGan(){
     return LunarUtil.GAN[(year-4)%10+1];
   }
 
@@ -145,18 +155,76 @@ public class Lunar{
    * 获取年份的地支
    *
    * @return 地支，如亥
+   * @deprecated 使用getYearZhi
    */
   public String getZhi(){
     return LunarUtil.ZHI[(year-4)%12+1];
   }
 
   /**
-   * 获取生肖
+   * 获取年份的地支
    *
-   * @return 生肖，如虎
+   * @return 地支，如亥
+   */
+  public String getYearZhi(){
+    return LunarUtil.ZHI[(year-4)%12+1];
+  }
+
+  /**
+   * 获取干支纪年
+   * @return 年份的干支，如辛亥
+   */
+  public String getYearInGanZhi(){
+    return getYearGan()+getYearZhi();
+  }
+
+  /**
+   * 获取年生肖
+   *
+   * @return 年生肖，如虎
+   * @deprecated 使用getYearShengXiao
    */
   public String getShengxiao(){
     return LunarUtil.SHENGXIAO[(year-4)%12+1];
+  }
+
+  /**
+   * 获取年生肖
+   *
+   * @return 年生肖，如虎
+   */
+  public String getYearShengXiao(){
+    return LunarUtil.SHENGXIAO[(year-4)%12+1];
+  }
+
+  /**
+   * 获取月生肖
+   *
+   * @return 月生肖，如虎
+   */
+  public String getMonthShengXiao(){
+    String zhi = getMonthZhi();
+    for(int i=0,j=LunarUtil.ZHI.length;i<j;i++){
+      if(LunarUtil.ZHI[i].equals(zhi)){
+        return LunarUtil.SHENGXIAO[i];
+      }
+    }
+    return "";
+  }
+
+  /**
+   * 获取日生肖
+   *
+   * @return 日生肖，如虎
+   */
+  public String getDayShengXiao(){
+    String zhi = getDayZhi();
+    for(int i=0,j=LunarUtil.ZHI.length;i<j;i++){
+      if(LunarUtil.ZHI[i].equals(zhi)){
+        return LunarUtil.SHENGXIAO[i];
+      }
+    }
+    return "";
   }
 
   /**
@@ -352,12 +420,27 @@ public class Lunar{
    * @return 干支纪月，如己卯
    */
   public String getMonthInGanZhi(){
+    return getMonthGan()+getMonthZhi();
+  }
+
+  /**
+   * 获取月天干
+   * @return 月天干，如己
+   */
+  public String getMonthGan(){
     int m = Math.abs(month)-1;
     int yearGanIndex = (year-4)%10;
     int offset = (yearGanIndex%5+1)*2;
-    String monthGan = LunarUtil.GAN[(m+offset)%10+1];
-    String monthZhi = LunarUtil.ZHI[(m+LunarUtil.BASE_MONTH_ZHI_INDEX)%12+1];
-    return monthGan+monthZhi;
+    return LunarUtil.GAN[(m+offset)%10+1];
+  }
+
+  /**
+   * 获取月地支
+   * @return 月地支，如卯
+   */
+  public String getMonthZhi(){
+    int m = Math.abs(month)-1;
+    return LunarUtil.ZHI[(m+LunarUtil.BASE_MONTH_ZHI_INDEX)%12+1];
   }
 
   /**
@@ -366,7 +449,25 @@ public class Lunar{
    * @return 干支纪日，如己卯
    */
   public String getDayInGanZhi(){
-    return LunarUtil.GAN[dayGanIndex+1]+LunarUtil.ZHI[dayZhiIndex+1];
+    return getDayGan()+getDayZhi();
+  }
+
+  /**
+   * 获取日天干
+   *
+   * @return 日天干，如甲
+   */
+  public String getDayGan(){
+    return LunarUtil.GAN[dayGanIndex+1];
+  }
+
+  /**
+   * 获取日地支
+   *
+   * @return 日地支，如卯
+   */
+  public String getDayZhi(){
+    return LunarUtil.ZHI[dayZhiIndex+1];
   }
 
   /**
@@ -470,7 +571,7 @@ public class Lunar{
    * @return 冲，如申
    */
   public String getChong(){
-    return LunarUtil.CHONG.get(LunarUtil.ZHI[dayZhiIndex+1]);
+    return LunarUtil.CHONG.get(getDayZhi());
   }
 
   /**
@@ -478,8 +579,7 @@ public class Lunar{
    * @return 无情之克的冲天干，如甲
    */
   public String getChongGan(){
-    String chong = LunarUtil.GAN[dayGanIndex+1];
-    return LunarUtil.CHONG_GAN.get(chong);
+    return LunarUtil.CHONG_GAN.get(getDayGan());
   }
 
   /**
@@ -487,8 +587,7 @@ public class Lunar{
    * @return 有情之克的冲天干，如甲
    */
   public String getChongGanTie(){
-    String chong = LunarUtil.GAN[dayGanIndex+1];
-    return LunarUtil.CHONG_GAN_TIE.get(chong);
+    return LunarUtil.CHONG_GAN_TIE.get(getDayGan());
   }
 
   /**
@@ -518,23 +617,56 @@ public class Lunar{
    * @return 刹，如北
    */
   public String getSha(){
-    return LunarUtil.SHA.get(LunarUtil.ZHI[dayZhiIndex+1]);
+    return LunarUtil.SHA.get(getDayZhi());
+  }
+
+  /**
+   * 获取年纳音
+   * @return 年纳音，如剑锋金
+   */
+  public String getYearNaYin(){
+    return LunarUtil.NAYIN.get(getYearInGanZhi());
+  }
+
+  /**
+   * 获取月纳音
+   * @return 月纳音，如剑锋金
+   */
+  public String getMonthNaYin(){
+    return LunarUtil.NAYIN.get(getMonthInGanZhi());
+  }
+
+  /**
+   * 获取日纳音
+   * @return 日纳音，如剑锋金
+   */
+  public String getDayNaYin(){
+    return LunarUtil.NAYIN.get(getDayInGanZhi());
   }
 
   public String toFullString(){
     StringBuilder s = new StringBuilder();
     s.append(toString());
     s.append(" ");
-    s.append(getGan());
-    s.append(getZhi());
+    s.append(getYearInGanZhi());
     s.append("(");
-    s.append(getShengxiao());
-    s.append(")");
-    s.append("年");
+    s.append(getYearShengXiao());
+    s.append(")年 ");
     s.append(getMonthInGanZhi());
-    s.append("月");
+    s.append("(");
+    s.append(getMonthShengXiao());
+    s.append(")月 ");
     s.append(getDayInGanZhi());
-    s.append("日");
+    s.append("(");
+    s.append(getDayShengXiao());
+    s.append(")日");
+    s.append(" 纳音[");
+    s.append(getYearNaYin());
+    s.append(" ");
+    s.append(getMonthNaYin());
+    s.append(" ");
+    s.append(getDayNaYin());
+    s.append("]");
     for(String f:getFestivals()){
       s.append(" (");
       s.append(f);

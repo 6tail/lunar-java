@@ -1,12 +1,12 @@
 # lunar [![License](https://img.shields.io/badge/license-MIT-4EB1BA.svg?style=flat-square)](https://github.com/6tail/lunar/blob/master/LICENSE)
 
-lunar is a calendar library for Solar and Chinese Lunar.
+lunar是一个无依赖的支持阳历和阴历的日历工具库。
 
-> Support since java 1.5
+> 支持java 1.5及以上版本。
 
-[简体中文](https://github.com/6tail/lunar-java/blob/master/README_ZH.md)
+[English](https://github.com/6tail/lunar-java/blob/master/README_EN.md)
 
-### Release
+### 稳定版本
 
 ```xml
 <dependency>
@@ -16,7 +16,7 @@ lunar is a calendar library for Solar and Chinese Lunar.
 </dependency>
 ```
  
-### Snapshot
+### 快照版本
 
 ```xml
 <repository>
@@ -38,13 +38,13 @@ lunar is a calendar library for Solar and Chinese Lunar.
 </dependency>
 ```
 
-### Download
+### 下载jar
 
-If you will use jars in your projects, I suggest you to download latest snapshot versions with less bugs.
+如果使用jar，建议下载最新的SNAPSHOT版本，bug将得到及时的修复。
 
 [Download](https://oss.sonatype.org/content/groups/public/cn/6tail/lunar/)
 
-## Example
+## 示例
 
     import com.nlf.calendar.Lunar;
      
@@ -68,20 +68,19 @@ If you will use jars in your projects, I suggest you to download latest snapshot
       }
     }
 
-Output:
+输出结果：
 
-
-    丙申年捌月初八 猴年丁酉月癸巳日 北方玄武 斗木獬 彭祖[癸不词讼理弱敌强 巳不远行财物伏藏]
+    贰零壹陆年捌月初八 丙申(猴)年丁酉月癸巳日 北方玄武 斗木獬 彭祖百忌[癸不词讼理弱敌强 巳不远行财物伏藏] 喜神方位[巽](东南) 阳贵神方位[巽](东南) 阴贵神方位[震](正东) 福神方位[兑](正西) 财神方位[离](正南) 冲[(丁亥)猪] 刹[东]
     2016-09-08 闰年 星期四 (世界扫盲日) 处女座
      
-    丙寅年肆月廿一 虎年癸巳月癸酉日 北方玄武 危月燕 彭祖[癸不词讼理弱敌强 酉不会客醉坐颠狂]
+    壹玖捌陆年肆月廿一 丙寅(虎)年癸巳月癸酉日 北方玄武 危月燕 彭祖百忌[癸不词讼理弱敌强 酉不会客醉坐颠狂] 喜神方位[巽](东南) 阳贵神方位[巽](东南) 阴贵神方位[震](正东) 福神方位[兑](正西) 财神方位[离](正南) 冲[(丁卯)兔] 刹[东]
     1986-05-29 星期四 双子座
 
-## Documentation
+## 文档
 
-Please visit [http://6tail.cn/calendar/api.html](http://6tail.cn/calendar/api.html "http://6tail.cn/calendar/api.html")
+请移步至 [http://6tail.cn/calendar/api.html](http://6tail.cn/calendar/api.html "http://6tail.cn/calendar/api.html")
 
-## Contact
+## 联系
 
 <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=5F9Pbf0"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="lunar" title="lunar"></a>
 

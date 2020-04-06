@@ -769,6 +769,14 @@ public class Lunar{
     return LunarUtil.NAYIN.get(getDayInGanZhi());
   }
 
+  /**
+   * 获取时辰纳音
+   * @return 时辰纳音，如剑锋金
+   */
+  public String getTimeNaYin(){
+    return LunarUtil.NAYIN.get(getTimeInGanZhi());
+  }
+
   public String toFullString(){
     StringBuilder s = new StringBuilder();
     s.append(toString());
@@ -786,12 +794,16 @@ public class Lunar{
     s.append(getDayShengXiao());
     s.append(")日 ");
     s.append(getTimeZhi());
-    s.append("时 纳音[");
+    s.append("(");
+    s.append(getTimeShengXiao());
+    s.append(")时 纳音五行[");
     s.append(getYearNaYin());
     s.append(" ");
     s.append(getMonthNaYin());
     s.append(" ");
     s.append(getDayNaYin());
+    s.append(" ");
+    s.append(getTimeNaYin());
     s.append("] 星期");
     s.append(getWeekInChinese());
     for(String f:getFestivals()){
@@ -814,11 +826,13 @@ public class Lunar{
     s.append(getGong());
     s.append("方");
     s.append(getShou());
-    s.append(" ");
+    s.append(" 星宿[");
     s.append(getXiu());
     s.append(getZheng());
     s.append(getAnimal());
-    s.append(" 彭祖百忌[");
+    s.append("](");
+    s.append(getXiuLuck());
+    s.append(") 彭祖百忌[");
     s.append(getPengZuGan());
     s.append(" ");
     s.append(getPengZuZhi());

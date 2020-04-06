@@ -43,6 +43,8 @@ public class Solar{
   public Solar(int year,int month,int day){
     calendar = Calendar.getInstance();
     calendar.set(year,month-1,day);
+    calendar.set(Calendar.HOUR_OF_DAY,0);
+    calendar.set(Calendar.MINUTE,0);
     this.year = year;
     this.month = month;
     this.day = day;

@@ -19,6 +19,10 @@ public class Solar{
   private int month;
   /** 日 */
   private int day;
+  /** 时 */
+  private int hour;
+  /** 分 */
+  private int minute;
   /** 日历 */
   private Calendar calendar;
 
@@ -42,6 +46,27 @@ public class Solar{
     this.year = year;
     this.month = month;
     this.day = day;
+    this.hour = 0;
+    this.minute = 0;
+  }
+
+  /**
+   * 通过年月日初始化
+   *
+   * @param year 年
+   * @param month 月，1到12
+   * @param day 日，1到31
+   * @param hour 小时，0到23
+   * @param minute 分钟，0到59
+   */
+  public Solar(int year,int month,int day,int hour,int minute){
+    calendar = Calendar.getInstance();
+    calendar.set(year,month-1,day,hour,minute);
+    this.year = year;
+    this.month = month;
+    this.day = day;
+    this.hour = hour;
+    this.minute = minute;
   }
 
   /**
@@ -55,6 +80,8 @@ public class Solar{
     year = calendar.get(Calendar.YEAR);
     month = calendar.get(Calendar.MONTH)+1;
     day = calendar.get(Calendar.DATE);
+    hour = calendar.get(Calendar.HOUR_OF_DAY);
+    minute = calendar.get(Calendar.MINUTE);
   }
 
   /**
@@ -67,6 +94,8 @@ public class Solar{
     year = calendar.get(Calendar.YEAR);
     month = calendar.get(Calendar.MONTH)+1;
     day = calendar.get(Calendar.DATE);
+    hour = calendar.get(Calendar.HOUR_OF_DAY);
+    minute = calendar.get(Calendar.MINUTE);
   }
 
   /**
@@ -99,6 +128,20 @@ public class Solar{
    */
   public static Solar fromYmd(int year,int month,int day){
     return new Solar(year,month,day);
+  }
+
+  /**
+   * 通过指定年月日时分获取阳历
+   *
+   * @param year 年
+   * @param month 月，1到12
+   * @param day 日，1到31
+   * @param hour 小时，0到23
+   * @param minute 分钟，0到59
+   * @return 阳历
+   */
+  public static Solar fromYmdHm(int year,int month,int day,int hour,int minute){
+    return new Solar(year,month,day,hour,minute);
   }
 
   /**
@@ -267,6 +310,24 @@ public class Solar{
   }
 
   /**
+   * 获取小时
+   *
+   * @return 0到23之间的数字
+   */
+  public int getHour(){
+    return hour;
+  }
+
+  /**
+   * 获取分钟
+   *
+   * @return 0到59之间的数字
+   */
+  public int getMinute(){
+    return minute;
+  }
+
+  /**
    * 获取农历
    * @return 农历
    */
@@ -291,6 +352,12 @@ public class Solar{
   public String toFullString(){
     StringBuilder s = new StringBuilder();
     s.append(toString());
+    s.append(" ");
+    s.append(hour<10?"0":"");
+    s.append(hour);
+    s.append(":");
+    s.append(minute<10?"0":"");
+    s.append(minute);
     if(isLeapYear()){
       s.append(" ");
       s.append("闰年");

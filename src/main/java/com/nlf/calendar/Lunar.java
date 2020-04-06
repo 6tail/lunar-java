@@ -28,6 +28,10 @@ public class Lunar{
   private int dayGanIndex;
   /** 日对应的地支下标，0-12 */
   private int dayZhiIndex;
+  /** 阳历小时 */
+  private int hour;
+  /** 阳历分钟 */
+  private int minute;
 
   /**
    * 默认使用当前日期初始化
@@ -39,14 +43,29 @@ public class Lunar{
   /**
    * 通过农历年月日初始化
    *
-   * @param year 年（农历）
-   * @param month 月（农历），1到12，闰月为负，即闰2月=-2
-   * @param day 日（农历），1到31
+   * @param lunarYear 年（农历）
+   * @param lunarMonth 月（农历），1到12，闰月为负，即闰2月=-2
+   * @param lunarDay 日（农历），1到31
    */
-  public Lunar(int year,int month,int day){
-    this.year = year;
-    this.month = month;
-    this.day = day;
+  public Lunar(int lunarYear,int lunarMonth,int lunarDay){
+    this(lunarYear,lunarMonth,lunarDay,0,0);
+  }
+
+  /**
+   * 通过农历年月日时初始化
+   *
+   * @param lunarYear 年（农历）
+   * @param lunarMonth 月（农历），1到12，闰月为负，即闰2月=-2
+   * @param lunarDay 日（农历），1到31
+   * @param hour 小时（阳历）
+   * @param minute 分钟（阳历）
+   */
+  public Lunar(int lunarYear,int lunarMonth,int lunarDay,int hour,int minute){
+    this.year = lunarYear;
+    this.month = lunarMonth;
+    this.day = lunarDay;
+    this.hour = hour;
+    this.minute = minute;
     this.dayOffset = LunarUtil.computeAddDays(year,month,day);
     int addDays = (dayOffset + LunarUtil.BASE_DAY_GANZHI_INDEX)%60;
     dayGanIndex = addDays%10;
@@ -104,6 +123,8 @@ public class Lunar{
     year = lunarYear;
     month = lunarMonth;
     day = lunarDay;
+    hour = solar.getHour();
+    minute = solar.getMinute();
     dayOffset = LunarUtil.computeAddDays(year,month,day);
     int addDays = (dayOffset + LunarUtil.BASE_DAY_GANZHI_INDEX)%60;
     dayGanIndex = addDays%10;
@@ -123,13 +144,27 @@ public class Lunar{
   /**
    * 通过指定农历年月日获取农历
    *
-   * @param year 年（农历）
-   * @param month 月（农历），1到12，闰月为负，即闰2月=-2
-   * @param day 日（农历），1到31
+   * @param lunarYear 年（农历）
+   * @param lunarMonth 月（农历），1到12，闰月为负，即闰2月=-2
+   * @param lunarDay 日（农历），1到31
    * @return 农历
    */
-  public static Lunar fromYmd(int year,int month,int day){
-    return new Lunar(year,month,day);
+  public static Lunar fromYmd(int lunarYear,int lunarMonth,int lunarDay){
+    return new Lunar(lunarYear,lunarMonth,lunarDay);
+  }
+
+  /**
+   * 通过指定农历年月日获取农历
+   *
+   * @param lunarYear 年（农历）
+   * @param lunarMonth 月（农历），1到12，闰月为负，即闰2月=-2
+   * @param lunarDay 日（农历），1到31
+   * @param hour 小时（阳历）
+   * @param minute 分钟（阳历）
+   * @return 农历
+   */
+  public static Lunar fromYmdHm(int lunarYear,int lunarMonth,int lunarDay,int hour,int minute){
+    return new Lunar(lunarYear,lunarMonth,lunarDay,hour,minute);
   }
 
   /**
@@ -228,6 +263,21 @@ public class Lunar{
   }
 
   /**
+   * 获取时辰生肖
+   *
+   * @return 时辰生肖，如虎
+   */
+  public String getTimeShengXiao(){
+    String zhi = getTimeZhi();
+    for(int i=0,j=LunarUtil.ZHI.length;i<j;i++){
+      if(LunarUtil.ZHI[i].equals(zhi)){
+        return LunarUtil.SHENGXIAO[i];
+      }
+    }
+    return "";
+  }
+
+  /**
    * 获取中文的年
    *
    * @return 中文年，如二零零一
@@ -252,6 +302,43 @@ public class Lunar{
     }else{
       return "闰"+LunarUtil.MONTH[-month];
     }
+  }
+
+  /**
+   * 获取时辰（地支）
+   * @return 时辰（地支）
+   */
+  public String getTimeZhi(){
+    String time = (hour<10?"0":"")+hour+":"+(minute<10?"0":"")+minute;
+    return LunarUtil.convertTime(time);
+  }
+
+  /**
+   * 获取时辰（天干）
+   * @return 时辰（天干）
+   */
+  public String getTimeGan(){
+    String zhi = getTimeZhi();
+    for(int i=1,j=LunarUtil.ZHI.length;i<j;i++){
+      if(LunarUtil.ZHI[i].equals(zhi)){
+        return LunarUtil.GAN[1+(i-1)%10];
+      }
+    }
+    return null;
+  }
+
+  /**
+   * 获取时辰干支
+   * @return 时辰干支
+   */
+  public String getTimeInGanZhi(){
+    String zhi = getTimeZhi();
+    for(int i=1,j=LunarUtil.ZHI.length;i<j;i++){
+      if(LunarUtil.ZHI[i].equals(zhi)){
+        return LunarUtil.GAN[1+(i-1)%10]+zhi;
+      }
+    }
+    return zhi;
   }
 
   /**
@@ -358,6 +445,24 @@ public class Lunar{
   }
 
   /**
+   * 获取宿吉凶
+   *
+   * @return 吉/凶
+   */
+  public String getXiuLuck(){
+    return LunarUtil.XIU_LUCK.get(getXiu());
+  }
+
+  /**
+   * 获取宿歌诀
+   *
+   * @return 宿歌诀
+   */
+  public String getXiuSong(){
+    return LunarUtil.XIU_SONG.get(getXiu());
+  }
+
+  /**
    * 获取政
    *
    * @return 政
@@ -427,6 +532,8 @@ public class Lunar{
     Calendar c = Calendar.getInstance();
     c.set(SolarUtil.BASE_YEAR,SolarUtil.BASE_MONTH-1,SolarUtil.BASE_DAY);
     c.add(Calendar.DATE,dayOffset);
+    c.set(Calendar.HOUR_OF_DAY,hour);
+    c.set(Calendar.MINUTE,minute);
     return new Solar(c);
   }
 
@@ -677,7 +784,9 @@ public class Lunar{
     s.append(getDayInGanZhi());
     s.append("(");
     s.append(getDayShengXiao());
-    s.append(")日 纳音[");
+    s.append(")日 ");
+    s.append(getTimeZhi());
+    s.append("时 纳音[");
     s.append(getYearNaYin());
     s.append(" ");
     s.append(getMonthNaYin());

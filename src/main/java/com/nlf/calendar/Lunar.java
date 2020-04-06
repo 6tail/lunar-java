@@ -331,12 +331,30 @@ public class Lunar{
   }
 
   /**
+   * 获取星期，0代表周日，1代表周一
+   *
+   * @return 0123456
+   */
+  public int getWeek(){
+    return (dayOffset+LunarUtil.BASE_WEEK_INDEX)%7;
+  }
+
+  /**
+   * 获取星期的中文
+   *
+   * @return 日一二三四五六
+   */
+  public String getWeekInChinese(){
+    return SolarUtil.WEEK[getWeek()];
+  }
+
+  /**
    * 获取宿
    *
    * @return 宿
    */
   public String getXiu(){
-    return LunarUtil.XIU[day-1][Math.abs(month)-1];
+    return LunarUtil.XIU.get(getDayZhi()+getWeek());
   }
 
   /**
@@ -659,14 +677,14 @@ public class Lunar{
     s.append(getDayInGanZhi());
     s.append("(");
     s.append(getDayShengXiao());
-    s.append(")日");
-    s.append(" 纳音[");
+    s.append(")日 纳音[");
     s.append(getYearNaYin());
     s.append(" ");
     s.append(getMonthNaYin());
     s.append(" ");
     s.append(getDayNaYin());
-    s.append("]");
+    s.append("] 星期");
+    s.append(getWeekInChinese());
     for(String f:getFestivals()){
       s.append(" (");
       s.append(f);

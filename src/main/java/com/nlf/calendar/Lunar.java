@@ -777,6 +777,48 @@ public class Lunar{
     return LunarUtil.NAYIN.get(getTimeInGanZhi());
   }
 
+  /**
+   * 获取八字
+   * @return 八字
+   */
+  public String getBaZi(){
+    String dayGan = getDayGan();
+    int dayGanIndex = 1;
+    for(int i=0,j=LunarUtil.GAN.length;i<j;i++){
+      if(LunarUtil.GAN[i].equals(dayGan)){
+        dayGanIndex = i;
+        break;
+      }
+    }
+    dayGanIndex--;
+    dayGanIndex%=5;
+    String timeZhi = getTimeZhi();
+    int timeZhiIndex = 1;
+    for(int i=0,j=LunarUtil.ZHI.length;i<j;i++){
+      if(LunarUtil.ZHI[i].equals(timeZhi)){
+        timeZhiIndex = i;
+        break;
+      }
+    }
+    timeZhiIndex--;
+    String timeGan = LunarUtil.GAN[(dayGanIndex*12+timeZhiIndex)%10+1];
+    return getYearInGanZhi()+getMonthInGanZhi()+getDayInGanZhi()+timeGan+getTimeZhi();
+  }
+
+  /**
+   * 获取五行，根据八字推算
+   * @return 五行
+   */
+  public String getWuXing(){
+    StringBuilder s = new StringBuilder();
+    String baZi = getBaZi();
+    for(int i=0,j=baZi.length();i<j;i++){
+      String letter = baZi.substring(i,i+1);
+      s.append(i%2==0?LunarUtil.WU_XING_GAN.get(letter):LunarUtil.WU_XING_ZHI.get(letter));
+    }
+    return s.toString();
+  }
+
   public String toFullString(){
     StringBuilder s = new StringBuilder();
     s.append(toString());

@@ -553,7 +553,40 @@ public class LunarUtil{
       put("轸","蚓");
     }
   };
-
+  /** 天干五行 */
+  public static final Map<String,String> WU_XING_GAN = new HashMap<String, String>(){
+    private static final long serialVersionUID = -1;
+    {
+      put("甲","木");
+      put("乙","木");
+      put("丙","火");
+      put("丁","火");
+      put("戊","土");
+      put("己","土");
+      put("庚","金");
+      put("辛","金");
+      put("壬","水");
+      put("癸","水");
+    }
+  };
+  /** 地支五行 */
+  public static final Map<String,String> WU_XING_ZHI = new HashMap<String, String>(){
+    private static final long serialVersionUID = -1;
+    {
+      put("寅","木");
+      put("卯","木");
+      put("巳","火");
+      put("午","火");
+      put("辰","土");
+      put("丑","土");
+      put("戌","土");
+      put("未","土");
+      put("申","金");
+      put("酉","金");
+      put("亥","水");
+      put("子","水");
+    }
+  };
   /** 纳音 */
   public static final Map<String,String> NAYIN = new HashMap<String,String>(){
     private static final long serialVersionUID = -1;

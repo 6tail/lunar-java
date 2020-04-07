@@ -206,8 +206,8 @@ public class Lunar{
   }
 
   /**
-   * 获取干支纪年
-   * @return 年份的干支，如辛亥
+   * 获取干支纪年（年柱）
+   * @return 年份的干支（年柱），如辛亥
    */
   public String getYearInGanZhi(){
     return getYearGan()+getYearZhi();
@@ -328,8 +328,8 @@ public class Lunar{
   }
 
   /**
-   * 获取时辰干支
-   * @return 时辰干支
+   * 获取时辰干支（时柱）
+   * @return 时辰干支（时柱）
    */
   public String getTimeInGanZhi(){
     String zhi = getTimeZhi();
@@ -538,11 +538,11 @@ public class Lunar{
   }
 
   /**
-   * 获取干支纪月
+   * 获取干支纪月（月柱）
    * <p>月天干口诀：甲己丙寅首，乙庚戊寅头。丙辛从庚寅，丁壬壬寅求，戊癸甲寅居，周而复始流。</p>
    * <p>月地支：正月起寅</p>
    *
-   * @return 干支纪月，如己卯
+   * @return 干支纪月（月柱），如己卯
    */
   public String getMonthInGanZhi(){
     return getMonthGan()+getMonthZhi();
@@ -569,9 +569,9 @@ public class Lunar{
   }
 
   /**
-   * 获取干支纪日
+   * 获取干支纪日（日柱）
    *
-   * @return 干支纪日，如己卯
+   * @return 干支纪日（日柱），如己卯
    */
   public String getDayInGanZhi(){
     return getDayGan()+getDayZhi();
@@ -778,10 +778,11 @@ public class Lunar{
   }
 
   /**
-   * 获取八字
-   * @return 八字
+   * 获取八字，男性也称乾造，女性也称坤造
+   * @return 八字（男性也称乾造，女性也称坤造）
    */
-  public String getBaZi(){
+  public List<String> getBaZi(){
+    List<String> l = new ArrayList<String>(4);
     String dayGan = getDayGan();
     int dayGanIndex = 1;
     for(int i=0,j=LunarUtil.GAN.length;i<j;i++){
@@ -802,21 +803,72 @@ public class Lunar{
     }
     timeZhiIndex--;
     String timeGan = LunarUtil.GAN[(dayGanIndex*12+timeZhiIndex)%10+1];
-    return getYearInGanZhi()+getMonthInGanZhi()+getDayInGanZhi()+timeGan+getTimeZhi();
+    l.add(getYearInGanZhi());
+    l.add(getMonthInGanZhi());
+    l.add(getDayInGanZhi());
+    l.add(timeGan+getTimeZhi());
+    return l;
   }
 
   /**
-   * 获取五行，根据八字推算
-   * @return 五行
+   * 获取八字五行
+   * @return 八字五行
    */
-  public String getWuXing(){
-    StringBuilder s = new StringBuilder();
-    String baZi = getBaZi();
-    for(int i=0,j=baZi.length();i<j;i++){
-      String letter = baZi.substring(i,i+1);
-      s.append(i%2==0?LunarUtil.WU_XING_GAN.get(letter):LunarUtil.WU_XING_ZHI.get(letter));
+  public List<String> getBaZiWuXing(){
+    List<String> baZi = getBaZi();
+    List<String> l = new ArrayList<String>(baZi.size());
+    for(String ganZhi:baZi){
+      String gan = ganZhi.substring(0,1);
+      String zhi = ganZhi.substring(1);
+      l.add(LunarUtil.WU_XING_GAN.get(gan)+LunarUtil.WU_XING_ZHI.get(zhi));
     }
-    return s.toString();
+    return l;
+  }
+
+  /**
+   * 获取八字纳音
+   * @return 八字纳音
+   */
+  public List<String> getBaZiNaYin(){
+    List<String> baZi = getBaZi();
+    List<String> l = new ArrayList<String>(baZi.size());
+    for(String ganZhi:baZi){
+      l.add(LunarUtil.NAYIN.get(ganZhi));
+    }
+    return l;
+  }
+
+  /**
+   * 获取八字天干十神，日柱十神为日主，其余三柱根据天干十神表查询
+   * @return 八字天干十神
+   */
+  public List<String> getBaZiShiShenGan(){
+    List<String> baZi = getBaZi();
+    String yearGan = baZi.get(0).substring(0,1);
+    String monthGan = baZi.get(1).substring(0,1);
+    String dayGan = baZi.get(2).substring(0,1);
+    String timeGan = baZi.get(3).substring(0,1);
+    List<String> l = new ArrayList<String>(baZi.size());
+    l.add(LunarUtil.SHI_SHEN_GAN.get(dayGan+yearGan));
+    l.add(LunarUtil.SHI_SHEN_GAN.get(dayGan+monthGan));
+    l.add("日主");
+    l.add(LunarUtil.SHI_SHEN_GAN.get(dayGan+timeGan));
+    return l;
+  }
+
+  /**
+   * 获取八字地支十神，根据地支十神表查询
+   * @return 八字地支十神
+   */
+  public List<String> getBaZiShiShenZhi(){
+    List<String> baZi = getBaZi();
+    String dayGan = baZi.get(2).substring(0,1);
+    List<String> l = new ArrayList<String>(baZi.size());
+    for(String ganZhi:baZi){
+      String zhi = ganZhi.substring(1);
+      l.add(LunarUtil.SHI_SHEN_ZHI.get(dayGan+zhi+LunarUtil.ZHI_HIDE_GAN.get(zhi).get(0)));
+    }
+    return l;
   }
 
   public String toFullString(){
@@ -838,7 +890,7 @@ public class Lunar{
     s.append(getTimeZhi());
     s.append("(");
     s.append(getTimeShengXiao());
-    s.append(")时 纳音五行[");
+    s.append(")时 纳音[");
     s.append(getYearNaYin());
     s.append(" ");
     s.append(getMonthNaYin());

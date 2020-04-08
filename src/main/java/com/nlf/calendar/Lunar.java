@@ -553,7 +553,11 @@ public class Lunar{
    * @return 月天干，如己
    */
   public String getMonthGan(){
-    int m = Math.abs(month)-1;
+    int m = Math.abs(month);
+    int leapMonth = LunarUtil.getLeapMonth(year);
+    if(0==leapMonth||m<leapMonth||month==leapMonth){
+      m-=1;
+    }
     int yearGanIndex = (year-4)%10;
     int offset = (yearGanIndex%5+1)*2;
     return LunarUtil.GAN[(m+offset)%10+1];
@@ -564,7 +568,11 @@ public class Lunar{
    * @return 月地支，如卯
    */
   public String getMonthZhi(){
-    int m = Math.abs(month)-1;
+    int m = Math.abs(month);
+    int leapMonth = LunarUtil.getLeapMonth(year);
+    if(0==leapMonth||m<leapMonth||month==leapMonth){
+      m-=1;
+    }
     return LunarUtil.ZHI[(m+LunarUtil.BASE_MONTH_ZHI_INDEX)%12+1];
   }
 
@@ -869,6 +877,34 @@ public class Lunar{
       l.add(LunarUtil.SHI_SHEN_ZHI.get(dayGan+zhi+LunarUtil.ZHI_HIDE_GAN.get(zhi).get(0)));
     }
     return l;
+  }
+
+  /**
+   * 获取建除十二神，当月支与日支相同即为建，依次类推
+   * @return 十二神
+   */
+  public String getShiErShen(){
+    String monthZhi = getMonthZhi();
+    String dayZhi = getDayZhi();
+    int indexMonthZhi = 0;
+    int indexDayZhi = 0;
+    for(int i=0,j=LunarUtil.ZHI.length;i<j;i++){
+      String zhi = LunarUtil.ZHI[i];
+      if(zhi.equals(monthZhi)){
+        indexMonthZhi = i;
+      }
+      if(zhi.equals(dayZhi)){
+        indexDayZhi = i;
+      }
+      if(indexMonthZhi>0&&indexDayZhi>0){
+        break;
+      }
+    }
+    int add = indexDayZhi-indexMonthZhi;
+    if(add<0){
+      add = 12+add;
+    }
+    return LunarUtil.SHI_ER_SHEN[1+add];
   }
 
   public String toFullString(){

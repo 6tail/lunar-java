@@ -47,6 +47,8 @@ public class LunarUtil{
   public static final String[] POSITION_CAI = {"","艮","艮","坤","坤","坎","坎","震","震","离","离"};
   /** 地支 */
   public static final String[] ZHI = {"","子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"};
+  /** 建除十二神 */
+  public static final String[] SHI_ER_SHEN = {"","建","除","满","平","定","执","破","危","成","收","开","闭"};
   /** 彭祖百忌.天干 */
   public static final String[] PENGZU_GAN = {"","甲不开仓财物耗散","乙不栽植千株不长","丙不修灶必见灾殃","丁不剃头头必生疮","戊不受田田主不祥","己不破券二比并亡","庚不经络织机虚张","辛不合酱主人不尝","壬不泱水更难提防","癸不词讼理弱敌强"};
   /** 彭祖百忌.地支 */
@@ -1093,6 +1095,18 @@ public class LunarUtil{
       }
     }
     return diff;
+  }
+
+  /**
+   * 获取指定年份的闰月
+   * @param year 年份
+   * @return 闰月数字，1代表闰1月，0代表无闰月
+   */
+  public static int getLeapMonth(int year){
+    int index = year-BASE_YEAR+BASE_INDEX;
+    int v = LUNAR_MONTH[2*index+1];
+    v = (v>>4)&0x0F;
+    return v;
   }
 
   /**

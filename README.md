@@ -6,15 +6,7 @@ lunar是一款无第三方依赖的日历工具，支持公历和农历、星座
 
 [English](https://github.com/6tail/lunar-java/blob/master/README_EN.md)
 
-### 也许稳定版本
-
-```xml
-<dependency>
-  <groupId>cn.6tail</groupId>
-  <artifactId>lunar</artifactId>
-  <version>1.1.0</version>
-</dependency>
-```
+非快照版本存在月干支的重大错误不建议使用，请使用快照版本。
  
 ### 快照版本
 

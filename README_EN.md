@@ -6,15 +6,6 @@ lunar is a calendar library for Solar and Chinese Lunar.
 
 [简体中文](https://github.com/6tail/lunar-java/blob/master/README.md)
 
-### Pre Release
-
-```xml
-<dependency>
-  <groupId>cn.6tail</groupId>
-  <artifactId>lunar</artifactId>
-  <version>1.1.0</version>
-</dependency>
-```
  
 ### Snapshot
 

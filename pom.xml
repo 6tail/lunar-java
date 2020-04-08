@@ -7,10 +7,10 @@
     <groupId>cn.6tail</groupId>
     <artifactId>lunar</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.1.0</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <url>https://github.com/6tail/lunar-java</url>
-    <description>calendar util</description>
+    <description>a calendar library for Solar and Chinese Lunar</description>
     <licenses>
         <license>
             <name>The MIT License</name>
@@ -43,8 +43,17 @@
         </repository>
     </distributionManagement>
     <properties>
+        <encoding>UTF-8</encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <sourceEncoding>UTF-8</sourceEncoding>
+        <source-version>1.5</source-version>
+        <target-version>1.5</target-version>
+        <maven-compiler-plugin-version>3.3</maven-compiler-plugin-version>
+        <maven-surefire-plugin-version>2.5</maven-surefire-plugin-version>
+        <maven-javadoc-plugin-version>2.9</maven-javadoc-plugin-version>
+        <maven-source-plugin-version>2.4</maven-source-plugin-version>
+        <maven-release-plugin-version>2.2.2</maven-release-plugin-version>
+        <maven-gpg-plugin-version>1.6</maven-gpg-plugin-version>
     </properties>
 
     <dependencies>
@@ -66,16 +75,18 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.2.2</version>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin-version}</version>
                 <configuration>
-                    <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
+                    <source>${source-version}</source>
+                    <target>${target-version}</target>
+                    <encoding>${encoding}</encoding>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.5</version>
+                <version>${maven-surefire-plugin-version}</version>
                 <configuration>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
                     <skipTests>false</skipTests>
@@ -83,18 +94,8 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
-                <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9</version>
+                <version>${maven-javadoc-plugin-version}</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -110,7 +111,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.4</version>
+                <version>${maven-source-plugin-version}</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -122,8 +123,16 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${maven-release-plugin-version}</version>
+                <configuration>
+                    <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.6</version>
+                <version>${maven-gpg-plugin-version}</version>
                 <configuration>
                     <passphrase>${gpg.passphrase}</passphrase>
                 </configuration>
@@ -136,6 +145,16 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <finalName>${project.artifactId}-${project.version}</finalName>
+                    <descriptors>
+                        <descriptor>${basedir}/src/assembly/assembly.xml</descriptor>
+                    </descriptors>
+                </configuration>
             </plugin>
         </plugins>
         <finalName>${project.artifactId}-${project.version}</finalName>

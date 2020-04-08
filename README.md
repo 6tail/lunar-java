@@ -1,18 +1,18 @@
 # lunar [![License](https://img.shields.io/badge/license-MIT-4EB1BA.svg?style=flat-square)](https://github.com/6tail/lunar/blob/master/LICENSE)
 
-lunar是一个无依赖的支持阳历和阴历的日历工具库。
+lunar是一款无第三方依赖的日历工具，支持公历和农历、星座、干支、生肖、节气、节日、彭祖百忌、吉神方位、冲煞、纳音、星宿、八字、五行、十神等。
 
 > 支持java 1.5及以上版本。
 
 [English](https://github.com/6tail/lunar-java/blob/master/README_EN.md)
 
-### 稳定版本
+### 也许稳定版本
 
 ```xml
 <dependency>
   <groupId>cn.6tail</groupId>
   <artifactId>lunar</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
 </dependency>
 ```
  
@@ -34,7 +34,7 @@ lunar是一个无依赖的支持阳历和阴历的日历工具库。
 <dependency>
   <groupId>cn.6tail</groupId>
   <artifactId>lunar</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.1.0-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -42,7 +42,7 @@ lunar是一个无依赖的支持阳历和阴历的日历工具库。
 
 如果使用jar，建议下载最新的SNAPSHOT版本，bug将得到及时的修复。
 
-[Download](https://oss.sonatype.org/content/groups/public/cn/6tail/lunar/)
+[Download](https://github.com/6tail/lunar-java/releases)
 
 ## 示例
 

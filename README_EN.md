@@ -6,13 +6,13 @@ lunar is a calendar library for Solar and Chinese Lunar.
 
 [简体中文](https://github.com/6tail/lunar-java/blob/master/README.md)
 
-### Release
+### Pre Release
 
 ```xml
 <dependency>
   <groupId>cn.6tail</groupId>
   <artifactId>lunar</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
 </dependency>
 ```
  
@@ -34,7 +34,7 @@ lunar is a calendar library for Solar and Chinese Lunar.
 <dependency>
   <groupId>cn.6tail</groupId>
   <artifactId>lunar</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.1.0-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -42,7 +42,7 @@ lunar is a calendar library for Solar and Chinese Lunar.
 
 If you will use jars in your projects, I suggest you to download latest snapshot versions with less bugs.
 
-[Download](https://oss.sonatype.org/content/groups/public/cn/6tail/lunar/)
+[Download](https://github.com/6tail/lunar-java/releases)
 
 ## Example
 

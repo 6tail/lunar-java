@@ -47,8 +47,55 @@ public class LunarUtil{
   public static final String[] POSITION_CAI = {"","艮","艮","坤","坤","坎","坎","震","震","离","离"};
   /** 地支 */
   public static final String[] ZHI = {"","子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"};
-  /** 建除十二神 */
-  public static final String[] SHI_ER_SHEN = {"","建","除","满","平","定","执","破","危","成","收","开","闭"};
+  /** 十二值星 */
+  public static final String[] ZHI_XING = {"","建","除","满","平","定","执","破","危","成","收","开","闭"};
+  /** 十二天神 */
+  public static final String[] TIAN_SHEN = {"","青龙","明堂","天刑","朱雀","金匮","天德","白虎","玉堂","天牢","玄武","司命","勾陈"};
+  /** 月份地支对应天神偏移下标 */
+  public static final Map<String,Integer> MONTH_ZHI_TIAN_SHEN_OFFSET = new HashMap<String, Integer>(){
+    private static final long serialVersionUID = -1L;
+    {
+      put("子",4);
+      put("丑",2);
+      put("寅",0);
+      put("卯",10);
+      put("辰",8);
+      put("巳",6);
+      put("午",4);
+      put("未",2);
+      put("申",0);
+      put("酉",10);
+      put("戌",8);
+      put("亥",6);
+    }
+  };
+  /** 天神类型：黄道，黑道 */
+  public static final Map<String,String> TIAN_SHEN_TYPE = new HashMap<String, String>(){
+    private static final long serialVersionUID = -1L;
+    {
+      put("青龙","黄道");
+      put("明堂","黄道");
+      put("金贵","黄道");
+      put("天德","黄道");
+      put("玉堂","黄道");
+      put("司命","黄道");
+
+      put("天刑","黑道");
+      put("朱雀","黄道");
+      put("白虎","黄道");
+      put("天牢","黄道");
+      put("玄武","黄道");
+      put("勾陈","黄道");
+    }
+  };
+  /** 天神类型吉凶 */
+  public static final Map<String,String> TIAN_SHEN_TYPE_LUCK = new HashMap<String, String>(){
+    private static final long serialVersionUID = -1L;
+    {
+      put("黄道","吉");
+      put("黑道","凶");
+    }
+  };
   /** 彭祖百忌.天干 */
   public static final String[] PENGZU_GAN = {"","甲不开仓财物耗散","乙不栽植千株不长","丙不修灶必见灾殃","丁不剃头头必生疮","戊不受田田主不祥","己不破券二比并亡","庚不经络织机虚张","辛不合酱主人不尝","壬不泱水更难提防","癸不词讼理弱敌强"};
   /** 彭祖百忌.地支 */

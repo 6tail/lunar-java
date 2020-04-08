@@ -880,10 +880,10 @@ public class Lunar{
   }
 
   /**
-   * 获取建除十二神，当月支与日支相同即为建，依次类推
-   * @return 十二神
+   * 获取十二执星：建、除、满、平、定、执、破、危、成、收、开、闭。当月支与日支相同即为建，依次类推
+   * @return 执星
    */
-  public String getShiErShen(){
+  public String getZhiXing(){
     String monthZhi = getMonthZhi();
     String dayZhi = getDayZhi();
     int indexMonthZhi = 0;
@@ -904,7 +904,41 @@ public class Lunar{
     if(add<0){
       add = 12+add;
     }
-    return LunarUtil.SHI_ER_SHEN[1+add];
+    return LunarUtil.ZHI_XING[1+add];
+  }
+
+  /**
+   * 获取值日天神
+   * @return 值日天神
+   */
+  public String getDayTianShen(){
+    String monthZhi = getMonthZhi();
+    String dayZhi = getDayZhi();
+    int offset = LunarUtil.MONTH_ZHI_TIAN_SHEN_OFFSET.get(monthZhi);
+    int dayIndex = 0;
+    for(int i=0,j=LunarUtil.ZHI.length;i<j;i++){
+      if(LunarUtil.ZHI[i].equals(dayZhi)){
+        dayIndex = i;
+        break;
+      }
+    }
+    return LunarUtil.TIAN_SHEN[1+(dayIndex-1+offset)%12];
+  }
+
+  /**
+   * 获取值日天神类型：黄道/黑道
+   * @return 值日天神类型：黄道/黑道
+   */
+  public String getDayTianShenType(){
+    return LunarUtil.TIAN_SHEN_TYPE.get(getDayTianShen());
+  }
+
+  /**
+   * 获取值日天神吉凶
+   * @return 吉/凶
+   */
+  public String getDayTianShenLuck(){
+    return LunarUtil.TIAN_SHEN_TYPE_LUCK.get(getDayTianShenType());
   }
 
   public String toFullString(){

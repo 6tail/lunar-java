@@ -66,7 +66,7 @@ public class TimeTest {
       put("22:59","亥");
       put("21:30","亥");
 
-      put(null,null);
+      put(null,"子");
 
       put("","子");
       put("23:01:01","子");

@@ -402,39 +402,9 @@ public class LunarUtil{
     }
   };
   /** 地支相冲（子午相冲，丑未相冲，寅申相冲，辰戌相冲，卯酉相冲，巳亥相冲），由于地支对应十二生肖，也就对应了生肖相冲 */
-  public static final Map<String,String> CHONG = new HashMap<String,String>(){
-    private static final long serialVersionUID = -1;
-    {
-      put("子","午");
-      put("丑","未");
-      put("寅","申");
-      put("卯","酉");
-      put("辰","戌");
-      put("巳","亥");
-      put("午","子");
-      put("未","丑");
-      put("申","寅");
-      put("酉","卯");
-      put("戌","辰");
-      put("亥","巳");
-    }
-  };
+  public static final String[] CHONG = {"","午","未","申","酉","戌","亥","子","丑","寅","卯","辰","巳"};
   /** 天干相冲之无情之克（阳克阳，阴克阴） */
-  public static final Map<String,String> CHONG_GAN = new HashMap<String,String>(){
-    private static final long serialVersionUID = -1;
-    {
-      put("甲","戊");
-      put("乙","己");
-      put("丙","庚");
-      put("丁","辛");
-      put("戊","壬");
-      put("己","癸");
-      put("庚","甲");
-      put("辛","乙");
-      put("壬","丙");
-      put("癸","丁");
-    }
-  };
+  public static final String[] CHONG_GAN = {"","戊","己","庚","辛","壬","癸","甲","乙","丙","丁"};
   /** 天干四冲（无情之克中克得最严重的4个） */
   public static final Map<String,String> CHONG_GAN_BAD = new HashMap<String,String>(){
     private static final long serialVersionUID = -1;
@@ -446,21 +416,7 @@ public class LunarUtil{
     }
   };
   /** 天干相冲之有情之克（阳克阴，阴克阳） */
-  public static final Map<String,String> CHONG_GAN_TIE = new HashMap<String,String>(){
-    private static final long serialVersionUID = -1;
-    {
-      put("甲","己");
-      put("乙","戊");
-      put("丙","辛");
-      put("丁","庚");
-      put("戊","癸");
-      put("己","壬");
-      put("庚","乙");
-      put("辛","甲");
-      put("壬","丁");
-      put("癸","丙");
-    }
-  };
+  public static final String[] CHONG_GAN_TIE = {"","己","戊","辛","庚","癸","壬","乙","甲","丁","丙"};
   /** 天干五合（有情之克中最有情的5个） */
   public static final Map<String,String> CHONG_GAN_TIE_GOOD = new HashMap<String,String>(){
     private static final long serialVersionUID = -1;
@@ -1223,24 +1179,33 @@ public class LunarUtil{
   }
 
   /**
-   * 将HH:mm时刻转换为时辰（地支），非法的时刻返回子，null返回null
+   * 获取HH:mm时刻的地支序号，非法的时刻返回0
    * @param hm HH:mm时刻
-   * @return 时辰(地支)，如子
+   * @return 地支序号，0到11
    */
-  public static String convertTime(String hm){
+  public static int getTimeZhiIndex(String hm){
     if(null==hm){
-      return null;
+      return 0;
     }
     if(hm.length()>5){
       hm = hm.substring(0,5);
     }
-    int x = 2;
+    int x = 1;
     for(int i=1;i<22;i+=2){
       if(hm.compareTo((i<10?"0":"")+i+":00")>=0&&hm.compareTo((i+1<10?"0":"")+(i+1)+":59")<=0){
-        return ZHI[x];
+        return x;
       }
       x++;
     }
-    return ZHI[1];
+    return 0;
+  }
+
+  /**
+   * 将HH:mm时刻转换为时辰（地支），非法的时刻返回子
+   * @param hm HH:mm时刻
+   * @return 时辰(地支)，如子
+   */
+  public static String convertTime(String hm){
+    return ZHI[getTimeZhiIndex(hm)+1];
   }
 }

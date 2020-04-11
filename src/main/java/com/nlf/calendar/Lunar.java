@@ -24,10 +24,24 @@ public class Lunar{
   private Solar solar;
   /** 相对于基准日的偏移天数 */
   private int dayOffset;
-  /** 日对应的天干下标，0-10 */
+  /** 时对应的天干下标，0-9 */
+  private int timeGanIndex;
+  /** 时对应的地支下标，0-11 */
+  private int timeZhiIndex;
+  /** 日对应的天干下标，0-9 */
   private int dayGanIndex;
-  /** 日对应的地支下标，0-12 */
+  /** 日对应的地支下标，0-11 */
   private int dayZhiIndex;
+  /** 月对应的天干下标，0-9 */
+  private int monthGanIndex;
+  /** 月对应的地支下标，0-11 */
+  private int monthZhiIndex;
+  /** 年对应的天干下标，0-9 */
+  private int yearGanIndex;
+  /** 年对应的地支下标，0-11 */
+  private int yearZhiIndex;
+  /** 周下标，0-6 */
+  private int weekIndex;
   /** 阳历小时 */
   private int hour;
   /** 阳历分钟 */
@@ -66,10 +80,7 @@ public class Lunar{
     this.day = lunarDay;
     this.hour = hour;
     this.minute = minute;
-    this.dayOffset = LunarUtil.computeAddDays(year,month,day);
-    int addDays = (dayOffset + LunarUtil.BASE_DAY_GANZHI_INDEX)%60;
-    dayGanIndex = addDays%10;
-    dayZhiIndex = addDays%12;
+    compute();
     this.solar = toSolar();
   }
 
@@ -125,10 +136,30 @@ public class Lunar{
     day = lunarDay;
     hour = solar.getHour();
     minute = solar.getMinute();
+    compute();
+  }
+
+  private void compute(){
+    yearGanIndex = (year-4)%10;
+    yearZhiIndex = (year-4)%12;
+
+    int m = Math.abs(month);
+    int leapMonth = LunarUtil.getLeapMonth(year);
+    if(0==leapMonth||m<leapMonth||month==leapMonth){
+      m-=1;
+    }
+    monthGanIndex = (m+(yearGanIndex%5+1)*2)%10;
+    monthZhiIndex = (m+LunarUtil.BASE_MONTH_ZHI_INDEX)%12;
+
     dayOffset = LunarUtil.computeAddDays(year,month,day);
     int addDays = (dayOffset + LunarUtil.BASE_DAY_GANZHI_INDEX)%60;
     dayGanIndex = addDays%10;
     dayZhiIndex = addDays%12;
+
+    timeZhiIndex = LunarUtil.getTimeZhiIndex((hour<10?"0":"")+hour+":"+(minute<10?"0":"")+minute);
+    timeGanIndex = timeZhiIndex%10;
+
+    weekIndex = (dayOffset+LunarUtil.BASE_WEEK_INDEX)%7;
   }
 
   /**
@@ -174,7 +205,7 @@ public class Lunar{
    * @deprecated 使用getYearGan
    */
   public String getGan(){
-    return LunarUtil.GAN[(year-4)%10+1];
+    return getYearGan();
   }
 
   /**
@@ -183,7 +214,7 @@ public class Lunar{
    * @return 天干，如辛
    */
   public String getYearGan(){
-    return LunarUtil.GAN[(year-4)%10+1];
+    return LunarUtil.GAN[yearGanIndex+1];
   }
 
   /**
@@ -193,7 +224,7 @@ public class Lunar{
    * @deprecated 使用getYearZhi
    */
   public String getZhi(){
-    return LunarUtil.ZHI[(year-4)%12+1];
+    return getYearZhi();
   }
 
   /**
@@ -202,7 +233,7 @@ public class Lunar{
    * @return 地支，如亥
    */
   public String getYearZhi(){
-    return LunarUtil.ZHI[(year-4)%12+1];
+    return LunarUtil.ZHI[yearZhiIndex+1];
   }
 
   /**
@@ -220,7 +251,7 @@ public class Lunar{
    * @deprecated 使用getYearShengXiao
    */
   public String getShengxiao(){
-    return LunarUtil.SHENGXIAO[(year-4)%12+1];
+    return getYearShengXiao();
   }
 
   /**
@@ -229,7 +260,7 @@ public class Lunar{
    * @return 年生肖，如虎
    */
   public String getYearShengXiao(){
-    return LunarUtil.SHENGXIAO[(year-4)%12+1];
+    return LunarUtil.SHENGXIAO[yearZhiIndex+1];
   }
 
   /**
@@ -238,13 +269,7 @@ public class Lunar{
    * @return 月生肖，如虎
    */
   public String getMonthShengXiao(){
-    String zhi = getMonthZhi();
-    for(int i=0,j=LunarUtil.ZHI.length;i<j;i++){
-      if(LunarUtil.ZHI[i].equals(zhi)){
-        return LunarUtil.SHENGXIAO[i];
-      }
-    }
-    return "";
+    return LunarUtil.SHENGXIAO[monthZhiIndex+1];
   }
 
   /**
@@ -253,13 +278,7 @@ public class Lunar{
    * @return 日生肖，如虎
    */
   public String getDayShengXiao(){
-    String zhi = getDayZhi();
-    for(int i=0,j=LunarUtil.ZHI.length;i<j;i++){
-      if(LunarUtil.ZHI[i].equals(zhi)){
-        return LunarUtil.SHENGXIAO[i];
-      }
-    }
-    return "";
+    return LunarUtil.SHENGXIAO[dayZhiIndex+1];
   }
 
   /**
@@ -268,13 +287,7 @@ public class Lunar{
    * @return 时辰生肖，如虎
    */
   public String getTimeShengXiao(){
-    String zhi = getTimeZhi();
-    for(int i=0,j=LunarUtil.ZHI.length;i<j;i++){
-      if(LunarUtil.ZHI[i].equals(zhi)){
-        return LunarUtil.SHENGXIAO[i];
-      }
-    }
-    return "";
+    return LunarUtil.SHENGXIAO[timeZhiIndex+1];
   }
 
   /**
@@ -294,59 +307,10 @@ public class Lunar{
   /**
    * 获取中文的月
    *
-   * @return 中文月，如正月
+   * @return 中文月，如正
    */
   public String getMonthInChinese(){
-    if(month>0){
-      return LunarUtil.MONTH[month];
-    }else{
-      return "闰"+LunarUtil.MONTH[-month];
-    }
-  }
-
-  /**
-   * 获取时辰（地支）
-   * @return 时辰（地支）
-   */
-  public String getTimeZhi(){
-    String time = (hour<10?"0":"")+hour+":"+(minute<10?"0":"")+minute;
-    return LunarUtil.convertTime(time);
-  }
-
-  /**
-   * 获取时辰（天干）
-   * @return 时辰（天干）
-   */
-  public String getTimeGan(){
-    String zhi = getTimeZhi();
-    for(int i=1,j=LunarUtil.ZHI.length;i<j;i++){
-      if(LunarUtil.ZHI[i].equals(zhi)){
-        return LunarUtil.GAN[1+(i-1)%10];
-      }
-    }
-    return null;
-  }
-
-  /**
-   * 获取时辰干支（时柱）
-   * @return 时辰干支（时柱）
-   */
-  public String getTimeInGanZhi(){
-    String zhi = getTimeZhi();
-    for(int i=1,j=LunarUtil.ZHI.length;i<j;i++){
-      if(LunarUtil.ZHI[i].equals(zhi)){
-        return LunarUtil.GAN[1+(i-1)%10]+zhi;
-      }
-    }
-    return zhi;
-  }
-
-  /**
-   * 获取季节
-   * @return 农历季节
-   */
-  public String getSeason(){
-    return LunarUtil.SEASON[Math.abs(month)];
+    return (month<0?"闰":"")+LunarUtil.MONTH[Math.abs(month)];
   }
 
   /**
@@ -356,6 +320,38 @@ public class Lunar{
    */
   public String getDayInChinese(){
     return LunarUtil.DAY[day];
+  }
+
+  /**
+   * 获取时辰（地支）
+   * @return 时辰（地支）
+   */
+  public String getTimeZhi(){
+    return LunarUtil.ZHI[timeZhiIndex+1];
+  }
+
+  /**
+   * 获取时辰（天干）
+   * @return 时辰（天干）
+   */
+  public String getTimeGan(){
+    return LunarUtil.GAN[timeGanIndex+1];
+  }
+
+  /**
+   * 获取时辰干支（时柱）
+   * @return 时辰干支（时柱）
+   */
+  public String getTimeInGanZhi(){
+    return getTimeGan()+getTimeZhi();
+  }
+
+  /**
+   * 获取季节
+   * @return 农历季节
+   */
+  public String getSeason(){
+    return LunarUtil.SEASON[Math.abs(month)];
   }
 
   /**
@@ -423,7 +419,7 @@ public class Lunar{
    * @return 0123456
    */
   public int getWeek(){
-    return (dayOffset+LunarUtil.BASE_WEEK_INDEX)%7;
+    return weekIndex;
   }
 
   /**
@@ -530,10 +526,8 @@ public class Lunar{
    */
   private Solar toSolar(){
     Calendar c = Calendar.getInstance();
-    c.set(SolarUtil.BASE_YEAR,SolarUtil.BASE_MONTH-1,SolarUtil.BASE_DAY);
+    c.set(SolarUtil.BASE_YEAR,SolarUtil.BASE_MONTH-1,SolarUtil.BASE_DAY,hour,minute);
     c.add(Calendar.DATE,dayOffset);
-    c.set(Calendar.HOUR_OF_DAY,hour);
-    c.set(Calendar.MINUTE,minute);
     return new Solar(c);
   }
 
@@ -553,14 +547,7 @@ public class Lunar{
    * @return 月天干，如己
    */
   public String getMonthGan(){
-    int m = Math.abs(month);
-    int leapMonth = LunarUtil.getLeapMonth(year);
-    if(0==leapMonth||m<leapMonth||month==leapMonth){
-      m-=1;
-    }
-    int yearGanIndex = (year-4)%10;
-    int offset = (yearGanIndex%5+1)*2;
-    return LunarUtil.GAN[(m+offset)%10+1];
+    return LunarUtil.GAN[monthGanIndex+1];
   }
 
   /**
@@ -568,12 +555,7 @@ public class Lunar{
    * @return 月地支，如卯
    */
   public String getMonthZhi(){
-    int m = Math.abs(month);
-    int leapMonth = LunarUtil.getLeapMonth(year);
-    if(0==leapMonth||m<leapMonth||month==leapMonth){
-      m-=1;
-    }
-    return LunarUtil.ZHI[(m+LunarUtil.BASE_MONTH_ZHI_INDEX)%12+1];
+    return LunarUtil.ZHI[monthZhiIndex+1];
   }
 
   /**
@@ -704,7 +686,7 @@ public class Lunar{
    * @return 冲，如申
    */
   public String getChong(){
-    return LunarUtil.CHONG.get(getDayZhi());
+    return LunarUtil.CHONG[dayZhiIndex+1];
   }
 
   /**
@@ -712,7 +694,7 @@ public class Lunar{
    * @return 无情之克的冲天干，如甲
    */
   public String getChongGan(){
-    return LunarUtil.CHONG_GAN.get(getDayGan());
+    return LunarUtil.CHONG_GAN[dayGanIndex+1];
   }
 
   /**
@@ -720,7 +702,7 @@ public class Lunar{
    * @return 有情之克的冲天干，如甲
    */
   public String getChongGanTie(){
-    return LunarUtil.CHONG_GAN_TIE.get(getDayGan());
+    return LunarUtil.CHONG_GAN_TIE[dayGanIndex+1];
   }
 
   /**
@@ -791,26 +773,7 @@ public class Lunar{
    */
   public List<String> getBaZi(){
     List<String> l = new ArrayList<String>(4);
-    String dayGan = getDayGan();
-    int dayGanIndex = 1;
-    for(int i=0,j=LunarUtil.GAN.length;i<j;i++){
-      if(LunarUtil.GAN[i].equals(dayGan)){
-        dayGanIndex = i;
-        break;
-      }
-    }
-    dayGanIndex--;
-    dayGanIndex%=5;
-    String timeZhi = getTimeZhi();
-    int timeZhiIndex = 1;
-    for(int i=0,j=LunarUtil.ZHI.length;i<j;i++){
-      if(LunarUtil.ZHI[i].equals(timeZhi)){
-        timeZhiIndex = i;
-        break;
-      }
-    }
-    timeZhiIndex--;
-    String timeGan = LunarUtil.GAN[(dayGanIndex*12+timeZhiIndex)%10+1];
+    String timeGan = LunarUtil.GAN[(dayGanIndex%5*12+timeZhiIndex)%10+1];
     l.add(getYearInGanZhi());
     l.add(getMonthInGanZhi());
     l.add(getDayInGanZhi());
@@ -884,27 +847,11 @@ public class Lunar{
    * @return 执星
    */
   public String getZhiXing(){
-    String monthZhi = getMonthZhi();
-    String dayZhi = getDayZhi();
-    int indexMonthZhi = 0;
-    int indexDayZhi = 0;
-    for(int i=0,j=LunarUtil.ZHI.length;i<j;i++){
-      String zhi = LunarUtil.ZHI[i];
-      if(zhi.equals(monthZhi)){
-        indexMonthZhi = i;
-      }
-      if(zhi.equals(dayZhi)){
-        indexDayZhi = i;
-      }
-      if(indexMonthZhi>0&&indexDayZhi>0){
-        break;
-      }
+    int offset = dayZhiIndex-monthZhiIndex;
+    if(offset<0){
+      offset += 12;
     }
-    int add = indexDayZhi-indexMonthZhi;
-    if(add<0){
-      add = 12+add;
-    }
-    return LunarUtil.ZHI_XING[1+add];
+    return LunarUtil.ZHI_XING[offset+1];
   }
 
   /**
@@ -913,16 +860,8 @@ public class Lunar{
    */
   public String getDayTianShen(){
     String monthZhi = getMonthZhi();
-    String dayZhi = getDayZhi();
     int offset = LunarUtil.MONTH_ZHI_TIAN_SHEN_OFFSET.get(monthZhi);
-    int dayIndex = 0;
-    for(int i=0,j=LunarUtil.ZHI.length;i<j;i++){
-      if(LunarUtil.ZHI[i].equals(dayZhi)){
-        dayIndex = i;
-        break;
-      }
-    }
-    return LunarUtil.TIAN_SHEN[1+(dayIndex-1+offset)%12];
+    return LunarUtil.TIAN_SHEN[(dayZhiIndex+offset)%12+1];
   }
 
   /**
@@ -946,11 +885,11 @@ public class Lunar{
    * @return 逐日胎神方位
    */
   public String getDayPositionTai(){
-    int ten = dayGanIndex-dayZhiIndex;
-    if(ten<0){
-      ten = ten+12;
+    int offset = dayGanIndex-dayZhiIndex;
+    if(offset<0){
+      offset += 12;
     }
-    return LunarUtil.POSITION_TAI_DAY[ten*5+dayGanIndex];
+    return LunarUtil.POSITION_TAI_DAY[offset*5+dayGanIndex];
   }
 
   /**
@@ -1023,33 +962,27 @@ public class Lunar{
     s.append(getPengZuGan());
     s.append(" ");
     s.append(getPengZuZhi());
-    s.append("]");
-    s.append(" 喜神方位[");
+    s.append("] 喜神方位[");
     s.append(getPositionXi());
     s.append("](");
     s.append(getPositionXiDesc());
-    s.append(")");
-    s.append(" 阳贵神方位[");
+    s.append(") 阳贵神方位[");
     s.append(getPositionYangGui());
     s.append("](");
     s.append(getPositionYangGuiDesc());
-    s.append(")");
-    s.append(" 阴贵神方位[");
+    s.append(") 阴贵神方位[");
     s.append(getPositionYinGui());
     s.append("](");
     s.append(getPositionYinGuiDesc());
-    s.append(")");
-    s.append(" 福神方位[");
+    s.append(") 福神方位[");
     s.append(getPositionFu());
     s.append("](");
     s.append(getPositionFuDesc());
-    s.append(")");
-    s.append(" 财神方位[");
+    s.append(") 财神方位[");
     s.append(getPositionCai());
     s.append("](");
     s.append(getPositionCaiDesc());
-    s.append(")");
-    s.append(" 冲[");
+    s.append(") 冲[");
     s.append(getChongDesc());
     s.append("] 煞[");
     s.append(getSha());

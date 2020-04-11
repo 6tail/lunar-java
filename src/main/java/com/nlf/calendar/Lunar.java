@@ -941,6 +941,29 @@ public class Lunar{
     return LunarUtil.TIAN_SHEN_TYPE_LUCK.get(getDayTianShenType());
   }
 
+  /**
+   * 获取逐日胎神方位
+   * @return 逐日胎神方位
+   */
+  public String getDayPositionTai(){
+    int ten = dayGanIndex-dayZhiIndex;
+    if(ten<0){
+      ten = ten+12;
+    }
+    return LunarUtil.POSITION_TAI_DAY[ten*5+dayGanIndex];
+  }
+
+  /**
+   * 获取逐月胎神方位，闰月无
+   * @return 逐月胎神方位
+   */
+  public String getMonthPositionTai(){
+    if(month<0){
+      return "";
+    }
+    return LunarUtil.POSITION_TAI_MONTH[month-1];
+  }
+
   public String toFullString(){
     StringBuilder s = new StringBuilder();
     s.append(toString());

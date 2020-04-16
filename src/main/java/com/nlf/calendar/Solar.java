@@ -390,7 +390,7 @@ public class Solar{
    */
   public Solar next(int days){
     Calendar c = Calendar.getInstance();
-    c.set(year,month-1,day);
+    c.set(year,month-1,day,hour,minute,0);
     c.add(Calendar.DATE,days);
     return new Solar(c);
   }

@@ -13,6 +13,8 @@ import com.nlf.calendar.util.SolarUtil;
  *
  */
 public class Solar{
+  /** 2000年儒略日数(2000-1-1 12:00:00 UTC) */
+  public static final double J2000 = 2451545;
   /** 年 */
   private int year;
   /** 月 */
@@ -23,6 +25,8 @@ public class Solar{
   private int hour;
   /** 分 */
   private int minute;
+  /** 秒 */
+  private int second;
   /** 日历 */
   private Calendar calendar;
 
@@ -41,15 +45,7 @@ public class Solar{
    * @param day 日，1到31
    */
   public Solar(int year,int month,int day){
-    calendar = Calendar.getInstance();
-    calendar.set(year,month-1,day);
-    calendar.set(Calendar.HOUR_OF_DAY,0);
-    calendar.set(Calendar.MINUTE,0);
-    this.year = year;
-    this.month = month;
-    this.day = day;
-    this.hour = 0;
-    this.minute = 0;
+    this(year,month,day,0,0,0);
   }
 
   /**
@@ -60,15 +56,17 @@ public class Solar{
    * @param day 日，1到31
    * @param hour 小时，0到23
    * @param minute 分钟，0到59
+   * @param second 秒钟，0到59
    */
-  public Solar(int year,int month,int day,int hour,int minute){
+  public Solar(int year,int month,int day,int hour,int minute,int second){
     calendar = Calendar.getInstance();
-    calendar.set(year,month-1,day,hour,minute);
+    calendar.set(year,month-1,day,hour,minute,second);
     this.year = year;
     this.month = month;
     this.day = day;
     this.hour = hour;
     this.minute = minute;
+    this.second = second;
   }
 
   /**
@@ -84,6 +82,7 @@ public class Solar{
     day = calendar.get(Calendar.DATE);
     hour = calendar.get(Calendar.HOUR_OF_DAY);
     minute = calendar.get(Calendar.MINUTE);
+    second = calendar.get(Calendar.SECOND);
   }
 
   /**
@@ -98,6 +97,63 @@ public class Solar{
     day = calendar.get(Calendar.DATE);
     hour = calendar.get(Calendar.HOUR_OF_DAY);
     minute = calendar.get(Calendar.MINUTE);
+    second = calendar.get(Calendar.SECOND);
+  }
+
+  /**
+   * 通过儒略日初始化
+   * @param julianDay 儒略日
+   */
+  public Solar(double julianDay){
+    julianDay += 0.5;
+
+    // 日数的整数部份
+    double a = int2(julianDay);
+    // 日数的小数部分
+    double f = julianDay - a;
+    double D;
+
+    if (a > 2299161) {
+      D = int2((a - 1867216.25) / 36524.25);
+      a += 1 + D - int2(D / 4);
+    }
+    // 向前移4年零2个月
+    a += 1524;
+    double y = int2((a - 122.1) / 365.25);
+    // 去除整年日数后余下日数
+    D = a - int2(365.25 * y);
+    double m = (int)int2(D / 30.6001);
+    // 去除整月日数后余下日数
+    double d = (int)int2(D - int2(m * 30.6001));
+    y -= 4716;
+    m--;
+    if (m > 12) {
+      m -= 12;
+    }
+    if (m <= 2) {
+      y++;
+    }
+
+    // 日的小数转为时分秒
+    f *= 24;
+    double h = (int)int2(f);
+
+    f -= h;
+    f *= 60;
+    double mi = int2(f);
+
+    f -= mi;
+    f *= 60;
+    double s = int2(f);
+
+    calendar = Calendar.getInstance();
+    calendar.set((int)y,(int)m-1,(int)d,(int)h,(int)mi,(int)s);
+    year = calendar.get(Calendar.YEAR);
+    month = calendar.get(Calendar.MONTH)+1;
+    day = calendar.get(Calendar.DATE);
+    hour = calendar.get(Calendar.HOUR_OF_DAY);
+    minute = calendar.get(Calendar.MINUTE);
+    second = calendar.get(Calendar.SECOND);
   }
 
   /**
@@ -121,6 +177,16 @@ public class Solar{
   }
 
   /**
+   * 通过指定儒略日获取阳历
+   *
+   * @param julianDay 儒略日
+   * @return 阳历
+   */
+  public static Solar fromJulianDay(double julianDay){
+    return new Solar(julianDay);
+  }
+
+  /**
    * 通过指定年月日获取阳历
    *
    * @param year 年
@@ -140,10 +206,11 @@ public class Solar{
    * @param day 日，1到31
    * @param hour 小时，0到23
    * @param minute 分钟，0到59
+   * @param second 秒钟，0到59
    * @return 阳历
    */
-  public static Solar fromYmdHm(int year,int month,int day,int hour,int minute){
-    return new Solar(year,month,day,hour,minute);
+  public static Solar fromYmdHms(int year,int month,int day,int hour,int minute,int second){
+    return new Solar(year,month,day,hour,minute,second);
   }
 
   /**
@@ -222,32 +289,7 @@ public class Solar{
    * @deprecated 使用getXingZuo
    */
   public String getXingzuo(){
-    int index = 11,m = month,d = day;
-    int y = m*100+d;
-    if(y>=321&&y<=419){
-      index = 0;
-    }else if(y>=420&&y<=520){
-      index = 1;
-    }else if(y>=521&&y<=620){
-      index = 2;
-    }else if(y>=621&&y<=722){
-      index = 3;
-    }else if(y>=723&&y<=822){
-      index = 4;
-    }else if(y>=823&&y<=922){
-      index = 5;
-    }else if(y>=923&&y<=1022){
-      index = 6;
-    }else if(y>=1023&&y<=1121){
-      index = 7;
-    }else if(y>=1122&&y<=1221){
-      index = 8;
-    }else if(y>=1222||y<=119){
-      index = 9;
-    }else if(y<=218){
-      index = 10;
-    }
-    return SolarUtil.XINGZUO[index];
+    return getXingZuo();
   }
 
   /**
@@ -330,11 +372,54 @@ public class Solar{
   }
 
   /**
+   * 获取秒钟
+   *
+   * @return 0到59之间的数字
+   */
+  public int getSecond(){
+    return second;
+  }
+
+  /**
    * 获取农历
    * @return 农历
    */
   public Lunar getLunar(){
     return new Lunar(calendar.getTime());
+  }
+
+  private double int2(double v){
+    v = Math.floor(v);
+    return v<0?v+1:v;
+  }
+
+  /**
+   * 获取儒略日
+   * @return 儒略日
+   */
+  public double getJulianDay(){
+    double y = this.year;
+    double m = this.month;
+    double n = 0;
+
+    if (m <= 2) {
+      m += 12;
+      y--;
+    }
+
+    // 判断是否为UTC日1582*372+10*31+15
+    if (this.year * 372 + this.month * 31 + this.day >= 588829) {
+      n = int2(y / 100);
+      // 加百年闰
+      n = 2 - n + int2(n / 4);
+    }
+
+    // 加上年引起的偏移日数
+    n += int2(365.2500001 * (y + 4716));
+    // 加上月引起的偏移日数及日偏移数
+    n += int2(30.6 * (m + 1)) + this.day;
+    n += ((this.second *1D / 60 + this.minute) / 60 + this.hour) / 24 - 1524.5;
+    return n;
   }
 
   /**
@@ -348,18 +433,20 @@ public class Solar{
 
   @Override
   public String toString(){
+    return toYmd();
+  }
+
+  public String toYmd(){
     return year+"-"+(month<10?"0":"")+month+"-"+(day<10?"0":"")+day;
+  }
+
+  public String toYmdhms(){
+    return toYmd()+" "+(hour<10?"0":"")+hour+":"+(minute<10?"0":"")+minute+":"+(second<10?"0":"")+second;
   }
 
   public String toFullString(){
     StringBuilder s = new StringBuilder();
-    s.append(toString());
-    s.append(" ");
-    s.append(hour<10?"0":"");
-    s.append(hour);
-    s.append(":");
-    s.append(minute<10?"0":"");
-    s.append(minute);
+    s.append(toYmdhms());
     if(isLeapYear()){
       s.append(" ");
       s.append("闰年");
@@ -390,7 +477,7 @@ public class Solar{
    */
   public Solar next(int days){
     Calendar c = Calendar.getInstance();
-    c.set(year,month-1,day,hour,minute,0);
+    c.set(year,month-1,day,hour,minute,second);
     c.add(Calendar.DATE,days);
     return new Solar(c);
   }

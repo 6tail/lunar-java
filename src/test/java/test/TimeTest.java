@@ -211,7 +211,7 @@ public class TimeTest {
         hour = Integer.parseInt(hm.substring(0,2),10);
         minute = Integer.parseInt(hm.substring(3,5),10);
       }
-      Lunar lunar = Lunar.fromYmdHm(2020,1,1,hour,minute);
+      Lunar lunar = Lunar.fromYmdHms(2020,1,1,hour,minute,0);
       String ganZhi = entry.getValue();
       Assert.assertEquals(hm, ganZhi, lunar.getTimeInGanZhi());
     }
@@ -225,7 +225,7 @@ public class TimeTest {
         hour = Integer.parseInt(hm.substring(0,2),10);
         minute = Integer.parseInt(hm.substring(3,5),10);
       }
-      Lunar lunar = Lunar.fromYmdHm(2020,1,1,hour,minute);
+      Lunar lunar = Lunar.fromYmdHms(2020,1,1,hour,minute,0);
       String gan = entry.getValue();
       Assert.assertEquals(hm, gan, lunar.getTimeGan());
     }

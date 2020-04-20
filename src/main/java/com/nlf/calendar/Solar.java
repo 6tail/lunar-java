@@ -440,13 +440,13 @@ public class Solar{
     return year+"-"+(month<10?"0":"")+month+"-"+(day<10?"0":"")+day;
   }
 
-  public String toYmdhms(){
+  public String toYmdHms(){
     return toYmd()+" "+(hour<10?"0":"")+hour+":"+(minute<10?"0":"")+minute+":"+(second<10?"0":"")+second;
   }
 
   public String toFullString(){
     StringBuilder s = new StringBuilder();
-    s.append(toYmdhms());
+    s.append(toYmdHms());
     if(isLeapYear()){
       s.append(" ");
       s.append("闰年");

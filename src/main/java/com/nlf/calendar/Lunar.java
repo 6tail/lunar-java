@@ -231,7 +231,7 @@ public class Lunar{
         }
       }
       //立春交接时刻判断
-      if(solar.toYmdhms().compareTo(liChun.toYmdhms())<0) {
+      if(solar.toYmdHms().compareTo(liChun.toYmdHms())<0) {
         gExact--;
         if(gExact<0){
           gExact += 10;
@@ -284,9 +284,9 @@ public class Lunar{
     int indexExact = -2;
     for(String jie:LunarUtil.JIE){
       end = jieQi.get(jie);
-      String time = solar.toYmdhms();
-      String stime = null==start?time:start.toYmdhms();
-      String etime = end.toYmdhms();
+      String time = solar.toYmdHms();
+      String stime = null==start?time:start.toYmdHms();
+      String etime = end.toYmdHms();
       if(time.compareTo(stime)>=0&&time.compareTo(etime)<0){
         break;
       }

@@ -104,7 +104,7 @@ public class Lunar{
    *
    * @param lunarYear 年（农历）
    * @param lunarMonth 月（农历），1到12，闰月为负，即闰2月=-2
-   * @param lunarDay 日（农历），1到31
+   * @param lunarDay 日（农历），1到30
    */
   public Lunar(int lunarYear,int lunarMonth,int lunarDay){
     this(lunarYear,lunarMonth,lunarDay,0,0,0);
@@ -115,12 +115,31 @@ public class Lunar{
    *
    * @param lunarYear 年（农历）
    * @param lunarMonth 月（农历），1到12，闰月为负，即闰2月=-2
-   * @param lunarDay 日（农历），1到31
+   * @param lunarDay 日（农历），1到30
    * @param hour 小时（阳历）
    * @param minute 分钟（阳历）
    * @param second 秒钟（阳历）
    */
   public Lunar(int lunarYear,int lunarMonth,int lunarDay,int hour,int minute,int second){
+    int m = Math.abs(lunarMonth);
+    if(m<1||m>12){
+      throw new IllegalArgumentException("lunar month must between 1 and 12, or negative");
+    }
+    if(lunarMonth<0){
+      int leapMonth = LunarUtil.getLeapMonth(lunarYear);
+      if(leapMonth==0){
+        throw new IllegalArgumentException(String.format("no leap month in lunar year %d",lunarYear));
+      }else if(leapMonth!=m){
+        throw new IllegalArgumentException(String.format("leap month is %d in lunar year %d",leapMonth,lunarYear));
+      }
+    }
+    if(lunarDay<1||lunarDay>30){
+      throw new IllegalArgumentException("lunar day must between 1 and 30");
+    }
+    int days = LunarUtil.getDaysOfMonth(lunarYear,lunarMonth);
+    if(lunarDay>days){
+      throw new IllegalArgumentException(String.format("only %d days in lunar year %d month %d",days,lunarYear,lunarMonth));
+    }
     this.year = lunarYear;
     this.month = lunarMonth;
     this.day = lunarDay;

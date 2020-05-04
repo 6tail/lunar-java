@@ -148,6 +148,9 @@ public class SolarWeek {
     Calendar c = Calendar.getInstance();
     c.set(year,month-1,1);
     int firstDayWeek = c.get(Calendar.DAY_OF_WEEK)-1;
+    if(firstDayWeek==0){
+      firstDayWeek = 7;
+    }
     return (int)Math.ceil((day+firstDayWeek-start)/7D);
   }
 

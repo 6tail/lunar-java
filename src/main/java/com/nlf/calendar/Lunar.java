@@ -1308,16 +1308,16 @@ public class Lunar{
   }
 
   /**
-   * 获取日吉神宜趋
-   * @return 日吉神宜趋
+   * 获取日吉神（宜趋），如果没有，返回["无"]
+   * @return 日吉神
    */
   public List<String> getDayJiShen(){
     return LunarUtil.getDayJiShen(getMonth(),getDayInGanZhi());
   }
 
   /**
-   * 获取日凶煞宜忌
-   * @return 日凶煞宜忌
+   * 获取日凶煞（宜忌），如果没有，返回["无"]
+   * @return 日凶煞
    */
   public List<String> getDayXiongSha(){
     return LunarUtil.getDayXiongSha(getMonth(),getDayInGanZhi());

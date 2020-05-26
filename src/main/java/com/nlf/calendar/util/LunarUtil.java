@@ -1256,7 +1256,7 @@ public class LunarUtil{
       right = right.substring(index+3);
       String left = right;
       if (left.contains("=")) {
-        left = left.substring(0, right.indexOf("=") - 2);
+        left = left.substring(0, left.indexOf("=") - 2);
       }
       boolean matched = false;
       String months = left.substring(0, left.indexOf(":"));
@@ -1268,7 +1268,6 @@ public class LunarUtil{
         }
       }
       if(matched) {
-        StringBuilder yj = new StringBuilder();
         String ys = left.substring(left.indexOf(":") + 1, left.indexOf(","));
         for (int i = 0, j = ys.length(); i < j; i += 2) {
           String m = ys.substring(i, i + 2);
@@ -1297,7 +1296,7 @@ public class LunarUtil{
       right = right.substring(index+3);
       String left = right;
       if (left.contains("=")) {
-        left = left.substring(0, right.indexOf("=") - 2);
+        left = left.substring(0, left.indexOf("=") - 2);
       }
       boolean matched = false;
       String months = left.substring(0, left.indexOf(":"));
@@ -1309,7 +1308,6 @@ public class LunarUtil{
         }
       }
       if(matched) {
-        StringBuilder yj = new StringBuilder();
         String js = left.substring(left.indexOf(",") + 1);
         for (int i = 0, j = js.length(); i < j; i += 2) {
           String m = js.substring(i, i + 2);

@@ -332,8 +332,17 @@ public class Lunar{
    * 干支纪时计算
    */
   private void computeTime(){
-    timeZhiIndex = LunarUtil.getTimeZhiIndex((hour<10?"0":"")+hour+":"+(minute<10?"0":"")+minute);
-    timeGanIndex = timeZhiIndex%10;
+    String hm = (hour<10?"0":"")+hour+":"+(minute<10?"0":"")+minute;
+    timeZhiIndex = LunarUtil.getTimeZhiIndex(hm);
+    int dayGan = dayGanIndex;
+    // 晚子时（夜子/子夜）应算作第二天
+    if(hm.compareTo("23:00")>=0&&hm.compareTo("23:59")<=0){
+      dayGan++;
+      if(dayGan>=10){
+        dayGan -= 10;
+      }
+    }
+    timeGanIndex = (dayGan%5*2+timeZhiIndex)%10;
   }
 
   /**
@@ -681,7 +690,7 @@ public class Lunar{
   }
 
   /**
-   * 获取时辰干支（时柱）
+   * 获取时辰干支（时柱），支持早子时和晚子时
    * @return 时辰干支（时柱）
    */
   public String getTimeInGanZhi(){

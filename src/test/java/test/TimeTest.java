@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Map;
  */
 public class TimeTest {
 
-  private static final Map<String,String> ZHI = new HashMap<String, String>(){
+  private static final Map<String,String> ZHI = new LinkedHashMap<String, String>(){
     private static final long serialVersionUID = -1L;
     {
       put("23:00","子");
@@ -76,129 +77,143 @@ public class TimeTest {
     }
   };
 
-  private static final Map<String,String> GAN = new HashMap<String, String>(){
+  private static final Map<String,String> GAN = new LinkedHashMap<String, String>(){
     private static final long serialVersionUID = -1L;
     {
-      put("23:00","甲");
-      put("00:59","甲");
-      put("23:30","甲");
+      //晚子时
+      put("2020-4,5,23:00","戊");
+      //早子时
+      put("2020-4,5,00:59","丙");
+      //晚子时
+      put("2020-4,5,23:30","戊");
 
-      put("01:00","乙");
-      put("02:59","乙");
-      put("01:30","乙");
+      put("2020-4,5,01:00","丁");
+      put("2020-4,5,02:59","丁");
+      put("2020-4,5,01:30","丁");
 
-      put("03:00","丙");
-      put("04:59","丙");
-      put("03:30","丙");
+      put("2020-4,5,03:00","戊");
+      put("2020-4,5,04:59","戊");
+      put("2020-4,5,03:30","戊");
 
-      put("05:00","丁");
-      put("06:59","丁");
-      put("05:30","丁");
+      put("2020-4,5,05:00","己");
+      put("2020-4,5,06:59","己");
+      put("2020-4,5,05:30","己");
 
-      put("07:00","戊");
-      put("08:59","戊");
-      put("07:30","戊");
+      put("2020-4,5,07:00","庚");
+      put("2020-4,5,08:59","庚");
+      put("2020-4,5,07:30","庚");
 
-      put("09:00","己");
-      put("10:59","己");
-      put("09:30","己");
+      put("2020-4,5,09:00","辛");
+      put("2020-4,5,10:59","辛");
+      put("2020-4,5,09:30","辛");
 
-      put("11:00","庚");
-      put("12:59","庚");
-      put("11:30","庚");
+      put("2020-4,5,11:00","壬");
+      put("2020-4,5,12:59","壬");
+      put("2020-4,5,11:30","壬");
 
-      put("13:00","辛");
-      put("14:59","辛");
-      put("13:30","辛");
+      put("2020-4,5,13:00","癸");
+      put("2020-4,5,14:59","癸");
+      put("2020-4,5,13:30","癸");
 
-      put("15:00","壬");
-      put("16:59","壬");
-      put("15:30","壬");
+      put("2020-4,5,15:00","甲");
+      put("2020-4,5,16:59","甲");
+      put("2020-4,5,15:30","甲");
 
-      put("17:00","癸");
-      put("18:59","癸");
-      put("17:30","癸");
+      put("2020-4,5,17:00","乙");
+      put("2020-4,5,18:59","乙");
+      put("2020-4,5,17:30","乙");
 
-      put("19:00","甲");
-      put("20:59","甲");
-      put("19:30","甲");
+      put("2020-4,5,19:00","丙");
+      put("2020-4,5,20:59","丙");
+      put("2020-4,5,19:30","丙");
 
-      put("21:00","乙");
-      put("22:59","乙");
-      put("21:30","乙");
+      put("2020-4,5,21:00","丁");
+      put("2020-4,5,22:59","丁");
+      put("2020-4,5,21:30","丁");
 
-      put(null,"甲");
+      put("2020-4,5,null","丙");
 
-      put("","甲");
-      put("23:01:01","甲");
-      put("其他","甲");
-      put("80:90","甲");
+      put("2020-4,5,","丙");
+      put("2020-4,5,23:01:01","戊");
+      put("2020-4,5,其他","丙");
+      put("2020-4,5,80:90","丙");
 
-      put("21:01:01","乙");
+      put("2020-4,5,21:01:01","丁");
+
+      put("2020-4,2,23:00","壬");
+      put("2020-4,2,11:20","丙");
     }
   };
 
   private static final Map<String,String> GAN_ZHI = new HashMap<String, String>(){
     private static final long serialVersionUID = -1L;
     {
-      put("23:00","甲子");
-      put("00:59","甲子");
-      put("23:30","甲子");
+      //晚子时
+      put("2020-4,5,23:00","戊子");
+      //早子时
+      put("2020-4,5,00:59","丙子");
+      //晚子时
+      put("2020-4,5,23:30","戊子");
 
-      put("01:00","乙丑");
-      put("02:59","乙丑");
-      put("01:30","乙丑");
+      put("2020-4,5,01:00","丁丑");
+      put("2020-4,5,02:59","丁丑");
+      put("2020-4,5,01:30","丁丑");
 
-      put("03:00","丙寅");
-      put("04:59","丙寅");
-      put("03:30","丙寅");
+      put("2020-4,5,03:00","戊寅");
+      put("2020-4,5,04:59","戊寅");
+      put("2020-4,5,03:30","戊寅");
 
-      put("05:00","丁卯");
-      put("06:59","丁卯");
-      put("05:30","丁卯");
+      put("2020-4,5,05:00","己卯");
+      put("2020-4,5,06:59","己卯");
+      put("2020-4,5,05:30","己卯");
 
-      put("07:00","戊辰");
-      put("08:59","戊辰");
-      put("07:30","戊辰");
+      put("2020-4,5,07:00","庚辰");
+      put("2020-4,5,08:59","庚辰");
+      put("2020-4,5,07:30","庚辰");
 
-      put("09:00","己巳");
-      put("10:59","己巳");
-      put("09:30","己巳");
+      put("2020-4,5,09:00","辛巳");
+      put("2020-4,5,10:59","辛巳");
+      put("2020-4,5,09:30","辛巳");
 
-      put("11:00","庚午");
-      put("12:59","庚午");
-      put("11:30","庚午");
+      put("2020-4,5,11:00","壬午");
+      put("2020-4,5,12:59","壬午");
+      put("2020-4,5,11:30","壬午");
 
-      put("13:00","辛未");
-      put("14:59","辛未");
-      put("13:30","辛未");
+      put("2020-4,5,13:00","癸未");
+      put("2020-4,5,14:59","癸未");
+      put("2020-4,5,13:30","癸未");
 
-      put("15:00","壬申");
-      put("16:59","壬申");
-      put("15:30","壬申");
+      put("2020-4,5,15:00","甲申");
+      put("2020-4,5,16:59","甲申");
+      put("2020-4,5,15:30","甲申");
 
-      put("17:00","癸酉");
-      put("18:59","癸酉");
-      put("17:30","癸酉");
+      put("2020-4,5,17:00","乙酉");
+      put("2020-4,5,18:59","乙酉");
+      put("2020-4,5,17:30","乙酉");
 
-      put("19:00","甲戌");
-      put("20:59","甲戌");
-      put("19:30","甲戌");
+      put("2020-4,5,19:00","丙戌");
+      put("2020-4,5,20:59","丙戌");
+      put("2020-4,5,19:30","丙戌");
 
-      put("21:00","乙亥");
-      put("22:59","乙亥");
-      put("21:30","乙亥");
+      put("2020-4,5,21:00","丁亥");
+      put("2020-4,5,22:59","丁亥");
+      put("2020-4,5,21:30","丁亥");
 
-      put(null,"甲子");
+      put("2020-4,5,null","丙子");
 
-      put("","甲子");
-      put("23:01:01","甲子");
-      put("其他","甲子");
-      put("80:90","甲子");
+      put("2020-4,5,","丙子");
+      put("2020-4,5,23:01:01","戊子");
+      put("2020-4,5,其他","丙子");
+      put("2020-4,5,80:90","丙子");
 
-      put("20:21:01","甲戌");
-      put("21:01:01","乙亥");
-      put("01:21:01","乙丑");
+      put("2020-4,5,20:21:01","丙戌");
+      put("2020-4,5,21:01:01","丁亥");
+      put("2020-4,5,01:21:01","丁丑");
+
+      put("2020-4,2,23:00","壬子");
+      put("2020-4,2,11:20","丙午");
+      put("20204,28,23:20","甲子");
+      put("20204,29,00:20","甲子");
     }
   };
 
@@ -206,28 +221,36 @@ public class TimeTest {
   public void testLunarTimeGanZhi(){
     for(Map.Entry<String,String> entry:GAN_ZHI.entrySet()){
       int hour = 0,minute = 0;
-      String hm = entry.getKey();
-      if(null!=hm&&hm.length()>=5){
+      String time = entry.getKey();
+      int year = Integer.parseInt(time.substring(0,4));
+      int month = Integer.parseInt(time.substring(4,time.indexOf(",")));
+      int day = Integer.parseInt(time.substring(time.indexOf(",")+1,time.lastIndexOf(",")));
+      String hm = time.substring(time.lastIndexOf(",")+1);
+      if(hm.length()>=5){
         hour = Integer.parseInt(hm.substring(0,2),10);
         minute = Integer.parseInt(hm.substring(3,5),10);
       }
-      Lunar lunar = Lunar.fromYmdHms(2020,1,1,hour,minute,0);
+      Lunar lunar = Lunar.fromYmdHms(year,month,day,hour,minute,0);
       String ganZhi = entry.getValue();
-      Assert.assertEquals(hm, ganZhi, lunar.getTimeInGanZhi());
+      Assert.assertEquals(lunar.getYear()+"年"+lunar.getMonthInChinese()+"月"+lunar.getDayInChinese()+" "+hm, ganZhi, lunar.getTimeInGanZhi());
     }
   }
   @Test
   public void testLunarTimeGan(){
     for(Map.Entry<String,String> entry:GAN.entrySet()){
       int hour = 0,minute = 0;
-      String hm = entry.getKey();
-      if(null!=hm&&hm.length()>=5){
+      String time = entry.getKey();
+      int year = Integer.parseInt(time.substring(0,4));
+      int month = Integer.parseInt(time.substring(4,time.indexOf(",")));
+      int day = Integer.parseInt(time.substring(time.indexOf(",")+1,time.lastIndexOf(",")));
+      String hm = time.substring(time.lastIndexOf(",")+1);
+      if(hm.length()>=5){
         hour = Integer.parseInt(hm.substring(0,2),10);
         minute = Integer.parseInt(hm.substring(3,5),10);
       }
-      Lunar lunar = Lunar.fromYmdHms(2020,1,1,hour,minute,0);
+      Lunar lunar = Lunar.fromYmdHms(year,month,day,hour,minute,0);
       String gan = entry.getValue();
-      Assert.assertEquals(hm, gan, lunar.getTimeGan());
+      Assert.assertEquals(lunar.getYear()+"年"+lunar.getMonthInChinese()+"月"+lunar.getDayInChinese()+" "+hm, gan, lunar.getTimeGan());
     }
   }
 

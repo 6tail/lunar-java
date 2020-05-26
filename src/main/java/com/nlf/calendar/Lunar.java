@@ -1292,6 +1292,22 @@ public class Lunar{
   }
 
   /**
+   * 获取每日宜
+   * @return 宜
+   */
+  public List<String> getDayYi(){
+    return LunarUtil.getDayYi(getMonthInGanZhiExact(),getDayInGanZhi());
+  }
+
+  /**
+   * 获取每日忌，如果没有，返回["无"]
+   * @return 忌
+   */
+  public List<String> getDayJi(){
+    return LunarUtil.getDayJi(getMonthInGanZhiExact(),getDayInGanZhi());
+  }
+
+  /**
    * 获取节气表（节气名称:阳历），节气交接时刻精确到秒，以冬至开头，按先后顺序排列
    * @return 节气表
    */

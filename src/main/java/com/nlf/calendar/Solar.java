@@ -111,20 +111,20 @@ public class Solar{
     double a = int2(julianDay);
     // 日数的小数部分
     double f = julianDay - a;
-    double D;
+    double jd;
 
     if (a > 2299161) {
-      D = int2((a - 1867216.25) / 36524.25);
-      a += 1 + D - int2(D / 4);
+      jd = int2((a - 1867216.25) / 36524.25);
+      a += 1 + jd - int2(jd / 4);
     }
     // 向前移4年零2个月
     a += 1524;
     double y = int2((a - 122.1) / 365.25);
     // 去除整年日数后余下日数
-    D = a - int2(365.25 * y);
-    double m = (int)int2(D / 30.6001);
+    jd = a - int2(365.25 * y);
+    double m = (int)int2(jd / 30.6001);
     // 去除整月日数后余下日数
-    double d = (int)int2(D - int2(m * 30.6001));
+    double d = (int)int2(jd - int2(m * 30.6001));
     y -= 4716;
     m--;
     if (m > 12) {

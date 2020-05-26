@@ -1308,6 +1308,22 @@ public class Lunar{
   }
 
   /**
+   * 获取日吉神宜趋
+   * @return 日吉神宜趋
+   */
+  public List<String> getDayJiShen(){
+    return LunarUtil.getDayJiShen(getMonth(),getDayInGanZhi());
+  }
+
+  /**
+   * 获取日凶煞宜忌
+   * @return 日凶煞宜忌
+   */
+  public List<String> getDayXiongSha(){
+    return LunarUtil.getDayXiongSha(getMonth(),getDayInGanZhi());
+  }
+
+  /**
    * 获取节气表（节气名称:阳历），节气交接时刻精确到秒，以冬至开头，按先后顺序排列
    * @return 节气表
    */

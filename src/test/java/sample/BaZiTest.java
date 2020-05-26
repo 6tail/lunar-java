@@ -58,4 +58,12 @@ public class BaZiTest {
     System.out.println(lunar.getBaZi());
   }
 
+  @Test
+  public void test7(){
+    Solar solar = new Solar(2020,5,26,23,43,0);
+    Lunar lunar = solar.getLunar();
+    //[庚子, 辛巳, 庚午, 丙子]
+    System.out.println(lunar.getBaZi());
+  }
+
 }

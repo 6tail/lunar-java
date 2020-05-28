@@ -419,6 +419,7 @@ public class Lunar{
    * @return 天干，如辛
    * @deprecated 使用getYearGan
    */
+  @Deprecated
   public String getGan(){
     return getYearGan();
   }
@@ -456,6 +457,7 @@ public class Lunar{
    * @return 地支，如亥
    * @deprecated 使用getYearZhi
    */
+  @Deprecated
   public String getZhi(){
     return getYearZhi();
   }
@@ -625,6 +627,7 @@ public class Lunar{
    * @return 年生肖，如虎
    * @deprecated 使用getYearShengXiao
    */
+  @Deprecated
   public String getShengxiao(){
     return getYearShengXiao();
   }
@@ -1123,55 +1126,61 @@ public class Lunar{
   /**
    * 获取冲
    * @return 冲，如申
+   * @deprecated 使用getDayChong
    */
+  @Deprecated
   public String getChong(){
-    return LunarUtil.CHONG[dayZhiIndex+1];
+    return getDayChong();
   }
 
   /**
    * 获取无情之克的冲天干
    * @return 无情之克的冲天干，如甲
+   * @deprecated 使用getDayChongGan
    */
+  @Deprecated
   public String getChongGan(){
-    return LunarUtil.CHONG_GAN[dayGanIndex+1];
+    return getDayChongGan();
   }
 
   /**
    * 获取有情之克的冲天干
    * @return 有情之克的冲天干，如甲
+   * @deprecated 使用getDayChongGanTie
    */
+  @Deprecated
   public String getChongGanTie(){
-    return LunarUtil.CHONG_GAN_TIE[dayGanIndex+1];
+    return getDayChongGanTie();
   }
 
   /**
    * 获取冲生肖
    * @return 冲生肖，如猴
+   * @deprecated 使用getDayChongShengXiao
    */
+  @Deprecated
   public String getChongShengXiao(){
-    String chong = getChong();
-    for(int i=0,j=LunarUtil.ZHI.length;i<j;i++){
-      if(LunarUtil.ZHI[i].equals(chong)){
-        return LunarUtil.SHENGXIAO[i];
-      }
-    }
-    return "";
+    return getDayChongShengXiao();
   }
 
   /**
    * 获取冲描述
    * @return 冲描述，如(壬申)猴
+   * @deprecated 使用getDayChongDesc
    */
+  @Deprecated
   public String getChongDesc(){
-    return "("+getChongGan()+getChong()+")"+getChongShengXiao();
+    return getDayChongDesc();
   }
 
   /**
    * 获取煞
    * @return 煞，如北
+   * @deprecated 使用getDaySha
    */
+  @Deprecated
   public String getSha(){
-    return LunarUtil.SHA.get(getDayZhi());
+    return getDaySha();
   }
 
   /**
@@ -1342,7 +1351,7 @@ public class Lunar{
   }
 
   /**
-   * 获取每日宜
+   * 获取每日宜，如果没有，返回["无"]
    * @return 宜
    */
   public List<String> getDayYi(){
@@ -1371,6 +1380,130 @@ public class Lunar{
    */
   public List<String> getDayXiongSha(){
     return LunarUtil.getDayXiongSha(getMonth(),getDayInGanZhi());
+  }
+
+  /**
+   * 获取日冲
+   * @return 日冲，如申
+   */
+  public String getDayChong(){
+    return LunarUtil.CHONG[dayZhiIndex+1];
+  }
+
+  /**
+   * 获取日煞
+   * @return 日煞，如北
+   */
+  public String getDaySha(){
+    return LunarUtil.SHA.get(getDayZhi());
+  }
+
+  /**
+   * 获取日冲描述
+   * @return 日冲描述，如(壬申)猴
+   */
+  public String getDayChongDesc(){
+    return "("+getDayChongGan()+getDayChong()+")"+getDayChongShengXiao();
+  }
+
+  /**
+   * 获取日冲生肖
+   * @return 日冲生肖，如猴
+   */
+  public String getDayChongShengXiao(){
+    String chong = getDayChong();
+    for(int i=0,j=LunarUtil.ZHI.length;i<j;i++){
+      if(LunarUtil.ZHI[i].equals(chong)){
+        return LunarUtil.SHENGXIAO[i];
+      }
+    }
+    return "";
+  }
+
+  /**
+   * 获取无情之克的日冲天干
+   * @return 无情之克的日冲天干，如甲
+   */
+  public String getDayChongGan(){
+    return LunarUtil.CHONG_GAN[dayGanIndex+1];
+  }
+
+  /**
+   * 获取有情之克的日冲天干
+   * @return 有情之克的日冲天干，如甲
+   */
+  public String getDayChongGanTie(){
+    return LunarUtil.CHONG_GAN_TIE[dayGanIndex+1];
+  }
+
+  /**
+   * 获取时冲
+   * @return 时冲，如申
+   */
+  public String getTimeChong(){
+    return LunarUtil.CHONG[timeZhiIndex+1];
+  }
+
+  /**
+   * 获取时煞
+   * @return 时煞，如北
+   */
+  public String getTimeSha(){
+    return LunarUtil.SHA.get(getTimeZhi());
+  }
+
+  /**
+   * 获取时冲生肖
+   * @return 时冲生肖，如猴
+   */
+  public String getTimeChongShengXiao(){
+    String chong = getTimeChong();
+    for(int i=0,j=LunarUtil.ZHI.length;i<j;i++){
+      if(LunarUtil.ZHI[i].equals(chong)){
+        return LunarUtil.SHENGXIAO[i];
+      }
+    }
+    return "";
+  }
+
+  /**
+   * 获取时冲描述
+   * @return 时冲描述，如(壬申)猴
+   */
+  public String getTimeChongDesc(){
+    return "("+getTimeChongGan()+getTimeChong()+")"+getTimeChongShengXiao();
+  }
+
+  /**
+   * 获取无情之克的时冲天干
+   * @return 无情之克的时冲天干，如甲
+   */
+  public String getTimeChongGan(){
+    return LunarUtil.CHONG_GAN[timeGanIndex+1];
+  }
+
+  /**
+   * 获取有情之克的时冲天干
+   * @return 有情之克的时冲天干，如甲
+   */
+  public String getTimeChongGanTie(){
+    return LunarUtil.CHONG_GAN_TIE[timeGanIndex+1];
+  }
+
+  /**
+   * 获取时辰宜，如果没有，返回["无"]
+   * @return 宜
+   */
+  public List<String> getTimeYi(){
+    return LunarUtil.getTimeYi(getDayInGanZhiExact(),getTimeInGanZhi());
+  }
+
+  /**
+   * 获取时辰忌，如果没有，返回["无"]
+   * @return 忌
+   */
+  public List<String> getTimeJi(){
+    return LunarUtil.getTimeJi(getDayInGanZhiExact(),getTimeInGanZhi());
   }
 
   /**
@@ -1461,9 +1594,9 @@ public class Lunar{
     s.append("](");
     s.append(getPositionCaiDesc());
     s.append(") 冲[");
-    s.append(getChongDesc());
+    s.append(getDayChongDesc());
     s.append("] 煞[");
-    s.append(getSha());
+    s.append(getDaySha());
     s.append("]");
     return s.toString();
   }

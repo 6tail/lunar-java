@@ -1541,11 +1541,100 @@ public class Lunar{
   }
 
   /**
-   * 获取值年九星
+   * 获取值年九星（流年紫白星起例歌诀：年上吉星论甲子，逐年星逆中宫起；上中下作三元汇，一上四中七下兑。）
    * @return 值年九星
    */
   public NineStar getYearNineStar(){
     int index = LunarUtil.BASE_YEAR_JIU_XING_INDEX-(year-LunarUtil.BASE_YEAR)%9;
+    if(index<0){
+      index += 9;
+    }
+    return new NineStar(index);
+  }
+
+  /**
+   * 获取值月九星（月紫白星歌诀：子午卯酉八白起，寅申巳亥二黑求，辰戌丑未五黄中。）
+   * @return 值月九星
+   */
+  public NineStar getMonthNineStar(){
+    int start = 2;
+    String yearZhi = getYearZhi();
+    if ("子午卯酉".contains(yearZhi)) {
+      start = 8;
+    } else if ("辰戌丑未".contains(yearZhi)) {
+      start = 5;
+    }
+    // 寅月起，所以需要-2
+    int monthIndex = monthZhiIndex-2;
+    int index = start-monthIndex-1;
+    if(index<0){
+      index += 9;
+    }
+    return new NineStar(index);
+  }
+
+  /**
+   * 获取值日九星（日家紫白星歌诀：日家白法不难求，二十四气六宫周；冬至雨水及谷雨，阳顺一七四中游；夏至处暑霜降后，九三六星逆行求。）
+   * @return 值日九星
+   */
+  public NineStar getDayNineStar(){
+    //顺逆
+    String solarYmd = solar.toYmd();
+    String yuShui = jieQi.get("雨水").toYmd();
+    String guYu = jieQi.get("谷雨").toYmd();
+    String xiaZhi = jieQi.get("夏至").toYmd();
+    String chuShu = jieQi.get("处暑").toYmd();
+    String shuangJiang = jieQi.get("霜降").toYmd();
+
+    int start = 6;
+    boolean asc = false;
+    if(solarYmd.compareTo(jieQi.get("冬至").toYmd())>=0 && solarYmd.compareTo(yuShui)<0){
+      asc = true;
+      start = 1;
+    } else if(solarYmd.compareTo(yuShui)>=0 && solarYmd.compareTo(guYu)<0){
+      asc = true;
+      start = 7;
+    } else if(solarYmd.compareTo(guYu)>=0 && solarYmd.compareTo(xiaZhi)<0){
+      asc = true;
+      start = 4;
+    } else if(solarYmd.compareTo(xiaZhi)>=0 && solarYmd.compareTo(chuShu)<0){
+      start = 9;
+    } else if(solarYmd.compareTo(chuShu)>=0 && solarYmd.compareTo(shuangJiang)<0){
+      start = 3;
+    }
+    int ganZhiIndex = LunarUtil.getJiaZiIndex(getDayInGanZhi())%9;
+    int index = asc?start+ganZhiIndex-1:start-ganZhiIndex-1;
+    if(index>8){
+      index -= 9;
+    }
+    if(index<0){
+      index += 9;
+    }
+    return new NineStar(index);
+  }
+
+  /**
+   * 获取值时九星（时家紫白星歌诀：三元时白最为佳，冬至阳生顺莫差，孟日七宫仲一白，季日四绿发萌芽，每把时辰起甲子，本时星耀照光华，时星移入中宫去，顺飞八方逐细查。夏至阴生逆回首，孟归三碧季加六，仲在九宫时起甲，依然掌中逆轮跨。）
+   * @return 值时九星
+   */
+  public NineStar getTimeNineStar(){
+    //顺逆
+    String solarYmd = solar.toYmd();
+    boolean asc = false;
+    if(solarYmd.compareTo(jieQi.get("冬至").toYmd())>=0 && solarYmd.compareTo(jieQi.get("夏至").toYmd())<0){
+      asc = true;
+    }
+    int start = asc?7:3;
+    String dayZhi = getDayZhi();
+    if ("子午卯酉".contains(dayZhi)) {
+      start = asc?1:9;
+    } else if ("辰戌丑未".contains(dayZhi)) {
+      start = asc?4:6;
+    }
+    int index = asc?start+timeZhiIndex-1:start-timeZhiIndex-1;
+    if(index>8){
+      index -= 9;
+    }
     if(index<0){
       index += 9;
     }

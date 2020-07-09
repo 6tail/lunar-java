@@ -1242,7 +1242,7 @@ public class LunarUtil{
    * @param ganZhi 干支
    * @return 甲子序号
    */
-  private static int getJiaZiIndex(String ganZhi){
+  public static int getJiaZiIndex(String ganZhi){
     for(int i=0,j=LunarUtil.JIA_ZI.length;i<j;i++){
       if(LunarUtil.JIA_ZI[i].equals(ganZhi)){
         return i;

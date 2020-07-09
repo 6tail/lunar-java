@@ -1533,6 +1533,26 @@ public class Lunar{
   }
 
   /**
+   * 获取月相
+   * @return 月相
+   */
+  public String getYueXiang() {
+    return LunarUtil.YUE_XIANG[day];
+  }
+
+  /**
+   * 获取值年九星
+   * @return 值年九星
+   */
+  public NineStar getYearNineStar(){
+    int index = LunarUtil.BASE_YEAR_JIU_XING_INDEX-(year-LunarUtil.BASE_YEAR)%9;
+    if(index<0){
+      index += 9;
+    }
+    return new NineStar(index);
+  }
+
+  /**
    * 获取节气表（节气名称:阳历），节气交接时刻精确到秒，以冬至开头，按先后顺序排列
    * @return 节气表
    */

@@ -208,10 +208,10 @@ public class Lunar{
     t /= 10;
     double v = 0, tn = 1;
     int n1,n2;
-    double N;
+    double m;
     double c;
     int pn = 1;
-    double n0, N0 = XL0[pn + 1] - XL0[pn];
+    double n0, m0 = XL0[pn + 1] - XL0[pn];
     for (int i = 0; i < 6; i++, tn *= t) {
       n1 = (int)XL0[pn + i];
       n2 = (int)XL0[pn + 1 + i];
@@ -220,18 +220,18 @@ public class Lunar{
         continue;
       }
       if (n < 0) {
-        N = n2;
+        m = n2;
       } else {
-        N = (int) Math.floor(3 * n * n0 / N0 + 0.5) + n1;
+        m = (int)(3 * n * n0 / m0 + 0.5) + n1;
         if (i != 0) {
-          N += 3;
+          m += 3;
         }
-        if (N > n2) {
-          N = n2;
+        if (m > n2) {
+          m = n2;
         }
       }
       c = 0;
-      for (int j = n1; j < N; j += 3) {
+      for (int j = n1; j < m; j += 3) {
         c += XL0[j] * Math.cos(XL0[j + 1] + t * XL0[j + 2]);
       }
       v += c * tn;
@@ -299,15 +299,15 @@ public class Lunar{
   }
 
   private double qiLow(double w){
-    double t, L, v = 628.3319653318;
+    double t, l, v = 628.3319653318;
     t = (w - 4.895062166) / v;
     t -= (53 * t * t + 334116 * Math.cos(4.67 + 628.307585 * t) + 2061 * Math.cos(2.678 + 628.3076 * t) * t) / v / 10000000;
-    L = 48950621.66 + 6283319653.318 * t + 53 * t * t + 334166 * Math.cos(4.669257 + 628.307585 * t) + 3489 * Math.cos(4.6261 + 1256.61517 * t) + 2060.6 * Math.cos(2.67823 + 628.307585 * t) * t - 994 - 834 * Math.sin(2.1824 - 33.75705 * t);
-    t -= (L / 10000000 - w) / 628.332 + (32 * (t + 1.8) * (t + 1.8) - 20) / 86400 / 36525;
+    l = 48950621.66 + 6283319653.318 * t + 53 * t * t + 334166 * Math.cos(4.669257 + 628.307585 * t) + 3489 * Math.cos(4.6261 + 1256.61517 * t) + 2060.6 * Math.cos(2.67823 + 628.307585 * t) * t - 994 - 834 * Math.sin(2.1824 - 33.75705 * t);
+    t -= (l / 10000000 - w) / 628.332 + (32 * (t + 1.8) * (t + 1.8) - 20) / 86400 / 36525;
     return t * 36525 + 8 / 24;
   }
 
-  private double S_aLon_t2(double w){
+  private double saLonT2(double w){
     double t, v = 628.3319653318;
     t = (w - 1.75347 - Math.PI) / v;
     t -= (0.000005297 * t * t + 0.0334166 * Math.cos(4.669257 + 628.307585 * t) + 0.0002061 * Math.cos(2.67823 + 628.307585 * t) * t) / v;
@@ -316,7 +316,7 @@ public class Lunar{
   }
 
   private double qiHigh(double w){
-    double t = S_aLon_t2(w) * 36525;
+    double t = saLonT2(w) * 36525;
     t = t - dtT(t) + 8 / 24;
     double v = ((t + 0.5) % 1) * 86400;
     if (v < 1200 || v > 86400 - 1200){
@@ -390,6 +390,9 @@ public class Lunar{
       double q = calcJieQi(w + 15.2184 * i);
       jieQi.put(JIE_QI[(i + size) % size], Solar.fromJulianDay(qiAccurate2(q) + Solar.J2000));
     }
+    //追加下一农历年的冬至
+    double q = calcJieQi(w + 15.2184 * size);
+    jieQi.put("DONG_ZHI", Solar.fromJulianDay(qiAccurate2(q) + Solar.J2000));
   }
 
   /**
@@ -944,6 +947,10 @@ public class Lunar{
       if(d.getYear()==solar.getYear()&&d.getMonth()==solar.getMonth()&&d.getDay()==solar.getDay()){
         return qi;
       }
+    }
+    Solar d = jieQi.get("DONG_ZHI");
+    if(d.getYear()==solar.getYear()&&d.getMonth()==solar.getMonth()&&d.getDay()==solar.getDay()){
+      return "冬至";
     }
     return "";
   }

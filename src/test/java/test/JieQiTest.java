@@ -12,7 +12,7 @@ import java.util.Map;
  *
  * @author 6tail
  */
-public class JiQiTest {
+public class JieQiTest {
 
   @Test
   public void test2022() {

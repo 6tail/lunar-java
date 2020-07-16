@@ -263,8 +263,9 @@ public class Lunar{
   }
 
   private double dtCalc(double y) {
-    double y0 = DT_AT[DT_AT.length - 2];
-    double t0 = DT_AT[DT_AT.length - 1];
+    int size = DT_AT.length;
+    double y0 = DT_AT[size - 2];
+    double t0 = DT_AT[size - 1];
     if (y >= y0) {
       double jsd = 31;
       if (y > y0 + 100) {
@@ -275,7 +276,7 @@ public class Lunar{
       return v - dv * (y0 + 100 - y) / 100;
     }
     int i;
-    for (i = 0; i < DT_AT.length; i += 5) {
+    for (i = 0; i < size; i += 5) {
       if (y < DT_AT[i + 5]) {
         break;
       }
@@ -326,15 +327,16 @@ public class Lunar{
   }
 
   private double calcJieQi(double jd) {
+    int size = QI_KB.length;
     double d = 0;
     int pc = 7;
     jd += 2451545;
-    double f1 = QI_KB[0] - pc, f2 = QI_KB[QI_KB.length - 1] - pc, f3 = 2436935;
+    double f1 = QI_KB[0] - pc, f2 = QI_KB[size - 1] - pc, f3 = 2436935;
     if (jd < f1 || jd >= f3) {
       d = Math.floor(qiHigh(Math.floor((jd + pc - 2451259) * 24D / 365.2422) * Math.PI / 12) + 0.5);
     }else if (jd >= f1 && jd < f2) {
       int i = 0;
-      for (; i < QI_KB.length; i += 2) {
+      for (; i < size; i += 2) {
         if (jd + pc < QI_KB[i + 2]) {
           break;
         }
@@ -388,7 +390,7 @@ public class Lunar{
     int size = JIE_QI.length;
     for (int i=0;i<size;i++) {
       double q = calcJieQi(w + 15.2184 * i);
-      jieQi.put(JIE_QI[(i + size) % size], Solar.fromJulianDay(qiAccurate2(q) + Solar.J2000));
+      jieQi.put(JIE_QI[i], Solar.fromJulianDay(qiAccurate2(q) + Solar.J2000));
     }
     //追加下一农历年的冬至
     double q = calcJieQi(w + 15.2184 * size);
@@ -1090,83 +1092,253 @@ public class Lunar{
   }
 
   /**
-   * 获取喜神方位
+   * 获取日喜神方位
    * @return 喜神方位，如艮
+   * @deprecated 使用getDayPositionXi
    */
   public String getPositionXi(){
-    return LunarUtil.POSITION_XI[dayGanIndex+1];
+    return getDayPositionXi();
   }
 
   /**
    * 获取喜神方位描述
    * @return 喜神方位描述，如东北
+   * @deprecated 使用getDayPositionXiDesc
    */
   public String getPositionXiDesc(){
-    return LunarUtil.POSITION_DESC.get(getPositionXi());
+    return getDayPositionXiDesc();
   }
 
   /**
    * 获取阳贵神方位
    * @return 阳贵神方位，如艮
+   * @deprecated 使用getDayPositionYangGui
    */
   public String getPositionYangGui(){
-    return LunarUtil.POSITION_YANG_GUI[dayGanIndex+1];
+    return getDayPositionYangGui();
   }
 
   /**
    * 获取阳贵神方位描述
    * @return 阳贵神方位描述，如东北
+   * @deprecated 使用getDayPositionYangGuiDesc
    */
   public String getPositionYangGuiDesc(){
-    return LunarUtil.POSITION_DESC.get(getPositionYangGui());
+    return getDayPositionYangGuiDesc();
   }
 
   /**
    * 获取阴贵神方位
    * @return 阴贵神方位，如艮
+   * @deprecated 使用getDayPositionYinGui
    */
   public String getPositionYinGui(){
-    return LunarUtil.POSITION_YIN_GUI[dayGanIndex+1];
+    return getDayPositionYinGui();
   }
 
   /**
    * 获取阴贵神方位描述
    * @return 阴贵神方位描述，如东北
+   * @deprecated 使用getDayPositionYinGuiDesc
    */
   public String getPositionYinGuiDesc(){
-    return LunarUtil.POSITION_DESC.get(getPositionYinGui());
+    return getDayPositionYinGuiDesc();
   }
 
   /**
    * 获取福神方位
    * @return 福神方位，如艮
+   * @deprecated 使用getDayPositionFu
    */
   public String getPositionFu(){
-    return LunarUtil.POSITION_FU[dayGanIndex+1];
+    return getDayPositionFu();
   }
 
   /**
    * 获取福神方位描述
    * @return 福神方位描述，如东北
+   * @deprecated 使用getDayPositionFuDesc
    */
   public String getPositionFuDesc(){
-    return LunarUtil.POSITION_DESC.get(getPositionFu());
+    return getDayPositionFuDesc();
   }
 
   /**
    * 获取财神方位
    * @return 财神方位，如艮
+   * @deprecated 使用getDayPositionCai
    */
   public String getPositionCai(){
-    return LunarUtil.POSITION_CAI[dayGanIndex+1];
+    return getDayPositionCai();
   }
 
   /**
    * 获取财神方位描述
    * @return 财神方位描述，如东北
+   * @deprecated 使用getDayPositionCaiDesc
    */
   public String getPositionCaiDesc(){
-    return LunarUtil.POSITION_DESC.get(getPositionCai());
+    return getDayPositionCaiDesc();
+  }
+
+  /**
+   * 获取日喜神方位
+   * @return 喜神方位，如艮
+   */
+  public String getDayPositionXi(){
+    return LunarUtil.POSITION_XI[dayGanIndex+1];
+  }
+
+  /**
+   * 获取日喜神方位描述
+   * @return 喜神方位描述，如东北
+   */
+  public String getDayPositionXiDesc(){
+    return LunarUtil.POSITION_DESC.get(getDayPositionXi());
+  }
+
+  /**
+   * 获取日阳贵神方位
+   * @return 阳贵神方位，如艮
+   */
+  public String getDayPositionYangGui(){
+    return LunarUtil.POSITION_YANG_GUI[dayGanIndex+1];
+  }
+
+  /**
+   * 获取日阳贵神方位描述
+   * @return 阳贵神方位描述，如东北
+   */
+  public String getDayPositionYangGuiDesc(){
+    return LunarUtil.POSITION_DESC.get(getDayPositionYangGui());
+  }
+
+  /**
+   * 获取日阴贵神方位
+   * @return 阴贵神方位，如艮
+   */
+  public String getDayPositionYinGui(){
+    return LunarUtil.POSITION_YIN_GUI[dayGanIndex+1];
+  }
+
+  /**
+   * 获取日阴贵神方位描述
+   * @return 阴贵神方位描述，如东北
+   */
+  public String getDayPositionYinGuiDesc(){
+    return LunarUtil.POSITION_DESC.get(getDayPositionYinGui());
+  }
+
+  /**
+   * 获取日福神方位
+   * @return 福神方位，如艮
+   */
+  public String getDayPositionFu(){
+    return LunarUtil.POSITION_FU[dayGanIndex+1];
+  }
+
+  /**
+   * 获取日福神方位描述
+   * @return 福神方位描述，如东北
+   */
+  public String getDayPositionFuDesc(){
+    return LunarUtil.POSITION_DESC.get(getDayPositionFu());
+  }
+
+  /**
+   * 获取日财神方位
+   * @return 财神方位，如艮
+   */
+  public String getDayPositionCai(){
+    return LunarUtil.POSITION_CAI[dayGanIndex+1];
+  }
+
+  /**
+   * 获取日财神方位描述
+   * @return 财神方位描述，如东北
+   */
+  public String getDayPositionCaiDesc(){
+    return LunarUtil.POSITION_DESC.get(getDayPositionCai());
+  }
+
+  /**
+   * 获取时辰喜神方位
+   * @return 喜神方位，如艮
+   */
+  public String getTimePositionXi(){
+    return LunarUtil.POSITION_XI[timeGanIndex+1];
+  }
+
+  /**
+   * 获取时辰喜神方位描述
+   * @return 喜神方位描述，如东北
+   */
+  public String getTimePositionXiDesc(){
+    return LunarUtil.POSITION_DESC.get(getTimePositionXi());
+  }
+
+  /**
+   * 获取时辰阳贵神方位
+   * @return 阳贵神方位，如艮
+   */
+  public String getTimePositionYangGui(){
+    return LunarUtil.POSITION_YANG_GUI[timeGanIndex+1];
+  }
+
+  /**
+   * 获取时辰阳贵神方位描述
+   * @return 阳贵神方位描述，如东北
+   */
+  public String getTimePositionYangGuiDesc(){
+    return LunarUtil.POSITION_DESC.get(getTimePositionYangGui());
+  }
+
+  /**
+   * 获取时辰阴贵神方位
+   * @return 阴贵神方位，如艮
+   */
+  public String getTimePositionYinGui(){
+    return LunarUtil.POSITION_YIN_GUI[timeGanIndex+1];
+  }
+
+  /**
+   * 获取时辰阴贵神方位描述
+   * @return 阴贵神方位描述，如东北
+   */
+  public String getTimePositionYinGuiDesc(){
+    return LunarUtil.POSITION_DESC.get(getTimePositionYinGui());
+  }
+
+  /**
+   * 获取时辰福神方位
+   * @return 福神方位，如艮
+   */
+  public String getTimePositionFu(){
+    return LunarUtil.POSITION_FU[timeGanIndex+1];
+  }
+
+  /**
+   * 获取时辰福神方位描述
+   * @return 福神方位描述，如东北
+   */
+  public String getTimePositionFuDesc(){
+    return LunarUtil.POSITION_DESC.get(getTimePositionFu());
+  }
+
+  /**
+   * 获取时辰财神方位
+   * @return 财神方位，如艮
+   */
+  public String getTimePositionCai(){
+    return LunarUtil.POSITION_CAI[timeGanIndex+1];
+  }
+
+  /**
+   * 获取时辰财神方位描述
+   * @return 财神方位描述，如东北
+   */
+  public String getTimePositionCaiDesc(){
+    return LunarUtil.POSITION_DESC.get(getTimePositionCai());
   }
 
   /**
@@ -1755,25 +1927,25 @@ public class Lunar{
     s.append(" ");
     s.append(getPengZuZhi());
     s.append("] 喜神方位[");
-    s.append(getPositionXi());
+    s.append(getDayPositionXi());
     s.append("](");
-    s.append(getPositionXiDesc());
+    s.append(getDayPositionXiDesc());
     s.append(") 阳贵神方位[");
-    s.append(getPositionYangGui());
+    s.append(getDayPositionYangGui());
     s.append("](");
-    s.append(getPositionYangGuiDesc());
+    s.append(getDayPositionYangGuiDesc());
     s.append(") 阴贵神方位[");
-    s.append(getPositionYinGui());
+    s.append(getDayPositionYinGui());
     s.append("](");
-    s.append(getPositionYinGuiDesc());
+    s.append(getDayPositionYinGuiDesc());
     s.append(") 福神方位[");
-    s.append(getPositionFu());
+    s.append(getDayPositionFu());
     s.append("](");
-    s.append(getPositionFuDesc());
+    s.append(getDayPositionFuDesc());
     s.append(") 财神方位[");
-    s.append(getPositionCai());
+    s.append(getDayPositionCai());
     s.append("](");
-    s.append(getPositionCaiDesc());
+    s.append(getDayPositionCaiDesc());
     s.append(") 冲[");
     s.append(getDayChongDesc());
     s.append("] 煞[");

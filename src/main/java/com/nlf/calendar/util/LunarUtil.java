@@ -1101,19 +1101,21 @@ public class LunarUtil{
    * @return 距离天数
    */
   public static int computeAddDays(int year,int month,int day){
+    if(BASE_YEAR==year&&BASE_MONTH==month){
+      return day-BASE_DAY;
+    }
     int y = BASE_YEAR;
     int m = BASE_MONTH;
     int diff = getDaysOfMonth(y,m)-BASE_DAY;
-    m = nextMonth(y,m);
-    while(true){
-      diff += getDaysOfMonth(y,m);
+    while(y!=year||m!=month){
       m = nextMonth(y,m);
       if(m==1){
         y++;
       }
       if(y==year&&m==month){
         diff += day;
-        break;
+      }else {
+        diff += getDaysOfMonth(y, m);
       }
     }
     return diff;

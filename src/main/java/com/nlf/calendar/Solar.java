@@ -219,7 +219,7 @@ public class Solar{
     Solar today = new Solar();
     Lunar lunar = today.getLunar();
     int offsetYear = LunarUtil.getJiaZiIndex(lunar.getYearInGanZhiExact())-LunarUtil.getJiaZiIndex(yearGanZhi);
-    if (offsetYear<0){
+    if(offsetYear<0){
       offsetYear = offsetYear+60;
     }
     int startYear = today.getYear() - offsetYear;
@@ -230,37 +230,44 @@ public class Solar{
         hour = (i-1)*2;
       }
     }
-    int year = startYear-1;
-    while(year>=SolarUtil.BASE_YEAR) {
+    while(startYear>=SolarUtil.BASE_YEAR-1){
+      int year = startYear-1;
       int counter = 0;
       int month = 12;
       int day;
       boolean found = false;
       while (counter < 15) {
-        day = 1;
-        if(year==SolarUtil.BASE_YEAR){
-          if(month<SolarUtil.BASE_MONTH){
-            continue;
-          }else if(month==SolarUtil.BASE_MONTH){
+        if(year>=SolarUtil.BASE_YEAR){
+          day = 1;
+          if(year==SolarUtil.BASE_YEAR&&month==SolarUtil.BASE_MONTH){
             day = SolarUtil.BASE_DAY;
           }
-        }
-        Solar solar = new Solar(year, month, day, hour, 0, 0);
-        lunar = solar.getLunar();
-        if (lunar.getYearInGanZhiExact().equals(yearGanZhi) && lunar.getMonthInGanZhiExact().equals(monthGanZhi)) {
-          found = true;
-          break;
+          Solar solar = new Solar(year, month, day, hour, 0, 0);
+          lunar = solar.getLunar();
+          if(lunar.getYearInGanZhiExact().equals(yearGanZhi) && lunar.getMonthInGanZhiExact().equals(monthGanZhi)){
+            found = true;
+            break;
+          }
         }
         month++;
-        if (month > 12) {
+        if(month > 12){
           month = 1;
           year++;
         }
         counter++;
       }
-      if (found) {
+      if(found){
         counter = 0;
-        Solar solar = new Solar(year, month-1, 1, hour, 0, 0);
+        month--;
+        if(month<1){
+          month = 12;
+          year--;
+        }
+        day = 1;
+        if(year==SolarUtil.BASE_YEAR&&month==SolarUtil.BASE_MONTH){
+          day = SolarUtil.BASE_DAY;
+        }
+        Solar solar = new Solar(year, month, day, hour, 0, 0);
         while (counter < 61) {
           lunar = solar.getLunar();
           if (lunar.getYearInGanZhiExact().equals(yearGanZhi) && lunar.getMonthInGanZhiExact().equals(monthGanZhi) && lunar.getDayInGanZhiExact().equals(dayGanZhi) && lunar.getTimeInGanZhi().equals(timeGanZhi)) {
@@ -271,7 +278,7 @@ public class Solar{
           counter++;
         }
       }
-      year -= 61;
+      startYear -= 60;
     }
     return l;
   }

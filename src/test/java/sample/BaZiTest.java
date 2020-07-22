@@ -79,7 +79,7 @@ public class BaZiTest {
   @Test
   public void testBazi2Solar7() {
     List<Solar> l = Solar.fromBaZi("庚子", "辛巳", "庚午", "丙子");
-    // [2020-07-21 22:00:00, 1960-08-05 22:00:00]
+    // [2020-05-26 23:00:00, 2020-05-27 00:00:00]
     for (Solar solar : l) {
       System.out.println(solar.toFullString());
     }
@@ -88,7 +88,16 @@ public class BaZiTest {
   @Test
   public void testBazi2Solar() {
     List<Solar> l = Solar.fromBaZi("庚子", "癸未", "乙丑", "丁亥");
-    // [2020-05-26 23:00:00, 2020-05-27 00:00:00]
+    // [2020-07-21 22:00:00, 1960-08-05 22:00:00]
+    for (Solar solar : l) {
+      System.out.println(solar.toFullString());
+    }
+  }
+
+  @Test
+  public void testBazi2Solar2() {
+    List<Solar> l = Solar.fromBaZi("庚子", "戊子", "己卯", "庚午");
+    // [1960-12-17 12:00:00, 1901-01-01 12:00:00]
     for (Solar solar : l) {
       System.out.println(solar.toFullString());
     }

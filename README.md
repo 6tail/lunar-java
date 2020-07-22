@@ -10,7 +10,15 @@ lunar是一款无第三方依赖的公历(阳历)和农历(阴历、老黄历)�
 
 [English](https://github.com/6tail/lunar-java/blob/master/README_EN.md)
 
-非快照版本存在月干支的重大错误不建议使用，请使用快照版本。
+### 正式版本
+
+```xml
+<dependency>
+  <groupId>cn.6tail</groupId>
+  <artifactId>lunar</artifactId>
+  <version>1.1.1</version>
+</dependency>
+```
  
 ### 快照版本
 

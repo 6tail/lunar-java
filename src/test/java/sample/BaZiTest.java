@@ -2,8 +2,9 @@ package sample;
 
 import com.nlf.calendar.Lunar;
 import com.nlf.calendar.Solar;
-import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.List;
 
 /**
  * 八字测试
@@ -59,11 +60,38 @@ public class BaZiTest {
   }
 
   @Test
+  public void testBazi2Solar6() {
+    List<Solar> l = Solar.fromBaZi("庚子", "戊寅", "戊寅", "癸亥");
+    // [2020-02-05 22:00:00, 1960-02-20 22:00:00]
+    for (Solar solar : l) {
+      System.out.println(solar.toFullString());
+    }
+  }
+
+  @Test
   public void test7(){
     Solar solar = new Solar(2020,5,26,23,43,0);
     Lunar lunar = solar.getLunar();
     //[庚子, 辛巳, 庚午, 丙子]
     System.out.println(lunar.getBaZi());
+  }
+
+  @Test
+  public void testBazi2Solar7() {
+    List<Solar> l = Solar.fromBaZi("庚子", "辛巳", "庚午", "丙子");
+    // [2020-07-21 22:00:00, 1960-08-05 22:00:00]
+    for (Solar solar : l) {
+      System.out.println(solar.toFullString());
+    }
+  }
+
+  @Test
+  public void testBazi2Solar() {
+    List<Solar> l = Solar.fromBaZi("庚子", "癸未", "乙丑", "丁亥");
+    // [2020-05-26 23:00:00, 2020-05-27 00:00:00]
+    for (Solar solar : l) {
+      System.out.println(solar.toFullString());
+    }
   }
 
 }

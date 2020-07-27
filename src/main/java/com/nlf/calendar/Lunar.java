@@ -1507,6 +1507,53 @@ public class Lunar{
     return l;
   }
 
+  private List<String> getBaZiShiShenZhi(String zhi){
+    List<String> baZi = getBaZi();
+    String dayGan = baZi.get(2).substring(0,1);
+    List<String> hideGan = LunarUtil.ZHI_HIDE_GAN.get(zhi);
+    List<String> l = new ArrayList<String>(hideGan.size());
+    for(String gan:hideGan){
+      l.add(LunarUtil.SHI_SHEN_ZHI.get(dayGan+zhi+gan));
+    }
+    return l;
+  }
+
+  /**
+   * 获取八字年支十神
+   * @return 八字年支十神
+   */
+  public List<String> getBaZiShiShenYearZhi(){
+    List<String> baZi = getBaZi();
+    return getBaZiShiShenZhi(baZi.get(0).substring(1));
+  }
+
+  /**
+   * 获取八字月支十神
+   * @return 八字月支十神
+   */
+  public List<String> getBaZiShiShenMonthZhi(){
+    List<String> baZi = getBaZi();
+    return getBaZiShiShenZhi(baZi.get(1).substring(1));
+  }
+
+  /**
+   * 获取八字日支十神
+   * @return 八字日支十神
+   */
+  public List<String> getBaZiShiShenDayZhi(){
+    List<String> baZi = getBaZi();
+    return getBaZiShiShenZhi(baZi.get(2).substring(1));
+  }
+
+  /**
+   * 获取八字时支十神
+   * @return 八字时支十神
+   */
+  public List<String> getBaZiShiShenTimeZhi(){
+    List<String> baZi = getBaZi();
+    return getBaZiShiShenZhi(baZi.get(3).substring(1));
+  }
+
   /**
    * 获取十二执星：建、除、满、平、定、执、破、危、成、收、开、闭。当月支与日支相同即为建，依次类推
    * @return 执星

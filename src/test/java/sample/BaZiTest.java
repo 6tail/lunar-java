@@ -103,4 +103,24 @@ public class BaZiTest {
     }
   }
 
+  @Test
+  public void testBaziShiShenZhi() {
+    Solar solar = new Solar(2020,1,1,22,35,0);
+    Lunar lunar = solar.getLunar();
+    //[己亥, 丙子, 癸卯, 癸亥]
+    System.out.println(lunar.getBaZi());
+    //[七杀, 正财, 日主, 比肩]
+    System.out.println(lunar.getBaZiShiShenGan());
+    //[劫财, 比肩, 食神, 劫财]
+    System.out.println(lunar.getBaZiShiShenZhi());
+    //[劫财, 伤官]
+    System.out.println(lunar.getBaZiShiShenYearZhi());
+    //[比肩]
+    System.out.println(lunar.getBaZiShiShenMonthZhi());
+    //[食神]
+    System.out.println(lunar.getBaZiShiShenDayZhi());
+    //[劫财, 伤官]
+    System.out.println(lunar.getBaZiShiShenTimeZhi());
+  }
+
 }

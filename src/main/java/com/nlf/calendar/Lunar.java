@@ -72,6 +72,8 @@ public class Lunar{
   private int minute;
   /** 阳历秒钟 */
   private int second;
+  /** 八字 */
+  private EightChar eightChar;
   /** 24节气表（对应阳历的准确时刻） */
   private Map<String,Solar> jieQi = new LinkedHashMap<String, Solar>();
 
@@ -1436,122 +1438,121 @@ public class Lunar{
   /**
    * 获取八字，男性也称乾造，女性也称坤造（以立春交接时刻作为新年的开始）
    * @return 八字（男性也称乾造，女性也称坤造）
+   * @deprecated 使用getEightChar
    */
+  @Deprecated
   public List<String> getBaZi(){
     List<String> l = new ArrayList<String>(4);
-    l.add(getYearInGanZhiExact());
-    l.add(getMonthInGanZhiExact());
-    l.add(getDayInGanZhiExact());
-    l.add(getTimeInGanZhi());
+    EightChar eightChar = getEightChar();
+    l.add(eightChar.getYear());
+    l.add(eightChar.getMonth());
+    l.add(eightChar.getDay());
+    l.add(eightChar.getTime());
     return l;
   }
 
   /**
    * 获取八字五行
    * @return 八字五行
+   * @deprecated 使用getEightChar
    */
+  @Deprecated
   public List<String> getBaZiWuXing(){
-    List<String> baZi = getBaZi();
-    List<String> l = new ArrayList<String>(baZi.size());
-    for(String ganZhi:baZi){
-      String gan = ganZhi.substring(0,1);
-      String zhi = ganZhi.substring(1);
-      l.add(LunarUtil.WU_XING_GAN.get(gan)+LunarUtil.WU_XING_ZHI.get(zhi));
-    }
+    List<String> l = new ArrayList<String>(4);
+    EightChar eightChar = getEightChar();
+    l.add(eightChar.getYearWuXing());
+    l.add(eightChar.getMonthWuXing());
+    l.add(eightChar.getDayWuXing());
+    l.add(eightChar.getTimeWuXing());
     return l;
   }
 
   /**
    * 获取八字纳音
    * @return 八字纳音
+   * @deprecated 使用getEightChar
    */
+  @Deprecated
   public List<String> getBaZiNaYin(){
-    List<String> baZi = getBaZi();
-    List<String> l = new ArrayList<String>(baZi.size());
-    for(String ganZhi:baZi){
-      l.add(LunarUtil.NAYIN.get(ganZhi));
-    }
+    List<String> l = new ArrayList<String>(4);
+    EightChar eightChar = getEightChar();
+    l.add(eightChar.getYearNaYin());
+    l.add(eightChar.getMonthNaYin());
+    l.add(eightChar.getDayNaYin());
+    l.add(eightChar.getTimeNaYin());
     return l;
   }
 
   /**
    * 获取八字天干十神，日柱十神为日主，其余三柱根据天干十神表查询
    * @return 八字天干十神
+   * @deprecated 使用getEightChar
    */
+  @Deprecated
   public List<String> getBaZiShiShenGan(){
-    List<String> baZi = getBaZi();
-    String yearGan = baZi.get(0).substring(0,1);
-    String monthGan = baZi.get(1).substring(0,1);
-    String dayGan = baZi.get(2).substring(0,1);
-    String timeGan = baZi.get(3).substring(0,1);
-    List<String> l = new ArrayList<String>(baZi.size());
-    l.add(LunarUtil.SHI_SHEN_GAN.get(dayGan+yearGan));
-    l.add(LunarUtil.SHI_SHEN_GAN.get(dayGan+monthGan));
-    l.add("日主");
-    l.add(LunarUtil.SHI_SHEN_GAN.get(dayGan+timeGan));
+    List<String> l = new ArrayList<String>(4);
+    EightChar eightChar = getEightChar();
+    l.add(eightChar.getYearShiShenGan());
+    l.add(eightChar.getMonthShiShenGan());
+    l.add(eightChar.getDayShiShenGan());
+    l.add(eightChar.getTimeShiShenGan());
     return l;
   }
 
   /**
    * 获取八字地支十神，根据地支十神表查询
    * @return 八字地支十神
+   * @deprecated 使用getEightChar
    */
+  @Deprecated
   public List<String> getBaZiShiShenZhi(){
-    List<String> baZi = getBaZi();
-    String dayGan = baZi.get(2).substring(0,1);
-    List<String> l = new ArrayList<String>(baZi.size());
-    for(String ganZhi:baZi){
-      String zhi = ganZhi.substring(1);
-      l.add(LunarUtil.SHI_SHEN_ZHI.get(dayGan+zhi+LunarUtil.ZHI_HIDE_GAN.get(zhi).get(0)));
-    }
-    return l;
-  }
-
-  private List<String> getBaZiShiShenZhi(String zhi){
-    List<String> baZi = getBaZi();
-    String dayGan = baZi.get(2).substring(0,1);
-    List<String> hideGan = LunarUtil.ZHI_HIDE_GAN.get(zhi);
-    List<String> l = new ArrayList<String>(hideGan.size());
-    for(String gan:hideGan){
-      l.add(LunarUtil.SHI_SHEN_ZHI.get(dayGan+zhi+gan));
-    }
+    List<String> l = new ArrayList<String>(4);
+    EightChar eightChar = getEightChar();
+    l.add(eightChar.getYearShiShenZhi().get(0));
+    l.add(eightChar.getMonthShiShenZhi().get(0));
+    l.add(eightChar.getDayShiShenZhi().get(0));
+    l.add(eightChar.getTimeShiShenZhi().get(0));
     return l;
   }
 
   /**
    * 获取八字年支十神
    * @return 八字年支十神
+   * @deprecated 使用getEightChar
    */
+  @Deprecated
   public List<String> getBaZiShiShenYearZhi(){
-    List<String> baZi = getBaZi();
-    return getBaZiShiShenZhi(baZi.get(0).substring(1));
+    return getEightChar().getYearShiShenZhi();
   }
 
   /**
    * 获取八字月支十神
    * @return 八字月支十神
+   * @deprecated 使用getEightChar
    */
+  @Deprecated
   public List<String> getBaZiShiShenMonthZhi(){
-    List<String> baZi = getBaZi();
-    return getBaZiShiShenZhi(baZi.get(1).substring(1));
+    return getEightChar().getMonthShiShenZhi();
   }
 
   /**
    * 获取八字日支十神
    * @return 八字日支十神
+   * @deprecated 使用getEightChar
    */
+  @Deprecated
   public List<String> getBaZiShiShenDayZhi(){
-    List<String> baZi = getBaZi();
-    return getBaZiShiShenZhi(baZi.get(2).substring(1));
+    return getEightChar().getDayShiShenZhi();
   }
 
   /**
    * 获取八字时支十神
    * @return 八字时支十神
+   * @deprecated 使用getEightChar
    */
+  @Deprecated
   public List<String> getBaZiShiShenTimeZhi(){
-    List<String> baZi = getBaZi();
-    return getBaZiShiShenZhi(baZi.get(3).substring(1));
+    return getEightChar().getTimeShiShenZhi();
   }
 
   /**
@@ -2060,7 +2061,46 @@ public class Lunar{
     return second;
   }
 
+  public int getTimeGanIndex() {
+    return timeGanIndex;
+  }
+
+  public int getTimeZhiIndex() {
+    return timeZhiIndex;
+  }
+
+  public int getDayGanIndexExact() {
+    return dayGanIndexExact;
+  }
+
+  public int getDayZhiIndexExact() {
+    return dayZhiIndexExact;
+  }
+
+  public int getMonthGanIndexExact() {
+    return monthGanIndexExact;
+  }
+
+  public int getMonthZhiIndexExact() {
+    return monthZhiIndexExact;
+  }
+
+  public int getYearGanIndexExact(){
+    return yearGanIndexExact;
+  }
+
+  public int getYearZhiIndexExact(){
+    return yearZhiIndexExact;
+  }
+
   public Solar getSolar(){
     return solar;
+  }
+
+  public EightChar getEightChar(){
+    if(null==eightChar){
+      eightChar = new EightChar(this);
+    }
+    return eightChar;
   }
 }

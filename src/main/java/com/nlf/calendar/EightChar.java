@@ -42,6 +42,10 @@ public class EightChar {
     this.lunar = lunar;
   }
 
+  public static EightChar fromLunar(Lunar lunar){
+    return new EightChar(lunar);
+  }
+
   @Override
   public String toString(){
     return getYear()+" "+getMonth()+" "+getDay()+" "+getTime();
@@ -103,7 +107,7 @@ public class EightChar {
     return LunarUtil.SHI_SHEN_GAN.get(getDayGan()+getYearGan());
   }
 
-  private List<String> getYearShiShenZhi(String zhi){
+  private List<String> getShiShenZhi(String zhi){
     List<String> hideGan = LunarUtil.ZHI_HIDE_GAN.get(zhi);
     List<String> l = new ArrayList<String>(hideGan.size());
     for(String gan:hideGan){
@@ -117,7 +121,7 @@ public class EightChar {
    * @return 十神
    */
   public List<String> getYearShiShenZhi(){
-    return getYearShiShenZhi(getYearZhi());
+    return getShiShenZhi(getYearZhi());
   }
 
   private String getDiShi(int zhiIndex){
@@ -201,7 +205,7 @@ public class EightChar {
    * @return 十神
    */
   public List<String> getMonthShiShenZhi(){
-    return getYearShiShenZhi(getMonthZhi());
+    return getShiShenZhi(getMonthZhi());
   }
 
   /**
@@ -273,7 +277,7 @@ public class EightChar {
    * @return 十神
    */
   public List<String> getDayShiShenZhi(){
-    return getYearShiShenZhi(getDayZhi());
+    return getShiShenZhi(getDayZhi());
   }
 
   /**
@@ -345,7 +349,7 @@ public class EightChar {
    * @return 十神
    */
   public List<String> getTimeShiShenZhi(){
-    return getYearShiShenZhi(getTimeZhi());
+    return getShiShenZhi(getTimeZhi());
   }
 
   /**
@@ -362,11 +366,11 @@ public class EightChar {
    */
   public String getTaiYuan(){
     int ganIndex = lunar.getMonthGanIndexExact() + 1;
-    if(ganIndex>10){
+    if(ganIndex>=10){
       ganIndex -= 10;
     }
     int zhiIndex = lunar.getMonthZhiIndexExact() + 3;
-    if(zhiIndex>12){
+    if(zhiIndex>=12){
       zhiIndex -= 12;
     }
     return LunarUtil.GAN[ganIndex+1]+LunarUtil.ZHI[zhiIndex+1];

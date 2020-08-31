@@ -1915,6 +1915,89 @@ public class Lunar{
     return jieQi;
   }
 
+  /**
+   * 获取下一节（顺推的第一个节）
+   * @return 节气
+   */
+  public JieQi getNextJie(){
+    return getNearJieQi(true,LunarUtil.JIE);
+  }
+
+  /**
+   * 获取上一节（逆推的第一个节）
+   * @return 节气
+   */
+  public JieQi getPrevJie(){
+    return getNearJieQi(false,LunarUtil.JIE);
+  }
+
+  /**
+   * 获取下一节气（顺推的第一个节气）
+   * @return 节气
+   */
+  public JieQi getNextJieQi(){
+    return getNearJieQi(true,null);
+  }
+
+  /**
+   * 获取上一节气（逆推的第一个节气）
+   * @return 节气
+   */
+  public JieQi getPrevJieQi(){
+    return getNearJieQi(false,null);
+  }
+
+  /**
+   * 获取最近的节气，如果未找到匹配的，返回null
+   * @param forward 是否顺推，true为顺推，false为逆推
+   * @param conditions 过滤条件，如果设置过滤条件，仅返回匹配该名称的
+   * @return 节气
+   */
+  protected JieQi getNearJieQi(boolean forward, String[] conditions){
+    String name = null;
+    Solar near = null;
+    Set<String> filters = new HashSet<String>();
+    if(null!=conditions) {
+      Collections.addAll(filters, conditions);
+    }
+    boolean filter = !filters.isEmpty();
+    String today = solar.toYmdHms();
+    for(Map.Entry<String,Solar> entry:jieQi.entrySet()){
+      String jq = entry.getKey();
+      if("DONG_ZHI".equals(jq)){
+        jq = "冬至";
+      }
+      if(filter){
+        if(!filters.contains(jq)){
+          continue;
+        }
+      }
+      Solar solar = entry.getValue();
+      String day = solar.toYmdHms();
+      if(forward){
+        if(day.compareTo(today)<0){
+          continue;
+        }
+        if(null==near || day.compareTo(near.toYmdHms())<0){
+          name = jq;
+          near = solar;
+        }
+      }else{
+        if(day.compareTo(today)>0){
+          continue;
+        }
+        if(null==near || day.compareTo(near.toYmdHms())>0) {
+          name = jq;
+          near = solar;
+        }
+      }
+    }
+    if(null==near){
+      return null;
+    }
+    return new JieQi(name, near);
+  }
+
   public String toFullString(){
     StringBuilder s = new StringBuilder();
     s.append(toString());

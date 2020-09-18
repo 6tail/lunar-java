@@ -12,6 +12,14 @@ import com.nlf.calendar.util.SolarUtil;
  *
  */
 public class Lunar{
+  /** 节气表头部追加农历上年末的节气名(节令：大雪)，以示区分 */
+  public static final String JIE_QI_PREPEND = "DA_XUE";
+  /** 节气表尾部追加农历下年初的节气名(气令：冬至)，以示区分 */
+  public static final String JIE_QI_APPEND = "DONG_ZHI";
+  /** 农历年初节气名(气令：冬至) */
+  public static final String JIE_QI_FIRST = "冬至";
+  /** 农历年末节气名(节令：大雪) */
+  public static final String JIE_QI_LAST = "大雪";
   /** 1弧度对应的角秒 */
   private static final double SECOND_PER_RAD = 180 * 3600 / Math.PI;
   /** 节气表，国标以冬至为首个节气 */
@@ -389,14 +397,17 @@ public class Lunar{
     if (calcJieQi(w) > jd){
       w -= 365.2422;
     }
+    //追加上一农历年末的大雪
+    double q = calcJieQi(w - 15.2184);
+    jieQi.put(JIE_QI_PREPEND, Solar.fromJulianDay(qiAccurate2(q) + Solar.J2000));
     int size = JIE_QI.length;
     for (int i=0;i<size;i++) {
-      double q = calcJieQi(w + 15.2184 * i);
+      q = calcJieQi(w + 15.2184 * i);
       jieQi.put(JIE_QI[i], Solar.fromJulianDay(qiAccurate2(q) + Solar.J2000));
     }
-    //追加下一农历年的冬至
-    double q = calcJieQi(w + 15.2184 * size);
-    jieQi.put("DONG_ZHI", Solar.fromJulianDay(qiAccurate2(q) + Solar.J2000));
+    //追加下一农历年初的冬至
+    q = calcJieQi(w + 15.2184 * size);
+    jieQi.put(JIE_QI_APPEND, Solar.fromJulianDay(qiAccurate2(q) + Solar.J2000));
   }
 
   /**
@@ -926,9 +937,9 @@ public class Lunar{
   }
 
   /**
-   * 获取节
+   * 获取节令
    *
-   * @return 节
+   * @return 节令
    */
   public String getJie(){
     for(String jie:LunarUtil.JIE){
@@ -937,13 +948,18 @@ public class Lunar{
         return jie;
       }
     }
+    // 追加的节令：大雪
+    Solar d = jieQi.get(JIE_QI_PREPEND);
+    if(d.getYear()==solar.getYear()&&d.getMonth()==solar.getMonth()&&d.getDay()==solar.getDay()){
+      return JIE_QI_LAST;
+    }
     return "";
   }
 
   /**
-   * 获取气
+   * 获取气令
    *
-   * @return 气
+   * @return 气令
    */
   public String getQi(){
     for(String qi:LunarUtil.QI){
@@ -952,9 +968,10 @@ public class Lunar{
         return qi;
       }
     }
-    Solar d = jieQi.get("DONG_ZHI");
+    // 追加的气令：冬至
+    Solar d = jieQi.get(JIE_QI_APPEND);
     if(d.getYear()==solar.getYear()&&d.getMonth()==solar.getMonth()&&d.getDay()==solar.getDay()){
-      return "冬至";
+      return JIE_QI_FIRST;
     }
     return "";
   }
@@ -1846,6 +1863,7 @@ public class Lunar{
   public NineStar getDayNineStar(){
     //顺逆
     String solarYmd = solar.toYmd();
+    String dongZhi = jieQi.get("冬至").toYmd();
     String yuShui = jieQi.get("雨水").toYmd();
     String guYu = jieQi.get("谷雨").toYmd();
     String xiaZhi = jieQi.get("夏至").toYmd();
@@ -1854,7 +1872,7 @@ public class Lunar{
 
     int start = 6;
     boolean asc = false;
-    if(solarYmd.compareTo(jieQi.get("冬至").toYmd())>=0 && solarYmd.compareTo(yuShui)<0){
+    if(solarYmd.compareTo(dongZhi)>=0 && solarYmd.compareTo(yuShui)<0){
       asc = true;
       start = 1;
     } else if(solarYmd.compareTo(yuShui)>=0 && solarYmd.compareTo(guYu)<0){
@@ -1916,7 +1934,7 @@ public class Lunar{
   }
 
   /**
-   * 获取下一节（顺推的第一个节）
+   * 获取下一节令（顺推的第一个节令）
    * @return 节气
    */
   public JieQi getNextJie(){
@@ -1924,7 +1942,7 @@ public class Lunar{
   }
 
   /**
-   * 获取上一节（逆推的第一个节）
+   * 获取上一节令（逆推的第一个节令）
    * @return 节气
    */
   public JieQi getPrevJie(){
@@ -1964,8 +1982,11 @@ public class Lunar{
     String today = solar.toYmdHms();
     for(Map.Entry<String,Solar> entry:jieQi.entrySet()){
       String jq = entry.getKey();
-      if("DONG_ZHI".equals(jq)){
-        jq = "冬至";
+      if(JIE_QI_APPEND.equals(jq)){
+        jq = JIE_QI_FIRST;
+      }
+      if(JIE_QI_PREPEND.equals(jq)){
+        jq = JIE_QI_LAST;
       }
       if(filter){
         if(!filters.contains(jq)){

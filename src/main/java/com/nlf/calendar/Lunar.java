@@ -1950,6 +1950,22 @@ public class Lunar{
   }
 
   /**
+   * 获取下一气令（顺推的第一个气令）
+   * @return 节气
+   */
+  public JieQi getNextQi(){
+    return getNearJieQi(true,LunarUtil.QI);
+  }
+
+  /**
+   * 获取上一气令（逆推的第一个气令）
+   * @return 节气
+   */
+  public JieQi getPrevQi(){
+    return getNearJieQi(false,LunarUtil.QI);
+  }
+
+  /**
    * 获取下一节气（顺推的第一个节气）
    * @return 节气
    */
@@ -2019,6 +2035,54 @@ public class Lunar{
     return new JieQi(name, near);
   }
 
+  /**
+   * 获取节气名称，如果无节气，返回空字符串
+   * @return 节气名称
+   */
+  public String getJieQi(){
+    String name = "";
+    for(Map.Entry<String,Solar> jq:jieQi.entrySet()){
+      Solar d = jq.getValue();
+      if(d.getYear()==solar.getYear()&&d.getMonth()==solar.getMonth()&&d.getDay()==solar.getDay()){
+        name = jq.getKey();
+        break;
+      }
+    }
+    if(JIE_QI_APPEND.equals(name)){
+      name = JIE_QI_FIRST;
+    }else if(JIE_QI_PREPEND.equals(name)){
+      name = JIE_QI_LAST;
+    }
+    return name;
+  }
+
+  /**
+   * 获取当天节气对象，如果无节气，返回null
+   * @return 节气对象
+   */
+  public JieQi getCurrentJieQi(){
+    String name = getJieQi();
+    return name.length()>0 ? new JieQi(name,solar) : null;
+  }
+
+  /**
+   * 获取当天节令对象，如果无节令，返回null
+   * @return 节气对象
+   */
+  public JieQi getCurrentJie(){
+    String name = getJie();
+    return name.length()>0 ? new JieQi(name,solar) : null;
+  }
+
+  /**
+   * 获取当天气令对象，如果无气令，返回null
+   * @return 节气对象
+   */
+  public JieQi getCurrentQi(){
+    String name = getQi();
+    return name.length()>0 ? new JieQi(name,solar) : null;
+  }
+
   public String toFullString(){
     StringBuilder s = new StringBuilder();
     s.append(toString());
@@ -2058,7 +2122,7 @@ public class Lunar{
       s.append(f);
       s.append(")");
     }
-    String jq = getJie()+getQi();
+    String jq = getJieQi();
     if(jq.length()>0){
       s.append(" [");
       s.append(jq);

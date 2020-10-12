@@ -1,5 +1,7 @@
 package com.nlf.calendar;
 
+import com.nlf.calendar.util.LunarUtil;
+
 /**
  * 节气
  *
@@ -13,11 +15,22 @@ public class JieQi {
   /** 阳历日期 */
   private Solar solar;
 
+  /** 是否节令 */
+  private boolean jie;
+
+  /** 是否气令 */
+  private boolean qi;
+
   public JieQi() {
   }
 
+  /**
+   * 初始化
+   * @param name 名称
+   * @param solar 阳历日期
+   */
   public JieQi(String name, Solar solar) {
-    this.name = name;
+    setName(name);
     this.solar = solar;
   }
 
@@ -35,6 +48,18 @@ public class JieQi {
    */
   public void setName(String name) {
     this.name = name;
+    for(String key: LunarUtil.JIE){
+      if(key.equals(name)){
+        this.jie = true;
+        return;
+      }
+    }
+    for(String key: LunarUtil.QI){
+      if(key.equals(name)){
+        this.qi = true;
+        return;
+      }
+    }
   }
 
   /**
@@ -53,4 +78,24 @@ public class JieQi {
     this.solar = solar;
   }
 
+  /**
+   * 是否节令
+   * @return true/false
+   */
+  public boolean isJie(){
+    return jie;
+  }
+
+  /**
+   * 是否气令
+   * @return true/false
+   */
+  public boolean isQi() {
+    return qi;
+  }
+
+  @Override
+  public String toString(){
+    return name;
+  }
 }

@@ -1,5 +1,6 @@
 package test;
 
+import com.nlf.calendar.Lunar;
 import com.nlf.calendar.Solar;
 import org.junit.Assert;
 import org.junit.Test;
@@ -94,5 +95,64 @@ public class JieQiTest {
       String name = entry.getKey();
       Assert.assertEquals(name, entry.getValue(), result.get(name).toYmdHms());
     }
+  }
+
+  @Test
+  public void test() {
+    Solar solar = Solar.fromYmd(1986,1,5);
+    Lunar lunar = solar.getLunar();
+    Assert.assertEquals("小寒", lunar.getJie());
+    Assert.assertEquals("小寒", lunar.getJieQi());
+    Assert.assertEquals("小寒", lunar.getCurrentJieQi().getName());
+    Assert.assertEquals("小寒", lunar.getCurrentJie().getName());
+    Assert.assertNull(lunar.getCurrentQi());
+    Assert.assertEquals("", lunar.getQi());
+    Assert.assertEquals("大雪", lunar.getPrevJie().getName());
+    Assert.assertEquals("冬至", lunar.getPrevQi().getName());
+    Assert.assertEquals("冬至", lunar.getPrevJieQi().getName());
+
+    solar = Solar.fromYmdHms(1986,1,20,17,0,0);
+    lunar = solar.getLunar();
+    Assert.assertEquals("大寒", lunar.getQi());
+    Assert.assertEquals("大寒", lunar.getJieQi());
+    Assert.assertEquals("大寒", lunar.getCurrentJieQi().getName());
+    Assert.assertEquals("大寒", lunar.getCurrentQi().getName());
+    Assert.assertNull(lunar.getCurrentJie());
+    Assert.assertEquals("", lunar.getJie());
+    Assert.assertEquals("立春", lunar.getNextJie().getName());
+    Assert.assertEquals("雨水", lunar.getNextQi().getName());
+    Assert.assertEquals("立春", lunar.getNextJieQi().getName());
+    solar = Solar.fromYmdHms(1986,1,20,14,0,0);
+    lunar = solar.getLunar();
+    Assert.assertEquals("小寒", lunar.getPrevJie().getName());
+    Assert.assertEquals("冬至", lunar.getPrevQi().getName());
+    Assert.assertEquals("小寒", lunar.getPrevJieQi().getName());
+
+    solar = Solar.fromYmd(1986,12,7);
+    lunar = solar.getLunar();
+    Assert.assertEquals("大雪", lunar.getJie());
+    Assert.assertEquals("大雪", lunar.getJieQi());
+    Assert.assertEquals("大雪", lunar.getCurrentJieQi().getName());
+    Assert.assertEquals("大雪", lunar.getCurrentJie().getName());
+    Assert.assertNull(lunar.getCurrentQi());
+    Assert.assertEquals("", lunar.getQi());
+    Assert.assertEquals("大雪", lunar.getNextJie().getName());
+    Assert.assertEquals("冬至", lunar.getNextQi().getName());
+    Assert.assertEquals("大雪", lunar.getNextJieQi().getName());
+
+    solar = Solar.fromYmd(1986,1,1);
+    lunar = solar.getLunar();
+    Assert.assertEquals("", lunar.getJie());
+    Assert.assertEquals("", lunar.getQi());
+    Assert.assertEquals("", lunar.getJieQi());
+    Assert.assertNull(lunar.getCurrentJieQi());
+    Assert.assertNull(lunar.getCurrentJie());
+    Assert.assertNull(lunar.getCurrentQi());
+    Assert.assertEquals("大雪", lunar.getPrevJie().getName());
+    Assert.assertEquals("冬至", lunar.getPrevQi().getName());
+    Assert.assertEquals("冬至", lunar.getPrevJieQi().getName());
+    Assert.assertEquals("小寒", lunar.getNextJie().getName());
+    Assert.assertEquals("大寒", lunar.getNextQi().getName());
+    Assert.assertEquals("小寒", lunar.getNextJieQi().getName());
   }
 }

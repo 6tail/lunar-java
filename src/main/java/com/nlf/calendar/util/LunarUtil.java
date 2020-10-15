@@ -1142,17 +1142,11 @@ public class LunarUtil{
   public static int nextMonth(int y,int m){
     int n = Math.abs(m)+1;
     if(m>0){
-      int index = y-BASE_YEAR+BASE_INDEX;
-      int v = LUNAR_MONTH[2*index+1];
-      v = (v>>4)&0x0F;
-      if(v==m){
+      if(m==getLeapMonth(y)){
         n = -m;
       }
     }
-    if(n==13){
-      n = 1;
-    }
-    return n;
+    return 13!=n?n:1;
   }
 
   /**

@@ -23,6 +23,33 @@ public class BaZiTest {
   }
 
   @Test
+  public void testGanZhi2() {
+    Solar solar = new Solar(1988, 2, 15, 23, 30, 0);
+    Lunar lunar = solar.getLunar();
+    EightChar eightChar = lunar.getEightChar();
+    Assert.assertEquals("年柱", "戊辰", eightChar.getYear());
+    Assert.assertEquals("月柱", "甲寅", eightChar.getMonth());
+    Assert.assertEquals("日柱", "辛丑", eightChar.getDay());
+    Assert.assertEquals("时柱", "戊子", eightChar.getTime());
+
+    solar = new Solar(1988, 2, 15, 22, 30, 0);
+    lunar = solar.getLunar();
+    eightChar = lunar.getEightChar();
+    Assert.assertEquals("年柱", "戊辰", eightChar.getYear());
+    Assert.assertEquals("月柱", "甲寅", eightChar.getMonth());
+    Assert.assertEquals("日柱", "庚子", eightChar.getDay());
+    Assert.assertEquals("时柱", "丁亥", eightChar.getTime());
+
+    solar = new Solar(1988, 2, 2, 22, 30, 0);
+    lunar = solar.getLunar();
+    eightChar = lunar.getEightChar();
+    Assert.assertEquals("年柱", "丁卯", eightChar.getYear());
+    Assert.assertEquals("月柱", "癸丑", eightChar.getMonth());
+    Assert.assertEquals("日柱", "丁亥", eightChar.getDay());
+    Assert.assertEquals("时柱", "辛亥", eightChar.getTime());
+  }
+
+  @Test
   public void testHideGan() {
     Solar solar = new Solar(2005, 12, 23, 8, 37, 0);
     Lunar lunar = solar.getLunar();

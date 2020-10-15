@@ -414,6 +414,7 @@ public class Lunar{
    * 计算干支纪年
    */
   private void computeYear(){
+    //以正月初一开始
     yearGanIndex = (year+LunarUtil.BASE_YEAR_GANZHI_INDEX)%10;
     yearZhiIndex = (year+LunarUtil.BASE_YEAR_GANZHI_INDEX)%12;
 
@@ -425,32 +426,57 @@ public class Lunar{
     int gExact = yearGanIndex;
     int zExact = yearZhiIndex;
 
+    //获取立春的阳历时刻
+    Solar liChun = jieQi.get("立春");
+
+    //阳历和阴历年份相同代表正月初一及以后
     if(year==solar.getYear()){
-      //获取立春的阳历时刻
-      Solar liChun = jieQi.get("立春");
       //立春日期判断
       if(solar.toYmd().compareTo(liChun.toYmd())<0) {
         g--;
-        if(g<0){
-          g += 10;
-        }
         z--;
-        if(z<0){
-          z += 12;
-        }
       }
       //立春交接时刻判断
       if(solar.toYmdHms().compareTo(liChun.toYmdHms())<0) {
         gExact--;
-        if(gExact<0){
-          gExact += 10;
-        }
         zExact--;
-        if(zExact<0){
-          zExact += 12;
-        }
+      }
+    }else{
+      if(solar.toYmd().compareTo(liChun.toYmd())>=0) {
+        g++;
+        z++;
+      }
+      if(solar.toYmdHms().compareTo(liChun.toYmdHms())>=0) {
+        gExact++;
+        zExact++;
       }
     }
+
+    if(g<0){
+      g += 10;
+    }
+    if(g>=10){
+      g-=10;
+    }
+    if(z<0){
+      z += 12;
+    }
+    if(z>=12){
+      z-=12;
+    }
+    if(gExact<0){
+      gExact += 10;
+    }
+    if(gExact>=10){
+      gExact-=10;
+    }
+    if(zExact<0){
+      zExact += 12;
+    }
+    if(zExact>=12){
+      zExact-=12;
+    }
+
     yearGanIndexByLiChun = g;
     yearZhiIndexByLiChun = z;
 
@@ -2270,5 +2296,56 @@ public class Lunar{
       eightChar = new EightChar(this);
     }
     return eightChar;
+  }
+
+  /**
+   * 获取往后推几天的农历日期，如果要往前推，则天数用负数
+   * @param days 天数
+   * @return 农历日期
+   */
+  public Lunar next(int days){
+    int y = year;
+    int m = month;
+    int d = day;
+    if(days>0){
+      int daysInMonth = LunarUtil.getDaysOfMonth(y,m);
+      int rest = day+days;
+      while(daysInMonth < rest) {
+        if(m>0){
+          if(LunarUtil.getLeapMonth(y)!=m){
+            m++;
+          }else{
+            m = -m;
+          }
+        }else{
+          m = 1-m;
+        }
+        if(13==m){
+          y++;
+          m=1;
+        }
+        rest -= daysInMonth;
+        daysInMonth = LunarUtil.getDaysOfMonth(y,m);
+      }
+      d = rest;
+    }else if(days<0){
+      int daysInMonth = day;
+      int rest = -days;
+      while(daysInMonth <= rest) {
+        if(m>0){
+          m--;
+          if(0==m){
+            y--;
+            m = LunarUtil.getLeapMonth(y)!=12?12:-12;
+          }
+        }else{
+          m = -m;
+        }
+        rest -= daysInMonth;
+        daysInMonth = LunarUtil.getDaysOfMonth(y,m);
+      }
+      d = daysInMonth - rest;
+    }
+    return new Lunar(y,m,d,hour,minute,second);
   }
 }

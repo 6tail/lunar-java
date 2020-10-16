@@ -20,6 +20,14 @@ public class Lunar{
   public static final String JIE_QI_FIRST = "冬至";
   /** 农历年末节气名(节令：大雪) */
   public static final String JIE_QI_LAST = "大雪";
+  /** 节气表尾部追加阳历下年初的第一个节气名(节令：小寒)，以示区分 */
+  public static final String JIE_APPEND_SOLAR_FIRST = "XIAO_HAN";
+  /** 节气表尾部追加阳历下年初的第二个节气名(气令：大寒)，以示区分 */
+  public static final String QI_APPEND_SOLAR_SECOND = "DA_HAN";
+  /** 阳历下年初的第一个节气名(节令：小寒) */
+  public static final String JIE_SOLAR_FIRST = "小寒";
+  /** 阳历下年初的第二个节气名(气令：大寒) */
+  public static final String QI_SOLAR_SECOND = "大寒";
   /** 1弧度对应的角秒 */
   private static final double SECOND_PER_RAD = 180 * 3600 / Math.PI;
   /** 节气表，国标以冬至为首个节气 */
@@ -408,6 +416,16 @@ public class Lunar{
     //追加下一农历年初的冬至
     q = calcJieQi(w + 15.2184 * size);
     jieQi.put(JIE_QI_APPEND, Solar.fromJulianDay(qiAccurate2(q) + Solar.J2000));
+
+    //追加下一阳历年初的小寒
+    size++;
+    q = calcJieQi(w + 15.2184 * size);
+    jieQi.put(JIE_APPEND_SOLAR_FIRST, Solar.fromJulianDay(qiAccurate2(q) + Solar.J2000));
+
+    //追加下一阳历年初的大寒
+    size++;
+    q = calcJieQi(w + 15.2184 * size);
+    jieQi.put(QI_APPEND_SOLAR_SECOND, Solar.fromJulianDay(qiAccurate2(q) + Solar.J2000));
   }
 
   /**
@@ -979,6 +997,11 @@ public class Lunar{
     if(d.getYear()==solar.getYear()&&d.getMonth()==solar.getMonth()&&d.getDay()==solar.getDay()){
       return JIE_QI_LAST;
     }
+    // 追加的节令：小寒
+    d = jieQi.get(JIE_APPEND_SOLAR_FIRST);
+    if(d.getYear()==solar.getYear()&&d.getMonth()==solar.getMonth()&&d.getDay()==solar.getDay()){
+      return JIE_SOLAR_FIRST;
+    }
     return "";
   }
 
@@ -998,6 +1021,11 @@ public class Lunar{
     Solar d = jieQi.get(JIE_QI_APPEND);
     if(d.getYear()==solar.getYear()&&d.getMonth()==solar.getMonth()&&d.getDay()==solar.getDay()){
       return JIE_QI_FIRST;
+    }
+    // 追加的气令：大寒
+    d = jieQi.get(QI_APPEND_SOLAR_SECOND);
+    if(d.getYear()==solar.getYear()&&d.getMonth()==solar.getMonth()&&d.getDay()==solar.getDay()){
+      return QI_SOLAR_SECOND;
     }
     return "";
   }
@@ -2030,6 +2058,12 @@ public class Lunar{
       if(JIE_QI_PREPEND.equals(jq)){
         jq = JIE_QI_LAST;
       }
+      if(JIE_APPEND_SOLAR_FIRST.equals(jq)){
+        jq = JIE_SOLAR_FIRST;
+      }
+      if(QI_APPEND_SOLAR_SECOND.equals(jq)){
+        jq = QI_SOLAR_SECOND;
+      }
       if(filter){
         if(!filters.contains(jq)){
           continue;
@@ -2078,6 +2112,10 @@ public class Lunar{
       name = JIE_QI_FIRST;
     }else if(JIE_QI_PREPEND.equals(name)){
       name = JIE_QI_LAST;
+    }else if(JIE_APPEND_SOLAR_FIRST.equals(name)){
+      name = JIE_SOLAR_FIRST;
+    }else if(QI_APPEND_SOLAR_SECOND.equals(name)){
+      name = QI_SOLAR_SECOND;
     }
     return name;
   }

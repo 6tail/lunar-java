@@ -154,5 +154,23 @@ public class JieQiTest {
     Assert.assertEquals("小寒", lunar.getNextJie().getName());
     Assert.assertEquals("大寒", lunar.getNextQi().getName());
     Assert.assertEquals("小寒", lunar.getNextJieQi().getName());
+
+
+    solar = Solar.fromYmd(2012,12,25);
+    lunar = solar.getLunar();
+    Assert.assertEquals("", lunar.getJie());
+    Assert.assertEquals("", lunar.getQi());
+    Assert.assertEquals("", lunar.getJieQi());
+    Assert.assertNull(lunar.getCurrentJie());
+    Assert.assertNull(lunar.getCurrentQi());
+    Assert.assertNull(lunar.getCurrentJieQi());
+
+    Assert.assertEquals("小寒", lunar.getNextJie().getName());
+    Assert.assertEquals("大寒", lunar.getNextQi().getName());
+    Assert.assertEquals("小寒", lunar.getNextJieQi().getName());
+
+    Assert.assertEquals("大雪", lunar.getPrevJie().getName());
+    Assert.assertEquals("冬至", lunar.getPrevQi().getName());
+    Assert.assertEquals("冬至", lunar.getPrevJieQi().getName());
   }
 }

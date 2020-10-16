@@ -16,7 +16,7 @@ lunar是一款无第三方依赖的公历(阳历)和农历(阴历、老黄历)�
 <dependency>
   <groupId>cn.6tail</groupId>
   <artifactId>lunar</artifactId>
-  <version>1.1.5</version>
+  <version>1.1.6</version>
 </dependency>
 ```
  
@@ -44,7 +44,7 @@ lunar是一款无第三方依赖的公历(阳历)和农历(阴历、老黄历)�
 
 ### 下载jar
 
-如果使用jar，建议下载最新的SNAPSHOT版本，bug将得到及时的修复。
+如果使用jar，建议下载最新的版本，bug将得到及时的修复。
 
 [Download](https://github.com/6tail/lunar-java/releases)
 

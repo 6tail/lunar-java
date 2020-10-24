@@ -323,7 +323,7 @@ public class Lunar{
     t -= (53 * t * t + 334116 * Math.cos(4.67 + 628.307585 * t) + 2061 * Math.cos(2.678 + 628.3076 * t) * t) / v / 10000000;
     l = 48950621.66 + 6283319653.318 * t + 53 * t * t + 334166 * Math.cos(4.669257 + 628.307585 * t) + 3489 * Math.cos(4.6261 + 1256.61517 * t) + 2060.6 * Math.cos(2.67823 + 628.307585 * t) * t - 994 - 834 * Math.sin(2.1824 - 33.75705 * t);
     t -= (l / 10000000 - w) / 628.332 + (32 * (t + 1.8) * (t + 1.8) - 20) / 86400 / 36525;
-    return t * 36525 + 8 / 24;
+    return t * 36525 + 8D / 24;
   }
 
   private double saLonT2(double w){
@@ -336,10 +336,10 @@ public class Lunar{
 
   private double qiHigh(double w){
     double t = saLonT2(w) * 36525;
-    t = t - dtT(t) + 8 / 24;
+    t = t - dtT(t) + 8D / 24;
     double v = ((t + 0.5) % 1) * 86400;
     if (v < 1200 || v > 86400 - 1200){
-      t = saLonT(w) * 36525 - dtT(t) + 8 / 24;
+      t = saLonT(w) * 36525 - dtT(t) + 8D / 24;
     }
     return t;
   }
@@ -381,7 +381,7 @@ public class Lunar{
 
   private double qiAccurate(double w){
     double t = saLonT(w) * 36525;
-    return t - dtT(t) + 8 * 1D / 24;
+    return t - dtT(t) + 8D / 24;
   }
 
   private double qiAccurate2(double jd) {

@@ -39,16 +39,17 @@ public class DaYun {
     this.yun = yun;
     this.lunar = yun.getLunar();
     this.index = index;
+    int birthYear = lunar.getSolar().getYear();
     int year = yun.getStartSolar().getYear();
     if (index < 1) {
-      this.startYear = lunar.getSolar().getYear();
+      this.startYear = birthYear;
       this.startAge = 1;
       this.endYear = year - 1;
-      this.endAge = yun.getStartYear();
+      this.endAge = year - birthYear;
     } else {
       int add = (index - 1) * 10;
       this.startYear = year + add;
-      this.startAge = yun.getStartYear() + add + 1;
+      this.startAge = this.startYear - birthYear + 1;
       this.endYear = this.startYear + 9;
       this.endAge = this.startAge + 9;
     }

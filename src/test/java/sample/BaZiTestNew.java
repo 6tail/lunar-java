@@ -250,6 +250,54 @@ public class BaZiTestNew {
       Assert.assertEquals(ages[i], liuNian.getAge());
       Assert.assertEquals(years[i] + "年", ganZhi[i], liuNian.getGanZhi());
     }
+
+    solar = new Solar(1981, 8, 16, 9, 30, 0);
+    lunar = solar.getLunar();
+    bazi = lunar.getEightChar();
+    yun = bazi.getYun(1);
+    daYun = yun.getDaYun();
+
+    years = new int[]{1981, 1982, 1983};
+    ages = new int[]{1, 2, 3};
+    ganZhi = new String[]{"辛酉","壬戌","癸亥"};
+    l = daYun[0].getLiuNian();
+    for (int i = 0, j = l.length; i < j; i++) {
+      LiuNian liuNian = l[i];
+      Assert.assertEquals(years[i], liuNian.getYear());
+      Assert.assertEquals(ages[i], liuNian.getAge());
+      Assert.assertEquals(ganZhi[i], liuNian.getGanZhi());
+    }
+
+    years = new int[]{1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993};
+    ages = new int[]{4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+    ganZhi = new String[]{"甲子","乙丑","丙寅","丁卯","戊辰","己巳","庚午","辛未","壬申","癸酉"};
+    l = daYun[1].getLiuNian();
+    for (int i = 0, j = l.length; i < j; i++) {
+      LiuNian liuNian = l[i];
+      Assert.assertEquals(years[i], liuNian.getYear());
+      Assert.assertEquals(ages[i], liuNian.getAge());
+      Assert.assertEquals(ganZhi[i], liuNian.getGanZhi());
+    }
+
+    solar = new Solar(1981, 8, 8, 1, 30, 0);
+    lunar = solar.getLunar();
+    bazi = lunar.getEightChar();
+    yun = bazi.getYun(1);
+    daYun = yun.getDaYun();
+
+    l = daYun[0].getLiuNian();
+    Assert.assertEquals(0, l.length);
+
+    years = new int[]{1981,1982, 1983,1984, 1985, 1986, 1987, 1988, 1989, 1990};
+    ages = new int[]{1,2,3,4,5,6,7,8,9,10};
+    ganZhi = new String[]{"辛酉","壬戌","癸亥","甲子","乙丑","丙寅","丁卯","戊辰","己巳","庚午"};
+    l = daYun[1].getLiuNian();
+    for (int i = 0, j = l.length; i < j; i++) {
+      LiuNian liuNian = l[i];
+      Assert.assertEquals(years[i], liuNian.getYear());
+      Assert.assertEquals(ages[i], liuNian.getAge());
+      Assert.assertEquals(ganZhi[i], liuNian.getGanZhi());
+    }
   }
 
   /**

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.nlf.calendar.util.HolidayUtil;
 import com.nlf.calendar.util.LunarUtil;
 import com.nlf.calendar.util.SolarUtil;
 
@@ -536,9 +537,36 @@ public class Solar{
    * @return 阳历日期
    */
   public Solar next(int days){
+    return next(days,false);
+  }
+
+  public Solar next(int days, boolean onlyWorkday){
     Calendar c = Calendar.getInstance();
     c.set(year,month-1,day,hour,minute,second);
-    c.add(Calendar.DATE,days);
+    if(0!=days) {
+      if(!onlyWorkday){
+        c.add(Calendar.DATE,days);
+      }else {
+        int rest = Math.abs(days);
+        int add = days < 1 ? -1 : 1;
+        while (rest > 0) {
+          c.add(Calendar.DATE, add);
+          boolean work = true;
+          Holiday holiday = HolidayUtil.getHoliday(c.get(Calendar.YEAR), c.get(Calendar.MONTH)+1, c.get(Calendar.DAY_OF_MONTH));
+          if(null==holiday){
+            int week = c.get(Calendar.DAY_OF_WEEK);
+            if(1==week||7==week){
+              work = false;
+            }
+          }else{
+            work = holiday.isWork();
+          }
+          if(work){
+            rest--;
+          }
+        }
+      }
+    }
     return new Solar(c);
   }
 

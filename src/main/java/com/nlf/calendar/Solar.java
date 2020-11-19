@@ -324,15 +324,10 @@ public class Solar{
       l.add(f);
     }
     //计算几月第几个星期几对应的节日
-    //第几周
-    int weekInMonth = calendar.get(Calendar.WEEK_OF_MONTH);
+    int weeks = (int)Math.ceil(day/7D);
     //星期几，0代表星期天
     int week = getWeek();
-    //星期天很奇葩，会多算一周，需要减掉
-    if(0==week){
-      weekInMonth--;
-    }
-    f = SolarUtil.WEEK_FESTIVAL.get(month+"-"+weekInMonth+"-"+week);
+    f = SolarUtil.WEEK_FESTIVAL.get(month+"-"+weeks+"-"+week);
     if(null!=f){
       l.add(f);
     }

@@ -61,4 +61,20 @@ public class LiuYue {
     String zhi = LunarUtil.ZHI[(index + LunarUtil.BASE_MONTH_ZHI_INDEX) % 12 + 1];
     return gan + zhi;
   }
+
+  /**
+   * 获取所在旬
+   * @return 旬
+   */
+  public String getXun(){
+    return LunarUtil.getXun(getGanZhi());
+  }
+
+  /**
+   * 获取旬空(空亡)
+   * @return 旬空(空亡)
+   */
+  public String getXunKong(){
+    return LunarUtil.getXunKong(getGanZhi());
+  }
 }

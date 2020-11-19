@@ -61,6 +61,26 @@ public class LiuNian {
     return LunarUtil.JIA_ZI[offset];
   }
 
+  /**
+   * 获取所在旬
+   * @return 旬
+   */
+  public String getXun(){
+    return LunarUtil.getXun(getGanZhi());
+  }
+
+  /**
+   * 获取旬空(空亡)
+   * @return 旬空(空亡)
+   */
+  public String getXunKong(){
+    return LunarUtil.getXunKong(getGanZhi());
+  }
+
+  /**
+   * 获取流月
+   * @return 流月
+   */
   public LiuYue[] getLiuYue() {
     int n = 12;
     LiuYue[] l = new LiuYue[n];

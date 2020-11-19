@@ -101,6 +101,22 @@ public class DaYun {
   }
 
   /**
+   * 获取所在旬
+   * @return 旬
+   */
+  public String getXun(){
+    return LunarUtil.getXun(getGanZhi());
+  }
+
+  /**
+   * 获取旬空(空亡)
+   * @return 旬空(空亡)
+   */
+  public String getXunKong(){
+    return LunarUtil.getXunKong(getGanZhi());
+  }
+
+  /**
    * 获取流年
    *
    * @return 流年

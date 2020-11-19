@@ -524,5 +524,67 @@ public class EightChar {
     return new Yun(this, gender);
   }
 
+  /**
+   * 获取年柱所在旬
+   * @return 旬
+   */
+  public String getYearXun(){
+    return lunar.getYearXunExact();
+  }
 
+  /**
+   * 获取年柱旬空(空亡)
+   * @return 旬空(空亡)
+   */
+  public String getYearXunKong(){
+    return lunar.getYearXunKongExact();
+  }
+
+  /**
+   * 获取月柱所在旬
+   * @return 旬
+   */
+  public String getMonthXun(){
+    return lunar.getMonthXunExact();
+  }
+
+  /**
+   * 获取月柱旬空(空亡)
+   * @return 旬空(空亡)
+   */
+  public String getMonthXunKong(){
+    return lunar.getMonthXunKongExact();
+  }
+
+  /**
+   * 获取日柱所在旬
+   * @return 旬
+   */
+  public String getDayXun(){
+    return lunar.getDayXunExact();
+  }
+
+  /**
+   * 获取日柱旬空(空亡)
+   * @return 旬空(空亡)
+   */
+  public String getDayXunKong(){
+    return lunar.getDayXunKongExact();
+  }
+
+  /**
+   * 获取时柱所在旬
+   * @return 旬
+   */
+  public String getTimeXun(){
+    return lunar.getTimeXun();
+  }
+
+  /**
+   * 获取时柱旬空(空亡)
+   * @return 旬空(空亡)
+   */
+  public String getTimeXunKong(){
+    return lunar.getTimeXunKong();
+  }
 }

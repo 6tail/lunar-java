@@ -114,6 +114,7 @@ public class SolarUtil{
       put("10-13",Collections.nCopies(1,"中国少年先锋队诞辰日"));
       put("10-25",Collections.nCopies(1,"抗美援朝纪念日"));
       put("11-12",Collections.nCopies(1,"孙中山诞辰纪念日"));
+      put("11-17",Collections.nCopies(1,"国际大学生节"));
       put("11-28",Collections.nCopies(1,"恩格斯诞辰纪念日"));
       put("12-1",Collections.nCopies(1,"世界艾滋病日"));
       put("12-12",Collections.nCopies(1,"西安事变纪念日"));

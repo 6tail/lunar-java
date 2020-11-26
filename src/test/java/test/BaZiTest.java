@@ -87,10 +87,90 @@ public class BaZiTest {
     Solar solar = new Solar(2005, 12, 23, 8, 37, 0);
     Lunar lunar = solar.getLunar();
     EightChar eightChar = lunar.getEightChar();
-    Assert.assertEquals("年柱地势", "临官", eightChar.getYearDiShi());
-    Assert.assertEquals("月柱地势", "长生", eightChar.getMonthDiShi());
-    Assert.assertEquals("日柱地势", "死", eightChar.getDayDiShi());
-    Assert.assertEquals("时柱地势", "墓", eightChar.getTimeDiShi());
+    Assert.assertEquals(String.format("年柱地势(%s%s)",eightChar.getDayGan(),eightChar.getYearZhi()), "临官", eightChar.getYearDiShi());
+    Assert.assertEquals(String.format("月柱地势(%s%s)",eightChar.getDayGan(),eightChar.getMonthZhi()), "长生", eightChar.getMonthDiShi());
+    Assert.assertEquals(String.format("日柱地势(%s%s)",eightChar.getDayGan(),eightChar.getDayZhi()), "死", eightChar.getDayDiShi());
+    Assert.assertEquals(String.format("时柱地势(%s%s)",eightChar.getDayGan(),eightChar.getTimeZhi()), "墓", eightChar.getTimeDiShi());
+
+    solar = new Solar(2020, 11, 18, 17, 37, 0);
+    lunar = solar.getLunar();
+    eightChar = lunar.getEightChar();
+    Assert.assertEquals(String.format("年柱地势(%s%s)",eightChar.getDayGan(),eightChar.getYearZhi()), "病", eightChar.getYearDiShi());
+    Assert.assertEquals(String.format("月柱地势(%s%s)",eightChar.getDayGan(),eightChar.getMonthZhi()), "死", eightChar.getMonthDiShi());
+    Assert.assertEquals(String.format("日柱地势(%s%s)",eightChar.getDayGan(),eightChar.getDayZhi()), "衰", eightChar.getDayDiShi());
+    Assert.assertEquals(String.format("时柱地势(%s%s)",eightChar.getDayGan(),eightChar.getTimeZhi()), "绝", eightChar.getTimeDiShi());
+
+    solar = new Solar(2020, 11, 19, 17, 37, 0);
+    lunar = solar.getLunar();
+    eightChar = lunar.getEightChar();
+    Assert.assertEquals(String.format("年柱地势(%s%s)",eightChar.getDayGan(),eightChar.getYearZhi()), "胎", eightChar.getYearDiShi());
+    Assert.assertEquals(String.format("月柱地势(%s%s)",eightChar.getDayGan(),eightChar.getMonthZhi()), "绝", eightChar.getMonthDiShi());
+    Assert.assertEquals(String.format("日柱地势(%s%s)",eightChar.getDayGan(),eightChar.getDayZhi()), "长生", eightChar.getDayDiShi());
+    Assert.assertEquals(String.format("时柱地势(%s%s)",eightChar.getDayGan(),eightChar.getTimeZhi()), "死", eightChar.getTimeDiShi());
+
+    solar = new Solar(2020, 11, 20, 17, 37, 0);
+    lunar = solar.getLunar();
+    eightChar = lunar.getEightChar();
+    Assert.assertEquals(String.format("年柱地势(%s%s)",eightChar.getDayGan(),eightChar.getYearZhi()), "绝", eightChar.getYearDiShi());
+    Assert.assertEquals(String.format("月柱地势(%s%s)",eightChar.getDayGan(),eightChar.getMonthZhi()), "胎", eightChar.getMonthDiShi());
+    Assert.assertEquals(String.format("日柱地势(%s%s)",eightChar.getDayGan(),eightChar.getDayZhi()), "病", eightChar.getDayDiShi());
+    Assert.assertEquals(String.format("时柱地势(%s%s)",eightChar.getDayGan(),eightChar.getTimeZhi()), "长生", eightChar.getTimeDiShi());
+
+    solar = new Solar(2020, 11, 21, 17, 37, 0);
+    lunar = solar.getLunar();
+    eightChar = lunar.getEightChar();
+    Assert.assertEquals(String.format("年柱地势(%s%s)",eightChar.getDayGan(),eightChar.getYearZhi()), "胎", eightChar.getYearDiShi());
+    Assert.assertEquals(String.format("月柱地势(%s%s)",eightChar.getDayGan(),eightChar.getMonthZhi()), "绝", eightChar.getMonthDiShi());
+    Assert.assertEquals(String.format("日柱地势(%s%s)",eightChar.getDayGan(),eightChar.getDayZhi()), "冠带", eightChar.getDayDiShi());
+    Assert.assertEquals(String.format("时柱地势(%s%s)",eightChar.getDayGan(),eightChar.getTimeZhi()), "死", eightChar.getTimeDiShi());
+
+    solar = new Solar(2020, 11, 22, 17, 37, 0);
+    lunar = solar.getLunar();
+    eightChar = lunar.getEightChar();
+    Assert.assertEquals(String.format("年柱地势(%s%s)",eightChar.getDayGan(),eightChar.getYearZhi()), "绝", eightChar.getYearDiShi());
+    Assert.assertEquals(String.format("月柱地势(%s%s)",eightChar.getDayGan(),eightChar.getMonthZhi()), "胎", eightChar.getMonthDiShi());
+    Assert.assertEquals(String.format("日柱地势(%s%s)",eightChar.getDayGan(),eightChar.getDayZhi()), "帝旺", eightChar.getDayDiShi());
+    Assert.assertEquals(String.format("时柱地势(%s%s)",eightChar.getDayGan(),eightChar.getTimeZhi()), "长生", eightChar.getTimeDiShi());
+
+    solar = new Solar(2020, 11, 23, 17, 37, 0);
+    lunar = solar.getLunar();
+    eightChar = lunar.getEightChar();
+    Assert.assertEquals(String.format("年柱地势(%s%s)",eightChar.getDayGan(),eightChar.getYearZhi()), "死", eightChar.getYearDiShi());
+    Assert.assertEquals(String.format("月柱地势(%s%s)",eightChar.getDayGan(),eightChar.getMonthZhi()), "病", eightChar.getMonthDiShi());
+    Assert.assertEquals(String.format("日柱地势(%s%s)",eightChar.getDayGan(),eightChar.getDayZhi()), "沐浴", eightChar.getDayDiShi());
+    Assert.assertEquals(String.format("时柱地势(%s%s)",eightChar.getDayGan(),eightChar.getTimeZhi()), "帝旺", eightChar.getTimeDiShi());
+
+    solar = new Solar(2020, 11, 24, 17, 37, 0);
+    lunar = solar.getLunar();
+    eightChar = lunar.getEightChar();
+    Assert.assertEquals(String.format("年柱地势(%s%s)",eightChar.getDayGan(),eightChar.getYearZhi()), "长生", eightChar.getYearDiShi());
+    Assert.assertEquals(String.format("月柱地势(%s%s)",eightChar.getDayGan(),eightChar.getMonthZhi()), "沐浴", eightChar.getMonthDiShi());
+    Assert.assertEquals(String.format("日柱地势(%s%s)",eightChar.getDayGan(),eightChar.getDayZhi()), "衰", eightChar.getDayDiShi());
+    Assert.assertEquals(String.format("时柱地势(%s%s)",eightChar.getDayGan(),eightChar.getTimeZhi()), "临官", eightChar.getTimeDiShi());
+
+    solar = new Solar(2020, 11, 25, 17, 37, 0);
+    lunar = solar.getLunar();
+    eightChar = lunar.getEightChar();
+    Assert.assertEquals(String.format("年柱地势(%s%s)",eightChar.getDayGan(),eightChar.getYearZhi()), "帝旺", eightChar.getYearDiShi());
+    Assert.assertEquals(String.format("月柱地势(%s%s)",eightChar.getDayGan(),eightChar.getMonthZhi()), "临官", eightChar.getMonthDiShi());
+    Assert.assertEquals(String.format("日柱地势(%s%s)",eightChar.getDayGan(),eightChar.getDayZhi()), "长生", eightChar.getDayDiShi());
+    Assert.assertEquals(String.format("时柱地势(%s%s)",eightChar.getDayGan(),eightChar.getTimeZhi()), "沐浴", eightChar.getTimeDiShi());
+
+    solar = new Solar(2020, 11, 26, 17, 37, 0);
+    lunar = solar.getLunar();
+    eightChar = lunar.getEightChar();
+    Assert.assertEquals(String.format("年柱地势(%s%s)",eightChar.getDayGan(),eightChar.getYearZhi()), "临官", eightChar.getYearDiShi());
+    Assert.assertEquals(String.format("月柱地势(%s%s)",eightChar.getDayGan(),eightChar.getMonthZhi()), "帝旺", eightChar.getMonthDiShi());
+    Assert.assertEquals(String.format("日柱地势(%s%s)",eightChar.getDayGan(),eightChar.getDayZhi()), "病", eightChar.getDayDiShi());
+    Assert.assertEquals(String.format("时柱地势(%s%s)",eightChar.getDayGan(),eightChar.getTimeZhi()), "病", eightChar.getTimeDiShi());
+
+    solar = new Solar(2020, 11, 27, 17, 37, 0);
+    lunar = solar.getLunar();
+    eightChar = lunar.getEightChar();
+    Assert.assertEquals(String.format("年柱地势(%s%s)",eightChar.getDayGan(),eightChar.getYearZhi()), "沐浴", eightChar.getYearDiShi());
+    Assert.assertEquals(String.format("月柱地势(%s%s)",eightChar.getDayGan(),eightChar.getMonthZhi()), "长生", eightChar.getMonthDiShi());
+    Assert.assertEquals(String.format("日柱地势(%s%s)",eightChar.getDayGan(),eightChar.getDayZhi()), "养", eightChar.getDayDiShi());
+    Assert.assertEquals(String.format("时柱地势(%s%s)",eightChar.getDayGan(),eightChar.getTimeZhi()), "胎", eightChar.getTimeDiShi());
   }
 
   @Test

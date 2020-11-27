@@ -191,6 +191,15 @@ public class BaZiTestNew {
     Assert.assertEquals(9, yun.getStartMonth());
     Assert.assertEquals(20, yun.getStartDay());
     Assert.assertEquals("1973-09-12", yun.getStartSolar().toYmd());
+
+    solar = new Solar(1992, 2, 2, 12, 0, 0);
+    lunar = solar.getLunar();
+    bazi = lunar.getEightChar();
+    yun = bazi.getYun(1);
+    Assert.assertEquals(9, yun.getStartYear());
+    Assert.assertEquals(0, yun.getStartMonth());
+    Assert.assertEquals(10, yun.getStartDay());
+    Assert.assertEquals("2001-02-12", yun.getStartSolar().toYmd());
   }
 
   /**
@@ -208,6 +217,25 @@ public class BaZiTestNew {
     EightChar bazi = lunar.getEightChar();
     Yun yun = bazi.getYun(0);
     DaYun[] l = yun.getDaYun();
+    for (int i = 0, j = l.length; i < j; i++) {
+      DaYun daYun = l[i];
+      Assert.assertEquals(startYears[i], daYun.getStartYear());
+      Assert.assertEquals(endYears[i], daYun.getEndYear());
+      Assert.assertEquals(startAges[i], daYun.getStartAge());
+      Assert.assertEquals(endAges[i], daYun.getEndAge());
+      Assert.assertEquals(yearGanZhi[i], daYun.getGanZhi());
+    }
+
+    startYears = new int[]{1992, 2001, 2011, 2021, 2031, 2041, 2051, 2061, 2071, 2081};
+    endYears = new int[]{2000, 2010, 2020, 2030, 2040, 2050, 2060, 2070, 2080, 2090};
+    startAges = new int[]{1, 10, 20, 30, 40, 50, 60, 70, 80, 90};
+    endAges = new int[]{9, 19, 29, 39, 49, 59, 69, 79, 89, 99};
+    yearGanZhi = new String[]{"", "庚子", "己亥", "戊戌", "丁酉", "丙申", "乙未", "甲午", "癸巳", "壬辰"};
+    solar = new Solar(1992, 2, 2, 12, 0, 0);
+    lunar = solar.getLunar();
+    bazi = lunar.getEightChar();
+    yun = bazi.getYun(1);
+    l = yun.getDaYun();
     for (int i = 0, j = l.length; i < j; i++) {
       DaYun daYun = l[i];
       Assert.assertEquals(startYears[i], daYun.getStartYear());
@@ -298,6 +326,23 @@ public class BaZiTestNew {
       Assert.assertEquals(ages[i], liuNian.getAge());
       Assert.assertEquals(ganZhi[i], liuNian.getGanZhi());
     }
+
+    solar = new Solar(1992, 2, 2, 12, 0, 0);
+    lunar = solar.getLunar();
+    bazi = lunar.getEightChar();
+    yun = bazi.getYun(1);
+    daYun = yun.getDaYun();
+
+    years = new int[]{1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000};
+    ages = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
+    ganZhi = new String[]{"壬申","癸酉","甲戌", "乙亥", "丙子", "丁丑", "戊寅", "己卯", "庚辰"};
+    l = daYun[0].getLiuNian();
+    for (int i = 0, j = l.length; i < j; i++) {
+      LiuNian liuNian = l[i];
+      Assert.assertEquals(years[i], liuNian.getYear());
+      Assert.assertEquals(ages[i], liuNian.getAge());
+      Assert.assertEquals(ganZhi[i], liuNian.getGanZhi());
+    }
   }
 
   /**
@@ -332,6 +377,19 @@ public class BaZiTestNew {
       Assert.assertEquals(ages[i], xiaoYun.getAge());
       Assert.assertEquals(years[i] + "年", ganZhi[i], xiaoYun.getGanZhi());
     }
+
+    solar = new Solar(1992, 2, 2, 12, 0, 0);
+    lunar = solar.getLunar();
+    bazi = lunar.getEightChar();
+    yun = bazi.getYun(1);
+    daYun = yun.getDaYun();
+
+    ganZhi = new String[]{"丁巳", "丙辰", "乙卯", "甲寅", "癸丑", "壬子","辛亥","庚戌","己酉"};
+    l = daYun[0].getXiaoYun();
+    for (int i = 0, j = l.length; i < j; i++) {
+      XiaoYun xiaoYun = l[i];
+      Assert.assertEquals(ganZhi[i], xiaoYun.getGanZhi());
+    }
   }
 
   /**
@@ -356,6 +414,21 @@ public class BaZiTestNew {
     ganZhi = new String[]{"庚寅", "辛卯", "壬辰", "癸巳", "甲午", "乙未", "丙申", "丁酉", "戊戌", "己亥", "庚子", "辛丑"};
     liuNian = daYun[4].getLiuNian();
     l = liuNian[2].getLiuYue();
+    for (int i = 0, j = l.length; i < j; i++) {
+      LiuYue liuYue = l[i];
+      Assert.assertEquals(ganZhi[i], liuYue.getGanZhi());
+    }
+
+
+    solar = new Solar(1992, 2, 2, 12, 0, 0);
+    lunar = solar.getLunar();
+    bazi = lunar.getEightChar();
+    yun = bazi.getYun(1);
+    daYun = yun.getDaYun();
+
+    ganZhi = new String[]{"壬寅", "癸卯", "甲辰", "乙巳", "丙午", "丁未", "戊申", "己酉", "庚戌", "辛亥", "壬子", "癸丑"};
+    liuNian = daYun[0].getLiuNian();
+    l = liuNian[0].getLiuYue();
     for (int i = 0, j = l.length; i < j; i++) {
       LiuYue liuYue = l[i];
       Assert.assertEquals(ganZhi[i], liuYue.getGanZhi());

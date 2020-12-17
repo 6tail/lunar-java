@@ -55,10 +55,14 @@ public class Lunar{
   private int dayGanIndex;
   /** 日对应的地支下标，0-11 */
   private int dayZhiIndex;
-  /** 日对应的天干下标（最精确的，供八字用，晚子时算第二天），0-9 */
+  /** 日对应的天干下标（八字流派1，晚子时日柱算明天），0-9 */
   private int dayGanIndexExact;
-  /** 日对应的地支下标（最精确的，供八字用，晚子时算第二天），0-11 */
+  /** 日对应的地支下标（八字流派1，晚子时日柱算明天），0-11 */
   private int dayZhiIndexExact;
+  /** 日对应的天干下标（八字流派2，晚子时日柱算当天），0-9 */
+  private int dayGanIndexExact2;
+  /** 日对应的地支下标（八字流派2，晚子时日柱算当天），0-11 */
+  private int dayZhiIndexExact2;
   /** 月对应的天干下标（以节交接当天起算），0-9 */
   private int monthGanIndex;
   /** 月对应的地支下标（以节交接当天起算），0-11 */
@@ -564,7 +568,11 @@ public class Lunar{
     int dayGanExact = dayGanIndex;
     int dayZhiExact = dayZhiIndex;
 
-    // 晚子时（夜子/子夜）应算作第二天
+    // 八字流派2，晚子时（夜子/子夜）日柱算当天
+    dayGanIndexExact2 = dayGanExact;
+    dayZhiIndexExact2 = dayZhiExact;
+
+    // 八字流派1，晚子时（夜子/子夜）日柱算明天
     String hm = (hour<10?"0":"")+hour+":"+(minute<10?"0":"")+minute;
     if(hm.compareTo("23:00")>=0&&hm.compareTo("23:59")<=0){
       dayGanExact++;
@@ -807,12 +815,21 @@ public class Lunar{
   }
 
   /**
-   * 获取干支纪日（日柱，晚子时算第二天）
+   * 获取干支纪日（日柱，晚子时日柱算明天）
    *
    * @return 干支纪日（日柱），如己卯
    */
   public String getDayInGanZhiExact(){
     return getDayGanExact()+getDayZhiExact();
+  }
+
+  /**
+   * 获取干支纪日（日柱，晚子时日柱算当天）
+   *
+   * @return 干支纪日（日柱），如己卯
+   */
+  public String getDayInGanZhiExact2(){
+    return getDayGanExact2()+getDayZhiExact2();
   }
 
   /**
@@ -825,12 +842,21 @@ public class Lunar{
   }
 
   /**
-   * 获取日天干（晚子时算第二天）
+   * 获取日天干（晚子时日柱算明天）
    *
    * @return 日天干，如甲
    */
   public String getDayGanExact(){
     return LunarUtil.GAN[dayGanIndexExact+1];
+  }
+
+  /**
+   * 获取日天干（晚子时日柱算当天）
+   *
+   * @return 日天干，如甲
+   */
+  public String getDayGanExact2(){
+    return LunarUtil.GAN[dayGanIndexExact2+1];
   }
 
   /**
@@ -843,12 +869,21 @@ public class Lunar{
   }
 
   /**
-   * 获取日地支（晚子时算第二天）
+   * 获取日地支（晚子时日柱算明天）
    *
    * @return 日地支，如卯
    */
   public String getDayZhiExact(){
     return LunarUtil.ZHI[dayZhiIndexExact+1];
+  }
+
+  /**
+   * 获取日地支（晚子时日柱算当天）
+   *
+   * @return 日地支，如卯
+   */
+  public String getDayZhiExact2(){
+    return LunarUtil.ZHI[dayZhiIndexExact2+1];
   }
 
   /**
@@ -2308,8 +2343,16 @@ public class Lunar{
     return dayGanIndexExact;
   }
 
+  public int getDayGanIndexExact2() {
+    return dayGanIndexExact2;
+  }
+
   public int getDayZhiIndexExact() {
     return dayZhiIndexExact;
+  }
+
+  public int getDayZhiIndexExact2() {
+    return dayZhiIndexExact2;
   }
 
   public int getMonthGanIndexExact() {
@@ -2479,11 +2522,19 @@ public class Lunar{
   }
 
   /**
-   * 获取日所在旬（晚子时算第二天）
+   * 获取日所在旬（晚子时日柱算明天）
    * @return 旬
    */
   public String getDayXunExact(){
     return LunarUtil.getXun(getDayInGanZhiExact());
+  }
+
+  /**
+   * 获取日所在旬（晚子时日柱算当天）
+   * @return 旬
+   */
+  public String getDayXunExact2(){
+    return LunarUtil.getXun(getDayInGanZhiExact2());
   }
 
   /**
@@ -2495,11 +2546,19 @@ public class Lunar{
   }
 
   /**
-   * 获取值日空亡（晚子时算第二天）
+   * 获取值日空亡（晚子时日柱算明天）
    * @return 空亡(旬空)
    */
   public String getDayXunKongExact(){
     return LunarUtil.getXunKong(getDayInGanZhiExact());
+  }
+
+  /**
+   * 获取值日空亡（晚子时日柱算当天）
+   * @return 空亡(旬空)
+   */
+  public String getDayXunKongExact2(){
+    return LunarUtil.getXunKong(getDayInGanZhiExact2());
   }
 
   /**

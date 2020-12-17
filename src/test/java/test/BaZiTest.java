@@ -29,6 +29,12 @@ public class BaZiTest {
     EightChar eightChar = lunar.getEightChar();
     Assert.assertEquals("年柱", "戊辰", eightChar.getYear());
     Assert.assertEquals("月柱", "甲寅", eightChar.getMonth());
+    Assert.assertEquals("日柱", "庚子", eightChar.getDay());
+    Assert.assertEquals("时柱", "戊子", eightChar.getTime());
+
+    eightChar.setSect(1);
+    Assert.assertEquals("年柱", "戊辰", eightChar.getYear());
+    Assert.assertEquals("月柱", "甲寅", eightChar.getMonth());
     Assert.assertEquals("日柱", "辛丑", eightChar.getDay());
     Assert.assertEquals("时柱", "戊子", eightChar.getTime());
 

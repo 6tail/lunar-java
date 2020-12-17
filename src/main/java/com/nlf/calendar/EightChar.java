@@ -45,6 +45,11 @@ public class EightChar {
   };
 
   /**
+   * 流派，2晚子时日柱按当天，1晚子时日柱按明天
+   */
+  protected int sect = 2;
+
+  /**
    * 阴历
    */
   protected Lunar lunar;
@@ -60,6 +65,24 @@ public class EightChar {
   @Override
   public String toString() {
     return getYear() + " " + getMonth() + " " + getDay() + " " + getTime();
+  }
+
+  /**
+   * 获取流派
+   *
+   * @return 流派，2晚子时日柱按当天，1晚子时日柱按明天
+   */
+  public int getSect() {
+    return sect;
+  }
+
+  /**
+   * 设置流派
+   *
+   * @param sect 流派，2晚子时日柱按当天，1晚子时日柱按明天，其他值默认为2
+   */
+  public void setSect(int sect) {
+    this.sect = (1 == sect) ? 1 : 2;
   }
 
   /**
@@ -104,7 +127,7 @@ public class EightChar {
    * @return 五行
    */
   public String getYearWuXing() {
-    return LunarUtil.WU_XING_GAN.get(lunar.getYearGanExact()) + LunarUtil.WU_XING_ZHI.get(lunar.getYearZhiExact());
+    return LunarUtil.WU_XING_GAN.get(getYearGan()) + LunarUtil.WU_XING_ZHI.get(getYearZhi());
   }
 
   /**
@@ -143,9 +166,27 @@ public class EightChar {
     return getShiShenZhi(getYearZhi());
   }
 
+  /**
+   * 获取日干下标
+   *
+   * @return 日干下标，0-9
+   */
+  public int getDayGanIndex() {
+    return 2 == sect ? lunar.getDayGanIndexExact2() : lunar.getDayGanIndexExact();
+  }
+
+  /**
+   * 获取日支下标
+   *
+   * @return 日支下标，0-11
+   */
+  public int getDayZhiIndex() {
+    return 2 == sect ? lunar.getDayZhiIndexExact2() : lunar.getDayZhiIndexExact();
+  }
+
   private String getDiShi(int zhiIndex) {
     int offset = CHANG_SHENG_OFFSET.get(getDayGan());
-    int index = offset + (lunar.getDayGanIndexExact() % 2 == 0 ? zhiIndex : -zhiIndex);
+    int index = offset + (getDayGanIndex() % 2 == 0 ? zhiIndex : -zhiIndex);
     if (index >= 12) {
       index -= 12;
     }
@@ -206,7 +247,7 @@ public class EightChar {
    * @return 五行
    */
   public String getMonthWuXing() {
-    return LunarUtil.WU_XING_GAN.get(lunar.getMonthGanExact()) + LunarUtil.WU_XING_ZHI.get(lunar.getMonthZhiExact());
+    return LunarUtil.WU_XING_GAN.get(getMonthGan()) + LunarUtil.WU_XING_ZHI.get(getMonthZhi());
   }
 
   /**
@@ -251,7 +292,7 @@ public class EightChar {
    * @return 日柱
    */
   public String getDay() {
-    return lunar.getDayInGanZhiExact();
+    return 2 == sect ? lunar.getDayInGanZhiExact2() : lunar.getDayInGanZhiExact();
   }
 
   /**
@@ -260,7 +301,7 @@ public class EightChar {
    * @return 天干
    */
   public String getDayGan() {
-    return lunar.getDayGanExact();
+    return 2 == sect ? lunar.getDayGanExact2() : lunar.getDayGanExact();
   }
 
   /**
@@ -269,7 +310,7 @@ public class EightChar {
    * @return 地支
    */
   public String getDayZhi() {
-    return lunar.getDayZhiExact();
+    return 2 == sect ? lunar.getDayZhiExact2() : lunar.getDayZhiExact();
   }
 
   /**
@@ -287,7 +328,7 @@ public class EightChar {
    * @return 五行
    */
   public String getDayWuXing() {
-    return LunarUtil.WU_XING_GAN.get(lunar.getDayGanExact()) + LunarUtil.WU_XING_ZHI.get(lunar.getDayZhiExact());
+    return LunarUtil.WU_XING_GAN.get(getDayGan()) + LunarUtil.WU_XING_ZHI.get(getDayZhi());
   }
 
   /**
@@ -323,7 +364,7 @@ public class EightChar {
    * @return 地势
    */
   public String getDayDiShi() {
-    return getDiShi(lunar.getDayZhiIndexExact());
+    return getDiShi(getDayZhiIndex());
   }
 
   /**
@@ -526,65 +567,73 @@ public class EightChar {
 
   /**
    * 获取年柱所在旬
+   *
    * @return 旬
    */
-  public String getYearXun(){
+  public String getYearXun() {
     return lunar.getYearXunExact();
   }
 
   /**
    * 获取年柱旬空(空亡)
+   *
    * @return 旬空(空亡)
    */
-  public String getYearXunKong(){
+  public String getYearXunKong() {
     return lunar.getYearXunKongExact();
   }
 
   /**
    * 获取月柱所在旬
+   *
    * @return 旬
    */
-  public String getMonthXun(){
+  public String getMonthXun() {
     return lunar.getMonthXunExact();
   }
 
   /**
    * 获取月柱旬空(空亡)
+   *
    * @return 旬空(空亡)
    */
-  public String getMonthXunKong(){
+  public String getMonthXunKong() {
     return lunar.getMonthXunKongExact();
   }
 
   /**
    * 获取日柱所在旬
+   *
    * @return 旬
    */
-  public String getDayXun(){
-    return lunar.getDayXunExact();
+  public String getDayXun() {
+    return 2 == sect ? lunar.getDayXunExact2() : lunar.getDayXunExact();
   }
 
   /**
    * 获取日柱旬空(空亡)
+   *
    * @return 旬空(空亡)
    */
-  public String getDayXunKong(){
-    return lunar.getDayXunKongExact();
+  public String getDayXunKong() {
+    return 2 == sect ? lunar.getDayXunKongExact2() : lunar.getDayXunKongExact();
   }
 
   /**
    * 获取时柱所在旬
+   *
    * @return 旬
    */
-  public String getTimeXun(){
+  public String getTimeXun() {
     return lunar.getTimeXun();
   }
 
   /**
    * 获取时柱旬空(空亡)
+   *
    * @return 旬空(空亡)
    */
-  public String getTimeXunKong(){
+  public String getTimeXunKong() {
     return lunar.getTimeXunKong();
   }
 }

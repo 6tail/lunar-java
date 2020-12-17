@@ -208,7 +208,7 @@ public class Solar{
   }
 
   /**
-   * 通过八字获取阳历列表
+   * 通过八字获取阳历列表（晚子时日柱按当天）
    * @param yearGanZhi 年柱
    * @param monthGanZhi 月柱
    * @param dayGanZhi 日柱
@@ -216,6 +216,20 @@ public class Solar{
    * @return 符合的阳历列表
    */
   public static List<Solar> fromBaZi(String yearGanZhi,String monthGanZhi,String dayGanZhi,String timeGanZhi){
+    return fromBaZi(yearGanZhi,monthGanZhi,dayGanZhi,timeGanZhi,2);
+  }
+
+  /**
+   * 通过八字获取阳历列表
+   * @param yearGanZhi 年柱
+   * @param monthGanZhi 月柱
+   * @param dayGanZhi 日柱
+   * @param timeGanZhi 时柱
+   * @param sect 流派，2晚子时日柱按当天，1晚子时日柱按明天
+   * @return 符合的阳历列表
+   */
+  public static List<Solar> fromBaZi(String yearGanZhi,String monthGanZhi,String dayGanZhi,String timeGanZhi,int sect){
+    sect = (1==sect)?1:2;
     List<Solar> l = new ArrayList<Solar>();
     Solar today = new Solar();
     Lunar lunar = today.getLunar();
@@ -271,7 +285,8 @@ public class Solar{
         Solar solar = new Solar(year, month, day, hour, 0, 0);
         while (counter < 61) {
           lunar = solar.getLunar();
-          if (lunar.getYearInGanZhiExact().equals(yearGanZhi) && lunar.getMonthInGanZhiExact().equals(monthGanZhi) && lunar.getDayInGanZhiExact().equals(dayGanZhi) && lunar.getTimeInGanZhi().equals(timeGanZhi)) {
+          String dgz = (2==sect)?lunar.getDayInGanZhiExact2():lunar.getDayInGanZhiExact();
+          if (lunar.getYearInGanZhiExact().equals(yearGanZhi) && lunar.getMonthInGanZhiExact().equals(monthGanZhi) && dgz.equals(dayGanZhi) && lunar.getTimeInGanZhi().equals(timeGanZhi)) {
             l.add(solar);
             break;
           }

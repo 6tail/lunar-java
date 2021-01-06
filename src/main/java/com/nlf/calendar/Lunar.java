@@ -2339,6 +2339,38 @@ public class Lunar{
     return timeZhiIndex;
   }
 
+  public int getDayGanIndex() {
+    return dayGanIndex;
+  }
+
+  public int getDayZhiIndex() {
+    return dayZhiIndex;
+  }
+
+  public int getMonthGanIndex() {
+    return monthGanIndex;
+  }
+
+  public int getMonthZhiIndex() {
+    return monthZhiIndex;
+  }
+
+  public int getYearGanIndex() {
+    return yearGanIndex;
+  }
+
+  public int getYearZhiIndex() {
+    return yearZhiIndex;
+  }
+
+  public int getYearGanIndexByLiChun() {
+    return yearGanIndexByLiChun;
+  }
+
+  public int getYearZhiIndexByLiChun() {
+    return yearZhiIndexByLiChun;
+  }
+
   public int getDayGanIndexExact() {
     return dayGanIndexExact;
   }
@@ -2575,5 +2607,105 @@ public class Lunar{
    */
   public String getTimeXunKong(){
     return LunarUtil.getXunKong(getTimeInGanZhi());
+  }
+
+  /**
+   * 获取数九
+   * @return 数九，如果不是数九天，返回null
+   */
+  public ShuJiu getShuJiu(){
+    Calendar currentCalendar = Calendar.getInstance();
+    currentCalendar.set(solar.getYear(),solar.getMonth()-1,solar.getDay(),0,0,0);
+    currentCalendar.set(Calendar.MILLISECOND,0);
+    Solar start = jieQi.get(JIE_QI_APPEND);
+    Calendar startCalendar = Calendar.getInstance();
+    startCalendar.set(start.getYear(),start.getMonth()-1,start.getDay(),0,0,0);
+    startCalendar.set(Calendar.MILLISECOND,0);
+
+    if(currentCalendar.compareTo(startCalendar)<0){
+      start = jieQi.get(JIE_QI_FIRST);
+      startCalendar.set(start.getYear(),start.getMonth()-1,start.getDay(),0,0,0);
+    }
+
+    Calendar endCalendar = Calendar.getInstance();
+    endCalendar.set(start.getYear(),start.getMonth()-1,start.getDay(),0,0,0);
+    endCalendar.add(Calendar.DATE,81);
+    endCalendar.set(Calendar.MILLISECOND,0);
+
+    if(currentCalendar.compareTo(startCalendar)<0||currentCalendar.compareTo(endCalendar)>=0){
+      return null;
+    }
+
+    int days = (int)((currentCalendar.getTimeInMillis()-startCalendar.getTimeInMillis())/(1000*60*60*24));
+    return new ShuJiu(LunarUtil.NUMBER[days/9+1]+"九",days%9+1);
+  }
+
+  /**
+   * 获取三伏
+   * @return 三伏，如果不是伏天，返回null
+   */
+  public Fu getFu(){
+    Calendar currentCalendar = Calendar.getInstance();
+    currentCalendar.set(solar.getYear(),solar.getMonth()-1,solar.getDay(),0,0,0);
+    currentCalendar.set(Calendar.MILLISECOND,0);
+    Solar xiaZhi = jieQi.get("夏至");
+    Solar liQiu = jieQi.get("立秋");
+    Calendar startCalendar = Calendar.getInstance();
+    startCalendar.set(xiaZhi.getYear(),xiaZhi.getMonth()-1,xiaZhi.getDay(),0,0,0);
+    startCalendar.set(Calendar.MILLISECOND,0);
+
+    // 第1个庚日
+    int add = 6-xiaZhi.getLunar().getDayGanIndex();
+    if(add<0){
+      add += 10;
+    }
+    // 第3个庚日，即初伏第1天
+    add += 20;
+    startCalendar.add(Calendar.DATE,add);
+
+    // 初伏以前
+    if(currentCalendar.compareTo(startCalendar)<0){
+      return null;
+    }
+
+    int days = (int)((currentCalendar.getTimeInMillis()-startCalendar.getTimeInMillis())/(1000*60*60*24));
+    if(days<10){
+      return new Fu("初伏",days+1);
+    }
+
+    // 第4个庚日，中伏第1天
+    startCalendar.add(Calendar.DATE,10);
+
+    days = (int)((currentCalendar.getTimeInMillis()-startCalendar.getTimeInMillis())/(1000*60*60*24));
+    if(days<10){
+      return new Fu("中伏",days+1);
+    }
+
+    // 第5个庚日，中伏第11天或末伏第1天
+    startCalendar.add(Calendar.DATE,10);
+
+    Calendar liQiuCalendar = Calendar.getInstance();
+    liQiuCalendar.set(liQiu.getYear(),liQiu.getMonth()-1,liQiu.getDay(),0,0,0);
+    liQiuCalendar.set(Calendar.MILLISECOND,0);
+
+    days = (int)((currentCalendar.getTimeInMillis()-startCalendar.getTimeInMillis())/(1000*60*60*24));
+    // 末伏
+    if(liQiuCalendar.compareTo(startCalendar)<=0){
+      if(days<10){
+        return new Fu("末伏",days+1);
+      }
+    }else{
+      // 中伏
+      if(days<10){
+        return new Fu("中伏",days+11);
+      }
+      // 末伏第1天
+      startCalendar.add(Calendar.DATE,10);
+      days = (int)((currentCalendar.getTimeInMillis()-startCalendar.getTimeInMillis())/(1000*60*60*24));
+      if(days<10){
+        return new Fu("末伏",days+1);
+      }
+    }
+    return null;
   }
 }

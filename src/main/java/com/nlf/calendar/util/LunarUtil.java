@@ -27,14 +27,18 @@ public class LunarUtil{
   public static final int BASE_MONTH_ZHI_INDEX = 2;
   /** 星期偏移量 */
   public static final int BASE_WEEK_INDEX = 2;
-  /** 闰年表 */
+  /** 闰年表（存在闰月的年份偏移值） */
   public static final int[] LEAP_MONTH_YEAR = {6,14,19,25,33,36,38,41,44,52,55,79,117,136,147,150,155,158,185,193};
-  /** 闰月表 */
+  /** 月份表（2个字节表示1年，共16个二进制位，前4位表示闰月月份，后12位表示每月大小） */
   public static final int[] LUNAR_MONTH = {0x00,0x04,0xad,0x08,0x5a,0x01,0xd5,0x54,0xb4,0x09,0x64,0x05,0x59,0x45,0x95,0x0a,0xa6,0x04,0x55,0x24,0xad,0x08,0x5a,0x62,0xda,0x04,0xb4,0x05,0xb4,0x55,0x52,0x0d,0x94,0x0a,0x4a,0x2a,0x56,0x02,0x6d,0x71,0x6d,0x01,0xda,0x02,0xd2,0x52,0xa9,0x05,0x49,0x0d,0x2a,0x45,0x2b,0x09,0x56,0x01,0xb5,0x20,0x6d,0x01,0x59,0x69,0xd4,0x0a,0xa8,0x05,0xa9,0x56,0xa5,0x04,0x2b,0x09,0x9e,0x38,0xb6,0x08,0xec,0x74,0x6c,0x05,0xd4,0x0a,0xe4,0x6a,0x52,0x05,0x95,0x0a,0x5a,0x42,0x5b,0x04,0xb6,0x04,0xb4,0x22,0x6a,0x05,0x52,0x75,0xc9,0x0a,0x52,0x05,0x35,0x55,0x4d,0x0a,0x5a,0x02,0x5d,0x31,0xb5,0x02,0x6a,0x8a,0x68,0x05,0xa9,0x0a,0x8a,0x6a,0x2a,0x05,0x2d,0x09,0xaa,0x48,0x5a,0x01,0xb5,0x09,0xb0,0x39,0x64,0x05,0x25,0x75,0x95,0x0a,0x96,0x04,0x4d,0x54,0xad,0x04,0xda,0x04,0xd4,0x44,0xb4,0x05,0x54,0x85,0x52,0x0d,0x92,0x0a,0x56,0x6a,0x56,0x02,0x6d,0x02,0x6a,0x41,0xda,0x02,0xb2,0xa1,0xa9,0x05,0x49,0x0d,0x0a,0x6d,0x2a,0x09,0x56,0x01,0xad,0x50,0x6d,0x01,0xd9,0x02,0xd1,0x3a,0xa8,0x05,0x29,0x85,0xa5,0x0c,0x2a,0x09,0x96,0x54,0xb6,0x08,0x6c,0x09,0x64,0x45,0xd4,0x0a,0xa4,0x05,0x51,0x25,0x95,0x0a,0x2a,0x72,0x5b,0x04,0xb6,0x04,0xac,0x52,0x6a,0x05,0xd2,0x0a,0xa2,0x4a,0x4a,0x05,0x55,0x94,0x2d,0x0a,0x5a,0x02,0x75,0x61,0xb5,0x02,0x6a,0x03,0x61,0x45,0xa9,0x0a,0x4a,0x05,0x25,0x25,0x2d,0x09,0x9a,0x68,0xda,0x08,0xb4,0x09,0xa8,0x59,0x54,0x03,0xa5,0x0a,0x91,0x3a,0x96,0x04,0xad,0xb0,0xad,0x04,0xda,0x04,0xf4,0x62,0xb4,0x05,0x54,0x0b,0x44,0x5d,0x52,0x0a,0x95,0x04,0x55,0x22,0x6d,0x02,0x5a,0x71,0xda,0x02,0xaa,0x05,0xb2,0x55,0x49,0x0b,0x4a,0x0a,0x2d,0x39,0x36,0x01,0x6d,0x80,0x6d,0x01,0xd9,0x02,0xe9,0x6a,0xa8,0x05,0x29,0x0b,0x9a,0x4c,0xaa,0x08,0xb6,0x08,0xb4,0x38,0x6c,0x09,0x54,0x75,0xd4,0x0a,0xa4,0x05,0x45,0x55,0x95,0x0a,0x9a,0x04,0x55,0x44,0xb5,0x04,0x6a,0x82,0x6a,0x05,0xd2,0x0a,0x92,0x6a,0x4a,0x05,0x55,0x0a,0x2a,0x4a,0x5a,0x02,0xb5,0x02,0xb2,0x31,0x69,0x03,0x31,0x73,0xa9,0x0a,0x4a,0x05,0x2d,0x55,0x2d,0x09,0x5a,0x01,0xd5,0x48,0xb4,0x09,0x68,0x89,0x54,0x0b,0xa4,0x0a,0xa5,0x6a,0x95,0x04,0xad,0x08,0x6a,0x44,0xda,0x04,0x74,0x05,0xb0,0x25,0x54,0x03};
   /** 旬 */
   public static final String[] XUN = {"甲子","甲戌","甲申","甲午","甲辰","甲寅"};
   /** 旬空 */
   public static final String[] XUN_KONG = {"戌亥","申酉","午未","辰巳","寅卯","子丑"};
+  /** 六曜 */
+  public static final String[] LIU_YAO = {"先胜","友引","先负","佛灭","大安","赤口"};
+  /** 物候 */
+  public static final String[] WU_HOU = {"蚯蚓结","麋角解","水泉动","雁北乡","鹊始巢","雉始雊","鸡始乳","征鸟厉疾","水泽腹坚","东风解冻","蛰虫始振","鱼陟负冰","獭祭鱼","候雁北","草木萌动","桃始华","仓庚鸣","鹰化为鸠","玄鸟至","雷乃发声","始电","桐始华","田鼠化为鴽","虹始见","萍始生","鸣鸠拂奇羽","戴胜降于桑","蝼蝈鸣","蚯蚓出","王瓜生","苦菜秀","靡草死","麦秋至","螳螂生","鵙始鸣","反舌无声","鹿角解","蜩始鸣","半夏生","温风至","蟋蟀居壁","鹰始挚","腐草为萤","土润溽暑","大雨行时","凉风至","白露降","寒蝉鸣","鹰乃祭鸟","天地始肃","禾乃登","鸿雁来","玄鸟归","群鸟养羞","雷始收声","蛰虫坯户","水始涸","鸿雁来宾","雀入大水为蛤","菊有黄花","豺乃祭兽","草木黄落","蛰虫咸俯","水始冰","地始冻","雉入大水为蜃","虹藏不见","天气上升地气下降","闭塞而成冬","鹖鴠不鸣","虎始交","荔挺出"};
   /** 天干 */
   public static final String[] GAN = {"","甲","乙","丙","丁","戊","己","庚","辛","壬","癸"};
   /** 喜神方位，《喜神方位歌》：甲己在艮乙庚乾，丙辛坤位喜神安.  丁壬只在离宫坐，戊癸原在在巽间。 */
@@ -151,41 +155,47 @@ public class LunarUtil{
       put("12-30","除夕");
     }
   };
-  /** 农历日期对应的非正式节日 */
+  /** 农历日期对应的非正式节日，参考《寿康宝鉴》 */
   public static final Map<String,List<String>> OTHER_FESTIVAL = new HashMap<String,List<String>>(){
     private static final long serialVersionUID = -1;
     {
       put("1-1",Collections.nCopies(1,"弥勒佛圣诞"));
       put("1-8",Collections.nCopies(1,"五殿阎罗天子诞"));
       put("1-9",Collections.nCopies(1,"玉皇上帝诞"));
+      put("1-13",Collections.nCopies(1,"杨公忌"));
       put("2-1",Collections.nCopies(1,"一殿秦广王诞"));
       put("2-2",Collections.nCopies(1,"福德土地正神诞"));
       put("2-3",Collections.nCopies(1,"文昌帝君诞"));
       put("2-6",Collections.nCopies(1,"东华帝君诞"));
       put("2-8",Collections.nCopies(1,"释迦牟尼佛出家"));
-      put("2-15",Collections.nCopies(1,"释迦牟尼佛般涅槃"));
+      put("2-11",Collections.nCopies(1,"杨公忌"));
+      put("2-15",Arrays.asList("释迦牟尼佛涅槃","太上老君诞"));
       put("2-17",Collections.nCopies(1,"东方杜将军诞"));
-      put("2-18",Collections.nCopies(1,"至圣先师孔子讳辰"));
+      put("2-18",Arrays.asList("四殿五官王诞","至圣先师孔子讳辰"));
       put("2-19",Collections.nCopies(1,"观音大士诞"));
       put("2-21",Collections.nCopies(1,"普贤菩萨诞"));
       put("3-1",Collections.nCopies(1,"二殿楚江王诞"));
       put("3-3",Collections.nCopies(1,"玄天上帝诞"));
       put("3-8",Collections.nCopies(1,"六殿卞城王诞"));
-      put("3-15",Collections.nCopies(1,"昊天上帝诞"));
+      put("3-9",Collections.nCopies(1,"杨公忌"));
+      put("3-12",Collections.nCopies(1,"中央五道诞"));
+      put("3-15",Arrays.asList("玄坛诞","昊天上帝诞"));
       put("3-16",Collections.nCopies(1,"准提菩萨诞"));
-      put("3-19",Collections.nCopies(1,"中岳大帝诞"));
+      put("3-18",Arrays.asList("中岳大帝诞","后土娘娘诞"));
       put("3-20",Collections.nCopies(1,"子孙娘娘诞"));
       put("3-27",Collections.nCopies(1,"七殿泰山王诞"));
       put("3-28",Collections.nCopies(1,"苍颉至圣先师诞"));
       put("4-1",Collections.nCopies(1,"八殿都市王诞"));
       put("4-4",Collections.nCopies(1,"文殊菩萨诞"));
-      put("4-8",Collections.nCopies(1,"释迦牟尼佛诞"));
+      put("4-7",Collections.nCopies(1,"杨公忌"));
+      put("4-8",Arrays.asList("释迦牟尼佛诞","九殿平等王诞"));
       put("4-14",Collections.nCopies(1,"纯阳祖师诞"));
       put("4-15",Collections.nCopies(1,"钟离祖师诞"));
       put("4-17",Collections.nCopies(1,"十殿转轮王诞"));
       put("4-18",Collections.nCopies(1,"紫徽大帝诞"));
       put("4-20",Collections.nCopies(1,"眼光圣母诞"));
       put("5-1",Collections.nCopies(1,"南极长生大帝诞"));
+      put("5-5",Collections.nCopies(1,"杨公忌"));
       put("5-8",Collections.nCopies(1,"南方五道诞"));
       put("5-11",Collections.nCopies(1,"天下都城隍诞"));
       put("5-12",Collections.nCopies(1,"炳灵公诞"));
@@ -193,10 +203,16 @@ public class LunarUtil{
       put("5-16",Collections.nCopies(1,"天地元气造化万物之辰"));
       put("5-18",Collections.nCopies(1,"张天师诞"));
       put("5-22",Collections.nCopies(1,"孝娥神诞"));
-      put("6-19",Collections.nCopies(1,"观世音菩萨成道日"));
-      put("6-24",Collections.nCopies(1,"关帝诞"));
+      put("6-3",Collections.nCopies(1,"杨公忌"));
+      put("6-10",Collections.nCopies(1,"金粟如来诞"));
+      put("6-13",Collections.nCopies(1,"井泉龙王诞"));
+      put("6-19",Collections.nCopies(1,"观音大士涅槃"));
+      put("6-23",Collections.nCopies(1,"南方火神诞"));
+      put("6-24",Arrays.asList("雷祖诞","关帝诞"));
+      put("7-1",Collections.nCopies(1,"杨公忌"));
       put("7-7",Collections.nCopies(1,"魁星诞"));
-      put("7-13",Arrays.asList("长真谭真人诞","大势至菩萨诞"));
+      put("7-12",Collections.nCopies(1,"长真谭真人诞"));
+      put("7-13",Collections.nCopies(1,"大势至菩萨诞"));
       put("7-15",Collections.nCopies(1,"中元节"));
       put("7-18",Collections.nCopies(1,"西王母诞"));
       put("7-19",Collections.nCopies(1,"太岁诞"));
@@ -212,31 +228,42 @@ public class LunarUtil{
       put("8-18",Collections.nCopies(1,"天人兴福之辰"));
       put("8-23",Collections.nCopies(1,"汉恒候张显王诞"));
       put("8-24",Collections.nCopies(1,"灶君夫人诞"));
-      put("8-29",Collections.nCopies(1,"至圣先师孔子诞"));
-      put("9-1",Collections.nCopies(1,"北斗九星降世"));
-      put("9-3",Collections.nCopies(1,"五瘟神诞"));
-      put("9-9",Collections.nCopies(1,"酆都大帝诞"));
+      put("8-27",Arrays.asList("至圣先师孔子诞","杨公忌"));
+      put("9-1",Collections.nCopies(1,"北斗九星降"));
+      put("9-2",Collections.nCopies(1,"北斗九星降"));
+      put("9-3",Arrays.asList("北斗九星降","五瘟神诞"));
+      put("9-4",Collections.nCopies(1,"北斗九星降"));
+      put("9-5",Collections.nCopies(1,"北斗九星降"));
+      put("9-6",Collections.nCopies(1,"北斗九星降"));
+      put("9-7",Collections.nCopies(1,"北斗九星降"));
+      put("9-8",Collections.nCopies(1,"北斗九星降"));
+      put("9-9",Arrays.asList("北斗九星降","酆都大帝诞"));
       put("9-13",Collections.nCopies(1,"孟婆尊神诞"));
       put("9-17",Collections.nCopies(1,"金龙四大王诞"));
       put("9-19",Collections.nCopies(1,"观世音菩萨出家"));
+      put("9-25",Collections.nCopies(1,"杨公忌"));
       put("9-30",Collections.nCopies(1,"药师琉璃光佛诞"));
       put("10-1",Collections.nCopies(1,"寒衣节"));
       put("10-3",Collections.nCopies(1,"三茅诞"));
       put("10-5",Collections.nCopies(1,"达摩祖师诞"));
       put("10-8",Collections.nCopies(1,"佛涅槃日"));
       put("10-15",Collections.nCopies(1,"下元节"));
+      put("10-23",Collections.nCopies(1,"杨公忌"));
+      put("10-27",Collections.nCopies(1,"北极紫薇大帝降"));
       put("11-4",Collections.nCopies(1,"至圣先师孔子诞"));
       put("11-6",Collections.nCopies(1,"西岳大帝诞"));
       put("11-11",Collections.nCopies(1,"太乙救苦天尊诞"));
       put("11-17",Collections.nCopies(1,"阿弥陀佛诞"));
       put("11-19",Collections.nCopies(1,"太阳日宫诞"));
+      put("11-21",Collections.nCopies(1,"杨公忌"));
       put("11-23",Collections.nCopies(1,"张仙诞"));
+      put("11-25",Collections.nCopies(1,"掠刷大夫降"));
       put("11-26",Collections.nCopies(1,"北方五道诞"));
       put("12-8",Collections.nCopies(1,"释迦如来成佛之辰"));
       put("12-16",Collections.nCopies(1,"南岳大帝诞"));
+      put("12-19",Collections.nCopies(1,"杨公忌"));
       put("12-21",Collections.nCopies(1,"天猷上帝诞"));
-      put("12-23",Collections.nCopies(1,"小年"));
-      put("12-24",Collections.nCopies(1,"子时灶君上天朝玉帝"));
+      put("12-23",Arrays.asList("小年","五岳神降"));
       put("12-29",Collections.nCopies(1,"华严菩萨诞"));
     }
   };

@@ -30,6 +30,8 @@ public class Lunar{
   public static final String QI_SOLAR_SECOND = "大寒";
   /** 1弧度对应的角秒 */
   private static final double SECOND_PER_RAD = 180 * 3600 / Math.PI;
+  /** 1天对应的毫秒 */
+  private static final long MS_PER_DAY = 86400000L;
   /** 节气表，国标以冬至为首个节气 */
   private static final String[] JIE_QI = {"冬至","小寒","大寒","立春","雨水","惊蛰","春分","清明","谷雨","立夏","小满","芒种","夏至","小暑","大暑","立秋","处暑","白露","秋分","寒露","霜降","立冬","小雪","大雪"};
   private static final double[] NUT_B = {2.1824, -33.75705, 36e-6, -1720, 920, 3.5069, 1256.66393, 11e-6, -132, 57, 1.3375, 16799.4182, -51e-6, -23, 10, 4.3649, -67.5141, 72e-6, 21, -9, 0.04, -628.302, 0, -14, 0, 2.36, 8328.691, 0, 7, 0, 3.46, 1884.966, 0, -5, 2, 5.44, 16833.175, 0, -4, 2, 3.69, 25128.110, 0, -3, 0, 3.55, 628.362, 0, 2, 0};
@@ -2636,7 +2638,7 @@ public class Lunar{
       return null;
     }
 
-    int days = (int)((currentCalendar.getTimeInMillis()-startCalendar.getTimeInMillis())/(1000*60*60*24));
+    int days = (int)((currentCalendar.getTimeInMillis()-startCalendar.getTimeInMillis())/MS_PER_DAY);
     return new ShuJiu(LunarUtil.NUMBER[days/9+1]+"九",days%9+1);
   }
 
@@ -2668,7 +2670,7 @@ public class Lunar{
       return null;
     }
 
-    int days = (int)((currentCalendar.getTimeInMillis()-startCalendar.getTimeInMillis())/(1000*60*60*24));
+    int days = (int)((currentCalendar.getTimeInMillis()-startCalendar.getTimeInMillis())/MS_PER_DAY);
     if(days<10){
       return new Fu("初伏",days+1);
     }
@@ -2676,7 +2678,7 @@ public class Lunar{
     // 第4个庚日，中伏第1天
     startCalendar.add(Calendar.DATE,10);
 
-    days = (int)((currentCalendar.getTimeInMillis()-startCalendar.getTimeInMillis())/(1000*60*60*24));
+    days = (int)((currentCalendar.getTimeInMillis()-startCalendar.getTimeInMillis())/MS_PER_DAY);
     if(days<10){
       return new Fu("中伏",days+1);
     }
@@ -2688,7 +2690,7 @@ public class Lunar{
     liQiuCalendar.set(liQiu.getYear(),liQiu.getMonth()-1,liQiu.getDay(),0,0,0);
     liQiuCalendar.set(Calendar.MILLISECOND,0);
 
-    days = (int)((currentCalendar.getTimeInMillis()-startCalendar.getTimeInMillis())/(1000*60*60*24));
+    days = (int)((currentCalendar.getTimeInMillis()-startCalendar.getTimeInMillis())/MS_PER_DAY);
     // 末伏
     if(liQiuCalendar.compareTo(startCalendar)<=0){
       if(days<10){
@@ -2701,11 +2703,46 @@ public class Lunar{
       }
       // 末伏第1天
       startCalendar.add(Calendar.DATE,10);
-      days = (int)((currentCalendar.getTimeInMillis()-startCalendar.getTimeInMillis())/(1000*60*60*24));
+      days = (int)((currentCalendar.getTimeInMillis()-startCalendar.getTimeInMillis())/MS_PER_DAY);
       if(days<10){
         return new Fu("末伏",days+1);
       }
     }
     return null;
+  }
+
+  /**
+   * 获取六曜
+   * @return 六曜
+   */
+  public String getLiuYao(){
+    return LunarUtil.LIU_YAO[(Math.abs(month)-1+day-1)%6];
+  }
+
+  /**
+   * 获取物候
+   * @return 物候
+   */
+  public String getWuHou(){
+    JieQi jieQi = getPrevJieQi();
+    String name = jieQi.getName();
+    int offset = 0;
+    for(int i=0,j=JIE_QI.length;i<j;i++){
+      if(name.equals(JIE_QI[i])){
+        offset = i;
+        break;
+      }
+    }
+    Calendar currentCalendar = Calendar.getInstance();
+    currentCalendar.set(solar.getYear(),solar.getMonth()-1,solar.getDay(),0,0,0);
+    currentCalendar.set(Calendar.MILLISECOND,0);
+
+    Solar startSolar = jieQi.getSolar();
+    Calendar startCalendar = Calendar.getInstance();
+    startCalendar.set(startSolar.getYear(),startSolar.getMonth()-1,startSolar.getDay(),0,0,0);
+    startCalendar.set(Calendar.MILLISECOND,0);
+
+    int days = (int)((currentCalendar.getTimeInMillis()-startCalendar.getTimeInMillis())/MS_PER_DAY);
+    return LunarUtil.WU_HOU[offset*3+days/5];
   }
 }

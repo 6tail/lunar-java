@@ -23,22 +23,21 @@ public class YearTest {
       for(Solar d:m.getDays()){
         //获取阴历
         Lunar lunar = d.getLunar();
-        StringBuilder s = new StringBuilder();
-        s.append(d.getDay()<10?"0":"");
-        s.append(d.getDay());
-        s.append(" ");
-        s.append(lunar.getMonthInChinese());
-        s.append("月");
-        s.append(lunar.getDayInChinese());
-        s.append(" ");
-        s.append("星期");
-        s.append(d.getWeekInChinese());
-        s.append(" ");
-        s.append(d.getFestivals());
-        s.append(lunar.getFestivals());
-        s.append(lunar.getJie());
-        s.append(lunar.getQi());
-        System.out.println(s.toString());
+        String s = (d.getDay() < 10 ? "0" : "") +
+            d.getDay() +
+            " " +
+            lunar.getMonthInChinese() +
+            "月" +
+            lunar.getDayInChinese() +
+            " " +
+            "星期" +
+            d.getWeekInChinese() +
+            " " +
+            d.getFestivals() +
+            lunar.getFestivals() +
+            lunar.getJie() +
+            lunar.getQi();
+        System.out.println(s);
       }
     }
   }

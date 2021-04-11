@@ -144,6 +144,7 @@ public class SolarWeek {
    * 获取当前日期是在当月第几周
    * @return 周序号，从1开始
    */
+  @SuppressWarnings("MagicConstant")
   public int getIndex(){
     Calendar c = Calendar.getInstance();
     c.set(year,month-1,1);
@@ -160,6 +161,7 @@ public class SolarWeek {
    * @param separateMonth 是否按月单独计算
    * @return 推移后的阳历周
    */
+  @SuppressWarnings("MagicConstant")
   public SolarWeek next(int weeks,boolean separateMonth){
     if(0==weeks){
       return new SolarWeek(year,month,day,start);
@@ -215,6 +217,7 @@ public class SolarWeek {
    * 获取本周第一天的阳历日期（可能跨月）
    * @return 本周第一天的阳历日期
    */
+  @SuppressWarnings("MagicConstant")
   public Solar getFirstDay(){
     Calendar c = Calendar.getInstance();
     c.set(year,month-1,day);

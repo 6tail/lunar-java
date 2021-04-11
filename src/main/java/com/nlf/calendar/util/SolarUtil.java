@@ -3,17 +3,11 @@ package com.nlf.calendar.util;
 import java.util.*;
 
 /**
- * 阳历工具，基准日期为1901年1月1日，对应农历1900年十一月十一
+ * 阳历工具
  *
  * @author 6tail
  */
 public class SolarUtil{
-  /** 阳历基准年 */
-  public static final int BASE_YEAR = 1901;
-  /** 阳历基准月 */
-  public static final int BASE_MONTH = 1;
-  /** 阳历基准日 */
-  public static final int BASE_DAY = 1;
   /** 星期*/
   public static final String[] WEEK = {"日","一","二","三","四","五","六"};
   /** 每月天数 */
@@ -132,17 +126,7 @@ public class SolarUtil{
    * @return true/false 闰年/非闰年
    */
   public static boolean isLeapYear(int year){
-    boolean leap = false;
-    if(year%4==0){
-      leap = true;
-    }
-    if(year%100==0){
-      leap = false;
-    }
-    if(year%400==0){
-      leap = true;
-    }
-    return leap;
+    return (year%4 == 0 && year%100 != 0) || (year%400 == 0);
   }
 
   /**
@@ -170,6 +154,7 @@ public class SolarUtil{
    * @param start 星期几作为一周的开始，1234560分别代表星期一至星期天
    * @return 周数
    */
+  @SuppressWarnings("MagicConstant")
   public static int getWeeksOfMonth(int year,int month,int start){
     int days = getDaysOfMonth(year,month);
     Calendar c = Calendar.getInstance();

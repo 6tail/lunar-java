@@ -117,6 +117,7 @@ public class SolarHalfYear {
    * @param halfYears 推移的半年数，负数为倒推
    * @return 推移后的半年
    */
+  @SuppressWarnings("MagicConstant")
   public SolarHalfYear next(int halfYears){
     if(0==halfYears){
       return new SolarHalfYear(year,month);

@@ -116,6 +116,7 @@ public class SolarSeason {
    * @param seasons 推移的季度数，负数为倒推
    * @return 推移后的季度
    */
+  @SuppressWarnings("MagicConstant")
   public SolarSeason next(int seasons){
     if(0==seasons){
       return new SolarSeason(year,month);

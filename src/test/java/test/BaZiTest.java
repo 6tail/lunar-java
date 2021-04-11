@@ -6,6 +6,8 @@ import com.nlf.calendar.Solar;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.List;
+
 /**
  * 八字测试
  */
@@ -216,6 +218,16 @@ public class BaZiTest {
   public void testShenGong() {
     Lunar lunar = new Solar(1995, 12, 18, 10, 28, 0).getLunar();
     Assert.assertEquals("身宫", "壬午", lunar.getEightChar().getShenGong());
+  }
+
+  @Test
+  public void testBaZi2Solar() {
+    Solar solar = Solar.fromYmdHms(2027,1,27,12,0,0);
+    System.out.println(solar.getLunar().getEightChar().toString());
+    List<Solar> l = Solar.fromBaZi("丙午","辛丑","丙午","甲午");
+    for(Solar s:l){
+      System.out.println(s.toFullString());
+    }
   }
 
 }

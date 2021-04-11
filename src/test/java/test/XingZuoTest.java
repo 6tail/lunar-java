@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * 阳历测试
+ * 星座测试
  *
  * @author 6tail
  */

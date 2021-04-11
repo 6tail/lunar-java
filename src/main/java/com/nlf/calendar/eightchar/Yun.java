@@ -50,6 +50,7 @@ public class Yun {
   /**
    * 起运计算
    */
+  @SuppressWarnings("MagicConstant")
   private void computeStart() {
     // 上节
     JieQi prev = lunar.getPrevJie();
@@ -60,8 +61,10 @@ public class Yun {
     // 阳男阴女顺推，阴男阳女逆推
     Solar start = forward ? current : prev.getSolar();
     Solar end = forward ? next.getSolar() : current;
+    int endTimeZhiIndex = (end.getHour() == 23) ? 11 : LunarUtil.getTimeZhiIndex(end.toYmdHms().substring(11, 16));
+    int startTimeZhiIndex = (start.getHour() == 23) ? 11 : LunarUtil.getTimeZhiIndex(start.toYmdHms().substring(11, 16));
     // 时辰差
-    int hourDiff = LunarUtil.getTimeZhiIndex(end.toYmdHms().substring(11, 16)) - LunarUtil.getTimeZhiIndex(start.toYmdHms().substring(11, 16));
+    int hourDiff = endTimeZhiIndex - startTimeZhiIndex;
     Calendar endCalendar = Calendar.getInstance();
     endCalendar.set(end.getYear(), end.getMonth() - 1, end.getDay(), 0, 0, 0);
     endCalendar.set(Calendar.MILLISECOND, 0);
@@ -138,10 +141,12 @@ public class Yun {
    *
    * @return 阳历日期
    */
+  @SuppressWarnings("MagicConstant")
   public Solar getStartSolar() {
     Solar birth = lunar.getSolar();
     Calendar c = Calendar.getInstance();
     c.set(birth.getYear() + startYear, birth.getMonth() - 1 + startMonth, birth.getDay() + startDay, 0, 0, 0);
+    c.set(Calendar.MILLISECOND,0);
     return Solar.fromCalendar(c);
   }
 

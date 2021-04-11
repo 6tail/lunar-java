@@ -124,6 +124,7 @@ public class SolarMonth{
    * @param months 月数
    * @return 阳历月
    */
+  @SuppressWarnings("MagicConstant")
   public SolarMonth next(int months){
     Calendar c = Calendar.getInstance();
     c.set(year,month-1,1);

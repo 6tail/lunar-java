@@ -27,6 +27,24 @@ public class SolarTest {
   }
 
   @Test
+  public void test6(){
+    Solar solar = new Solar(11,1,1);
+    Assert.assertEquals("一〇年腊月初八",solar.getLunar().toString());
+  }
+
+  @Test
+  public void test7(){
+    Solar solar = new Solar(11,3,1);
+    Assert.assertEquals("一一年二月初八",solar.getLunar().toString());
+  }
+
+  @Test
+  public void test9(){
+    Solar solar = new Solar(26,4,13);
+    Assert.assertEquals("二六年三月初八",solar.getLunar().toString());
+  }
+
+  @Test
   public void testNext(){
     Solar date = new Solar(2020,1,23);
     Assert.assertEquals("2020-01-24",date.next(1).toString());

@@ -11,46 +11,51 @@ import java.util.List;
  * @author 6tail
  */
 public class SolarHalfYear {
-  /** 年 */
+  /**
+   * 年
+   */
   private int year;
-  /** 月 */
+  /**
+   * 月
+   */
   private int month;
 
-  /** 半年的月数 */
+  /**
+   * 半年的月数
+   */
   public static final int MONTH_COUNT = 6;
 
   /**
    * 默认当月
    */
-  public SolarHalfYear(){
+  public SolarHalfYear() {
     this(new Date());
   }
 
   /**
    * 通过日期初始化
    */
-  public SolarHalfYear(Date date){
-    Calendar c = Calendar.getInstance();
-    c.setTime(date);
+  public SolarHalfYear(Date date) {
+    Calendar c = ExactDate.fromDate(date);
     year = c.get(Calendar.YEAR);
-    month = c.get(Calendar.MONTH)+1;
+    month = c.get(Calendar.MONTH) + 1;
   }
 
   /**
    * 通过日历初始化
    */
-  public SolarHalfYear(Calendar calendar){
+  public SolarHalfYear(Calendar calendar) {
     year = calendar.get(Calendar.YEAR);
-    month = calendar.get(Calendar.MONTH)+1;
+    month = calendar.get(Calendar.MONTH) + 1;
   }
 
   /**
    * 通过年月初始化
    *
-   * @param year 年
+   * @param year  年
    * @param month 月
    */
-  public SolarHalfYear(int year,int month){
+  public SolarHalfYear(int year, int month) {
     this.year = year;
     this.month = month;
   }
@@ -61,7 +66,7 @@ public class SolarHalfYear {
    * @param date 日期
    * @return 阳历半年
    */
-  public static SolarHalfYear fromDate(Date date){
+  public static SolarHalfYear fromDate(Date date) {
     return new SolarHalfYear(date);
   }
 
@@ -71,19 +76,19 @@ public class SolarHalfYear {
    * @param calendar 日历
    * @return 阳历半年
    */
-  public static SolarHalfYear fromCalendar(Calendar calendar){
+  public static SolarHalfYear fromCalendar(Calendar calendar) {
     return new SolarHalfYear(calendar);
   }
 
   /**
    * 通过指定年月获取阳历半年
    *
-   * @param year 年
+   * @param year  年
    * @param month 月
    * @return 阳历半年
    */
-  public static SolarHalfYear fromYm(int year,int month){
-    return new SolarHalfYear(year,month);
+  public static SolarHalfYear fromYm(int year, int month) {
+    return new SolarHalfYear(year, month);
   }
 
   /**
@@ -91,7 +96,7 @@ public class SolarHalfYear {
    *
    * @return 年
    */
-  public int getYear(){
+  public int getYear() {
     return year;
   }
 
@@ -100,53 +105,55 @@ public class SolarHalfYear {
    *
    * @return 月
    */
-  public int getMonth(){
+  public int getMonth() {
     return month;
   }
 
   /**
    * 获取当月是第几半年
+   *
    * @return 半年序号，从1开始
    */
-  public int getIndex(){
-    return (int)Math.ceil(month*1D/MONTH_COUNT);
+  public int getIndex() {
+    return (int) Math.ceil(month * 1D / MONTH_COUNT);
   }
 
   /**
    * 半年推移
+   *
    * @param halfYears 推移的半年数，负数为倒推
    * @return 推移后的半年
    */
   @SuppressWarnings("MagicConstant")
-  public SolarHalfYear next(int halfYears){
-    if(0==halfYears){
-      return new SolarHalfYear(year,month);
+  public SolarHalfYear next(int halfYears) {
+    if (0 == halfYears) {
+      return new SolarHalfYear(year, month);
     }
-    Calendar c = Calendar.getInstance();
-    c.set(year,month-1,1);
-    c.add(Calendar.MONTH,MONTH_COUNT*halfYears);
+    Calendar c = ExactDate.fromYmd(year, month, 1);
+    c.add(Calendar.MONTH, MONTH_COUNT * halfYears);
     return new SolarHalfYear(c);
   }
 
   /**
    * 获取本半年的月份
+   *
    * @return 本半年的月份列表
    */
-  public List<SolarMonth> getMonths(){
+  public List<SolarMonth> getMonths() {
     List<SolarMonth> l = new ArrayList<SolarMonth>();
-    int index = getIndex()-1;
-    for(int i=0;i<MONTH_COUNT;i++){
-      l.add(new SolarMonth(year,MONTH_COUNT*index+i+1));
+    int index = getIndex() - 1;
+    for (int i = 0; i < MONTH_COUNT; i++) {
+      l.add(new SolarMonth(year, MONTH_COUNT * index + i + 1));
     }
     return l;
   }
 
   @Override
-  public String toString(){
-    return year+"."+getIndex();
+  public String toString() {
+    return year + "." + getIndex();
   }
 
-  public String toFullString(){
-    return year+"年"+(getIndex()==1?"上":"下")+"半年";
+  public String toFullString() {
+    return year + "年" + (getIndex() == 1 ? "上" : "下") + "半年";
   }
 }

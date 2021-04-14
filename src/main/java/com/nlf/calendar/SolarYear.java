@@ -9,35 +9,37 @@ import java.util.List;
  * 阳历年
  *
  * @author 6tail
- *
  */
-public class SolarYear{
-  /** 年 */
+public class SolarYear {
+  /**
+   * 年
+   */
   private int year;
 
-  /** 一年的月数 */
+  /**
+   * 一年的月数
+   */
   public static final int MONTH_COUNT = 12;
 
   /**
    * 默认当年
    */
-  public SolarYear(){
+  public SolarYear() {
     this(new Date());
   }
 
   /**
    * 通过日期初始化
    */
-  public SolarYear(Date date){
-    Calendar c = Calendar.getInstance();
-    c.setTime(date);
+  public SolarYear(Date date) {
+    Calendar c = ExactDate.fromDate(date);
     year = c.get(Calendar.YEAR);
   }
 
   /**
    * 通过日历初始化
    */
-  public SolarYear(Calendar calendar){
+  public SolarYear(Calendar calendar) {
     year = calendar.get(Calendar.YEAR);
   }
 
@@ -46,7 +48,7 @@ public class SolarYear{
    *
    * @param year 年
    */
-  public SolarYear(int year){
+  public SolarYear(int year) {
     this.year = year;
   }
 
@@ -56,7 +58,7 @@ public class SolarYear{
    * @param date 日期
    * @return 阳历年
    */
-  public static SolarYear fromDate(Date date){
+  public static SolarYear fromDate(Date date) {
     return new SolarYear(date);
   }
 
@@ -66,7 +68,7 @@ public class SolarYear{
    * @param calendar 日历
    * @return 阳历年
    */
-  public static SolarYear fromCalendar(Calendar calendar){
+  public static SolarYear fromCalendar(Calendar calendar) {
     return new SolarYear(calendar);
   }
 
@@ -76,7 +78,7 @@ public class SolarYear{
    * @param year 年
    * @return 阳历年
    */
-  public static SolarYear fromYear(int year){
+  public static SolarYear fromYear(int year) {
     return new SolarYear(year);
   }
 
@@ -85,7 +87,7 @@ public class SolarYear{
    *
    * @return 年
    */
-  public int getYear(){
+  public int getYear() {
     return year;
   }
 
@@ -94,11 +96,11 @@ public class SolarYear{
    *
    * @return 阳历月列表
    */
-  public List<SolarMonth> getMonths(){
+  public List<SolarMonth> getMonths() {
     List<SolarMonth> l = new ArrayList<SolarMonth>(MONTH_COUNT);
-    SolarMonth m = new SolarMonth(year,1);
+    SolarMonth m = new SolarMonth(year, 1);
     l.add(m);
-    for(int i = 1;i<MONTH_COUNT;i++){
+    for (int i = 1; i < MONTH_COUNT; i++) {
       l.add(m.next(i));
     }
     return l;
@@ -106,22 +108,22 @@ public class SolarYear{
 
   /**
    * 获取往后推几年的阳历年，如果要往前推，则年数用负数
+   *
    * @param years 年数
    * @return 阳历年
    */
-  public SolarYear next(int years){
-    Calendar c = Calendar.getInstance();
-    c.set(year,Calendar.JANUARY,1);
-    c.add(Calendar.YEAR,years);
+  public SolarYear next(int years) {
+    Calendar c = ExactDate.fromYmd(year, 1, 1);
+    c.add(Calendar.YEAR, years);
     return new SolarYear(c);
   }
 
   @Override
-  public String toString(){
-    return year+"";
+  public String toString() {
+    return year + "";
   }
 
-  public String toFullString(){
-    return year+"年";
+  public String toFullString() {
+    return year + "年";
   }
 }

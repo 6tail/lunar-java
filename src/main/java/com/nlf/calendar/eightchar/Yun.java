@@ -1,9 +1,6 @@
 package com.nlf.calendar.eightchar;
 
-import com.nlf.calendar.EightChar;
-import com.nlf.calendar.JieQi;
-import com.nlf.calendar.Lunar;
-import com.nlf.calendar.Solar;
+import com.nlf.calendar.*;
 import com.nlf.calendar.util.LunarUtil;
 
 import java.util.Calendar;
@@ -65,12 +62,8 @@ public class Yun {
     int startTimeZhiIndex = (start.getHour() == 23) ? 11 : LunarUtil.getTimeZhiIndex(start.toYmdHms().substring(11, 16));
     // 时辰差
     int hourDiff = endTimeZhiIndex - startTimeZhiIndex;
-    Calendar endCalendar = Calendar.getInstance();
-    endCalendar.set(end.getYear(), end.getMonth() - 1, end.getDay(), 0, 0, 0);
-    endCalendar.set(Calendar.MILLISECOND, 0);
-    Calendar startCalendar = Calendar.getInstance();
-    startCalendar.set(start.getYear(), start.getMonth() - 1, start.getDay(), 0, 0, 0);
-    startCalendar.set(Calendar.MILLISECOND, 0);
+    Calendar endCalendar = ExactDate.fromYmd(end.getYear(), end.getMonth(), end.getDay());
+    Calendar startCalendar = ExactDate.fromYmd(start.getYear(), start.getMonth(), start.getDay());
     // 天数差
     int dayDiff = (int) ((endCalendar.getTimeInMillis() - startCalendar.getTimeInMillis()) / (1000 * 3600 * 24));
     if (hourDiff < 0) {
@@ -144,9 +137,10 @@ public class Yun {
   @SuppressWarnings("MagicConstant")
   public Solar getStartSolar() {
     Solar birth = lunar.getSolar();
-    Calendar c = Calendar.getInstance();
-    c.set(birth.getYear() + startYear, birth.getMonth() - 1 + startMonth, birth.getDay() + startDay, 0, 0, 0);
-    c.set(Calendar.MILLISECOND,0);
+    Calendar c = ExactDate.fromYmd(birth.getYear(), birth.getMonth(), birth.getDay());
+    c.add(Calendar.YEAR, startYear);
+    c.add(Calendar.MONTH, startMonth);
+    c.add(Calendar.DATE, startDay);
     return Solar.fromCalendar(c);
   }
 

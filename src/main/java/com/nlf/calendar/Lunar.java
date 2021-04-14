@@ -1,9 +1,9 @@
 package com.nlf.calendar;
 
-import java.util.*;
-
 import com.nlf.calendar.util.LunarUtil;
 import com.nlf.calendar.util.SolarUtil;
+
+import java.util.*;
 
 /**
  * 农历日期
@@ -227,9 +227,7 @@ public class Lunar {
   @SuppressWarnings("MagicConstant")
   public Lunar(Date date) {
     solar = new Solar(date);
-    Calendar c = Calendar.getInstance();
-    c.set(solar.getYear(), solar.getMonth() - 1, solar.getDay(), 0, 0, 0);
-    c.set(Calendar.MILLISECOND, 0);
+    Calendar c = ExactDate.fromYmd(solar.getYear(), solar.getMonth(), solar.getDay());
     long solarTime = c.getTimeInMillis();
     int y = solar.getYear();
     LunarYear ly = LunarYear.fromYear(y);
@@ -2529,23 +2527,17 @@ public class Lunar {
    */
   @SuppressWarnings("MagicConstant")
   public ShuJiu getShuJiu() {
-    Calendar currentCalendar = Calendar.getInstance();
-    currentCalendar.set(solar.getYear(), solar.getMonth() - 1, solar.getDay(), 0, 0, 0);
-    currentCalendar.set(Calendar.MILLISECOND, 0);
+    Calendar currentCalendar = ExactDate.fromYmd(solar.getYear(), solar.getMonth(), solar.getDay());
     Solar start = jieQi.get(JIE_QI_APPEND);
-    Calendar startCalendar = Calendar.getInstance();
-    startCalendar.set(start.getYear(), start.getMonth() - 1, start.getDay(), 0, 0, 0);
-    startCalendar.set(Calendar.MILLISECOND, 0);
+    Calendar startCalendar = ExactDate.fromYmd(start.getYear(), start.getMonth(), start.getDay());
 
     if (currentCalendar.compareTo(startCalendar) < 0) {
       start = jieQi.get(JIE_QI_FIRST);
-      startCalendar.set(start.getYear(), start.getMonth() - 1, start.getDay(), 0, 0, 0);
+      startCalendar = ExactDate.fromYmd(start.getYear(), start.getMonth(), start.getDay());
     }
 
-    Calendar endCalendar = Calendar.getInstance();
-    endCalendar.set(start.getYear(), start.getMonth() - 1, start.getDay(), 0, 0, 0);
+    Calendar endCalendar = ExactDate.fromYmd(start.getYear(), start.getMonth(), start.getDay());
     endCalendar.add(Calendar.DATE, 81);
-    endCalendar.set(Calendar.MILLISECOND, 0);
 
     if (currentCalendar.compareTo(startCalendar) < 0 || currentCalendar.compareTo(endCalendar) >= 0) {
       return null;
@@ -2562,14 +2554,10 @@ public class Lunar {
    */
   @SuppressWarnings("MagicConstant")
   public Fu getFu() {
-    Calendar currentCalendar = Calendar.getInstance();
-    currentCalendar.set(solar.getYear(), solar.getMonth() - 1, solar.getDay(), 0, 0, 0);
-    currentCalendar.set(Calendar.MILLISECOND, 0);
+    Calendar currentCalendar = ExactDate.fromYmd(solar.getYear(), solar.getMonth(), solar.getDay());
     Solar xiaZhi = jieQi.get("夏至");
     Solar liQiu = jieQi.get("立秋");
-    Calendar startCalendar = Calendar.getInstance();
-    startCalendar.set(xiaZhi.getYear(), xiaZhi.getMonth() - 1, xiaZhi.getDay(), 0, 0, 0);
-    startCalendar.set(Calendar.MILLISECOND, 0);
+    Calendar startCalendar = ExactDate.fromYmd(xiaZhi.getYear(), xiaZhi.getMonth(), xiaZhi.getDay());
     // 第1个庚日
     int add = 6 - xiaZhi.getLunar().getDayGanIndex();
     if (add < 0) {
@@ -2600,9 +2588,7 @@ public class Lunar {
     // 第5个庚日，中伏第11天或末伏第1天
     startCalendar.add(Calendar.DATE, 10);
 
-    Calendar liQiuCalendar = Calendar.getInstance();
-    liQiuCalendar.set(liQiu.getYear(), liQiu.getMonth() - 1, liQiu.getDay(), 0, 0, 0);
-    liQiuCalendar.set(Calendar.MILLISECOND, 0);
+    Calendar liQiuCalendar = ExactDate.fromYmd(liQiu.getYear(), liQiu.getMonth(), liQiu.getDay());
 
     days = (int) ((currentCalendar.getTimeInMillis() - startCalendar.getTimeInMillis()) / MS_PER_DAY);
     // 末伏
@@ -2650,14 +2636,10 @@ public class Lunar {
         break;
       }
     }
-    Calendar currentCalendar = Calendar.getInstance();
-    currentCalendar.set(solar.getYear(), solar.getMonth() - 1, solar.getDay(), 0, 0, 0);
-    currentCalendar.set(Calendar.MILLISECOND, 0);
+    Calendar currentCalendar = ExactDate.fromYmd(solar.getYear(), solar.getMonth(), solar.getDay());
 
     Solar startSolar = jieQi.getSolar();
-    Calendar startCalendar = Calendar.getInstance();
-    startCalendar.set(startSolar.getYear(), startSolar.getMonth() - 1, startSolar.getDay(), 0, 0, 0);
-    startCalendar.set(Calendar.MILLISECOND, 0);
+    Calendar startCalendar = ExactDate.fromYmd(startSolar.getYear(), startSolar.getMonth(), startSolar.getDay());
 
     int days = (int) ((currentCalendar.getTimeInMillis() - startCalendar.getTimeInMillis()) / MS_PER_DAY);
     return LunarUtil.WU_HOU[offset * 3 + days / 5];

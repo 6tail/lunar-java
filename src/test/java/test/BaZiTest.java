@@ -58,6 +58,16 @@ public class BaZiTest {
   }
 
   @Test
+  public void testGanZhi3(){
+    Lunar lunar = new Lunar(2019,12,12,11,22,0);
+    EightChar eightChar = lunar.getEightChar();
+    Assert.assertEquals("年柱", "己亥", eightChar.getYear());
+    Assert.assertEquals("月柱", "丁丑", eightChar.getMonth());
+    Assert.assertEquals("日柱", "戊申", eightChar.getDay());
+    Assert.assertEquals("时柱", "戊午", eightChar.getTime());
+  }
+
+  @Test
   public void testHideGan() {
     Solar solar = new Solar(2005, 12, 23, 8, 37, 0);
     Lunar lunar = solar.getLunar();

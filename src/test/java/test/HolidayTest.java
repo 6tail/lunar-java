@@ -1,5 +1,6 @@
 package test;
 
+import com.nlf.calendar.Holiday;
 import com.nlf.calendar.Solar;
 import com.nlf.calendar.util.HolidayUtil;
 import org.junit.Assert;
@@ -115,5 +116,13 @@ public class HolidayTest {
     Assert.assertEquals("2021-05-29 我的生日 2021-05-29", HolidayUtil.getHoliday("2021-05-29") + "");
     Assert.assertEquals("2021-11-11 结婚纪念日 2021-11-11", HolidayUtil.getHoliday("2021-11-11") + "");
     Assert.assertEquals("2021-12-01 她的生日 2021-12-01", HolidayUtil.getHoliday("2021-12-01") + "");
+  }
+
+  @Test
+  public void test1() {
+    Holiday holiday = HolidayUtil.getHoliday(2016,10,4);
+    Assert.assertNotNull(holiday);
+    Assert.assertNotNull(holiday.getTarget());
+    Assert.assertEquals("2016-10-01",holiday.getTarget());
   }
 }

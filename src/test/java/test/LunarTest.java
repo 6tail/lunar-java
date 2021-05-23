@@ -65,6 +65,67 @@ public class LunarTest {
   }
 
   @Test
+  public void test8(){
+    Lunar lunar = new Lunar(2020,12,10,13,0,0);
+    Assert.assertEquals("二〇二〇年腊月初十",lunar.toString());
+    Assert.assertEquals("2021-01-22",lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test9(){
+    Lunar lunar = new Lunar(1500,1,1,12,0,0);
+    Assert.assertEquals("1500-01-31",lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test10(){
+    Lunar lunar = new Lunar(1500,12,29,12,0,0);
+    Assert.assertEquals("1501-01-18",lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test11(){
+    Solar solar = new Solar(1500,1,1,12,0,0);
+    Assert.assertEquals("一四九九年腊月初一",solar.getLunar().toString());
+  }
+
+  @Test
+  public void test12(){
+    Solar solar = new Solar(1500,12,31,12,0,0);
+    Assert.assertEquals("一五〇〇年腊月十一",solar.getLunar().toString());
+  }
+
+  @Test
+  public void test13(){
+    Solar solar = new Solar(1582,10,4,12,0,0);
+    Assert.assertEquals("一五八二年九月十八",solar.getLunar().toString());
+  }
+
+  @Test
+  public void test14(){
+    Solar solar = new Solar(1582,10,15,12,0,0);
+    Assert.assertEquals("一五八二年九月十九",solar.getLunar().toString());
+  }
+
+  @Test
+  public void test15(){
+    Lunar lunar = new Lunar(1582,9,18,12,0,0);
+    Assert.assertEquals("1582-10-04",lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test16(){
+    Lunar lunar = new Lunar(1582,9,19,12,0,0);
+    Assert.assertEquals("1582-10-15",lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test17(){
+    Lunar lunar = new Lunar(2019,12,12,11,22,0);
+    Assert.assertEquals("2020-01-06",lunar.getSolar().toString());
+  }
+
+  @Test
   public void testNext(){
     Solar solar = new Solar(2020,1,10,12,0,0);
     Lunar lunar = solar.getLunar();

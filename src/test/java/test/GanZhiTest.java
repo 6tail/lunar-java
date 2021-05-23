@@ -73,17 +73,6 @@ public class GanZhiTest {
     Assert.assertEquals("丁丑",lunar.getMonthInGanZhi());
     Assert.assertEquals("丁丑",lunar.getMonthInGanZhiExact());
 
-
-    solar = new Solar(2020,2,4,13,22,0);
-    lunar = solar.getLunar();
-    Assert.assertEquals("庚子",lunar.getYearInGanZhi());
-    Assert.assertEquals("庚子",lunar.getYearInGanZhiByLiChun());
-    Assert.assertEquals("己亥",lunar.getYearInGanZhiExact());
-
-    Assert.assertEquals("戊寅",lunar.getMonthInGanZhi());
-    Assert.assertEquals("丁丑",lunar.getMonthInGanZhiExact());
-
-
     solar = new Solar(2020,2,4,18,22,0);
     lunar = solar.getLunar();
     Assert.assertEquals("庚子",lunar.getYearInGanZhi());
@@ -318,6 +307,30 @@ public class GanZhiTest {
     Assert.assertEquals("丁卯",lunar.getYearInGanZhi());
     Assert.assertEquals("戊辰",lunar.getYearInGanZhiByLiChun());
     Assert.assertEquals("戊辰",lunar.getYearInGanZhiExact());
+  }
+
+  @Test
+  public void test17() {
+    Solar solar = new Solar(2019, 2, 8, 13, 22, 0);
+    Lunar lunar = solar.getLunar();
+    Assert.assertEquals("己亥", lunar.getYearInGanZhi());
+    Assert.assertEquals("己亥", lunar.getYearInGanZhiByLiChun());
+    Assert.assertEquals("己亥", lunar.getYearInGanZhiExact());
+
+    Assert.assertEquals("丙寅", lunar.getMonthInGanZhi());
+    Assert.assertEquals("丙寅", lunar.getMonthInGanZhiExact());
+  }
+
+  @Test
+  public void test18() {
+    Solar solar = new Solar(2020,2,4,13,22,0);
+    Lunar lunar = solar.getLunar();
+    Assert.assertEquals("庚子",lunar.getYearInGanZhi());
+    Assert.assertEquals("庚子",lunar.getYearInGanZhiByLiChun());
+    Assert.assertEquals("己亥",lunar.getYearInGanZhiExact());
+
+    Assert.assertEquals("戊寅",lunar.getMonthInGanZhi());
+    Assert.assertEquals("丁丑",lunar.getMonthInGanZhiExact());
   }
 
 }

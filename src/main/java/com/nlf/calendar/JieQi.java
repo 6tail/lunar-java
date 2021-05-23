@@ -1,7 +1,5 @@
 package com.nlf.calendar;
 
-import com.nlf.calendar.util.LunarUtil;
-
 /**
  * 节气
  *
@@ -48,15 +46,13 @@ public class JieQi {
    */
   public void setName(String name) {
     this.name = name;
-    for(String key: LunarUtil.JIE){
-      if(key.equals(name)){
-        this.jie = true;
-        return;
-      }
-    }
-    for(String key: LunarUtil.QI){
-      if(key.equals(name)){
-        this.qi = true;
+    for(int i=0,j=Lunar.JIE_QI.length;i<j;i++){
+      if(name.equals(Lunar.JIE_QI[i])){
+        if(i%2==0){
+          this.qi = true;
+        }else{
+          this.jie = true;
+        }
         return;
       }
     }

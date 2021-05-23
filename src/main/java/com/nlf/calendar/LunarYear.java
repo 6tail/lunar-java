@@ -51,12 +51,12 @@ public class LunarYear {
     // 节气(中午12点)
     double[] jq = new double[25];
     // 合朔，即每月初一(中午12点)
-    double[] hs = new double[15];
+    double[] hs = new double[16];
     // 每月天数
     int[] dayCounts = new int[hs.length - 1];
 
     int year = this.year - 2000;
-    // 从上年的大雪到下年的大寒
+    // 从上年的大雪到下年的立春
     for (int i = 0, j = Lunar.JIE_QI_IN_USE.length; i < j; i++) {
       // 精确的节气
       double t = 36525 * ShouXingUtil.saLonT((year + (17 + i) * 15d / 360) * ShouXingUtil.PI_2);

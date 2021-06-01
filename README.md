@@ -38,7 +38,7 @@ lunar是一款无第三方依赖的公历(阳历)和农历(阴历、老黄历)�
 <dependency>
   <groupId>cn.6tail</groupId>
   <artifactId>lunar</artifactId>
-  <version>1.1.0-SNAPSHOT</version>
+  <version>1.2.0-SNAPSHOT</version>
 </dependency>
 ```
 

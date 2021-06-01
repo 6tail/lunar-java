@@ -128,7 +128,6 @@ public class LunarUtil{
       put("8-15","中秋节");
       put("9-9","重阳节");
       put("12-8","腊八节");
-      put("12-30","除夕");
     }
   };
   /** 农历日期对应的非正式节日，参考《寿康宝鉴》 */
@@ -1186,7 +1185,8 @@ public class LunarUtil{
         }
       }
       if(matched) {
-        String ys = left.substring(left.indexOf(":") + 1, left.indexOf(","));
+        String ys = left.substring(left.indexOf(':') + 1);
+        ys = ys.substring(0, ys.indexOf(','));
         for (int i = 0, j = ys.length(); i < j; i += 2) {
           String m = ys.substring(i, i + 2);
           l.add(YI_JI[Integer.parseInt(m,16)]);

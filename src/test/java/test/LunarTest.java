@@ -126,6 +126,31 @@ public class LunarTest {
   }
 
   @Test
+  public void test18(){
+    Lunar lunar = new Lunar(2021,12,29);
+    Assert.assertEquals("除夕",lunar.getFestivals().get(0));
+  }
+
+  @Test
+  public void test19(){
+    Lunar lunar = new Lunar(2020,12,30);
+    Assert.assertEquals("除夕",lunar.getFestivals().get(0));
+  }
+
+  @Test
+  public void test20(){
+    Lunar lunar = new Lunar(2020,12,29);
+    Assert.assertEquals(0,lunar.getFestivals().size());
+  }
+
+  @Test
+  public void test21(){
+    Solar solar = Solar.fromYmd(2022, 1, 31);
+    Lunar lunar = solar.getLunar();
+    Assert.assertEquals("除夕",lunar.getFestivals().get(0));
+  }
+
+  @Test
   public void testNext(){
     Solar solar = new Solar(2020,1,10,12,0,0);
     Lunar lunar = solar.getLunar();

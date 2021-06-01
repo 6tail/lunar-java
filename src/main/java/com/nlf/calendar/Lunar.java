@@ -298,12 +298,14 @@ public class Lunar {
   private void computeMonth() {
     Solar start = null;
     Solar end;
+    String ymd = solar.toYmd();
+    String time = solar.toYmdHms();
+    int size = JIE_QI_IN_USE.length;
 
     //序号：大雪以前-3，大雪到小寒之间-2，小寒到立春之间-1，立春之后0
     int index = -3;
-    for (int i=0,j=JIE_QI_IN_USE.length;i<j;i+=2) {
+    for (int i=0;i<size;i+=2) {
       end = jieQi.get(JIE_QI_IN_USE[i]);
-      String ymd = solar.toYmd();
       String symd = null == start ? ymd : start.toYmd();
       if (ymd.compareTo(symd) >= 0 && ymd.compareTo(end.toYmd()) < 0) {
         break;
@@ -313,27 +315,26 @@ public class Lunar {
     }
 
     //干偏移值（以立春当天起算）
-    int gOffset = (((yearGanIndexByLiChun+(index<0?1:0)) % 5 + 1) * 2) % 10;
-    monthGanIndex = ((index<0?index+10:index) + gOffset) % 10;
+    int offset = (((yearGanIndexByLiChun+(index<0?1:0)) % 5 + 1) * 2) % 10;
+    monthGanIndex = ((index<0?index+10:index) + offset) % 10;
     monthZhiIndex = ((index<0?index+12:index) + LunarUtil.BASE_MONTH_ZHI_INDEX) % 12;
 
-    int indexExact = -3;
     start = null;
-    for (int i=0,j=JIE_QI_IN_USE.length;i<j;i+=2) {
+    index = -3;
+    for (int i=0;i<size;i+=2) {
       end = jieQi.get(JIE_QI_IN_USE[i]);
-      String time = solar.toYmdHms();
       String stime = null == start ? time : start.toYmdHms();
       if (time.compareTo(stime) >= 0 && time.compareTo(end.toYmdHms()) < 0) {
         break;
       }
       start = end;
-      indexExact++;
+      index++;
     }
 
     //干偏移值（以立春交接时刻起算）
-    int gOffsetExact = (((yearGanIndexExact+(indexExact<0?1:0)) % 5 + 1) * 2) % 10;
-    monthGanIndexExact = ((indexExact<0?indexExact+10:indexExact) + gOffsetExact) % 10;
-    monthZhiIndexExact = ((indexExact<0?indexExact+12:indexExact) + LunarUtil.BASE_MONTH_ZHI_INDEX) % 12;
+    offset = (((yearGanIndexExact+(index<0?1:0)) % 5 + 1) * 2) % 10;
+    monthGanIndexExact = ((index<0?index+10:index) + offset) % 10;
+    monthZhiIndexExact = ((index<0?index+12:index) + LunarUtil.BASE_MONTH_ZHI_INDEX) % 12;
   }
 
   /**
@@ -829,14 +830,12 @@ public class Lunar {
    */
   public String getJie() {
     String jie = "";
-    for(int i=0,j=JIE_QI.length;i<j;i++){
+    for(int i=1,j=JIE_QI.length;i<j;i+=2){
       String key = JIE_QI[i];
       Solar d = jieQi.get(key);
       if (d.getYear() == solar.getYear() && d.getMonth() == solar.getMonth() && d.getDay() == solar.getDay()) {
-        if(i%2==1){
-          jie = key;
-          break;
-        }
+        jie = key;
+        break;
       }
     }
     return convertJieQi(jie);
@@ -849,14 +848,12 @@ public class Lunar {
    */
   public String getQi() {
     String qi = "";
-    for(int i=0,j=JIE_QI.length;i<j;i++){
+    for(int i=0,j=JIE_QI.length;i<j;i+=2){
       String key = JIE_QI[i];
       Solar d = jieQi.get(key);
       if (d.getYear() == solar.getYear() && d.getMonth() == solar.getMonth() && d.getDay() == solar.getDay()) {
-        if(i%2==0){
-          qi = key;
-          break;
-        }
+        qi = key;
+        break;
       }
     }
     return convertJieQi(qi);
@@ -953,6 +950,9 @@ public class Lunar {
     String f = LunarUtil.FESTIVAL.get(month + "-" + day);
     if (null != f) {
       l.add(f);
+    }
+    if (Math.abs(month) == 12 && day >= 29 && year != next(1).getYear()) {
+      l.add("除夕");
     }
     return l;
   }

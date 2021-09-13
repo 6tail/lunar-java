@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 法定节假日工具（默认自2001年12月29日起，至2020年12月31日止）
+ * 法定节假日工具（默认自2001年12月29日起）
  *
  * @author 6tail
  */

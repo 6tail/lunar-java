@@ -117,12 +117,21 @@ public class DaYun {
   }
 
   /**
-   * 获取流年
+   * 获取10轮流年
    *
    * @return 流年
    */
   public LiuNian[] getLiuNian() {
-    int n = 10;
+    return getLiuNian(10);
+  }
+
+  /**
+   * 获取流年
+   *
+   * @param n 轮数
+   * @return 流年
+   */
+  public LiuNian[] getLiuNian(int n) {
     if (index < 1) {
       n = endYear-startYear+1;
     }
@@ -134,12 +143,20 @@ public class DaYun {
   }
 
   /**
-   * 获取小运
+   * 获取10轮小运
    *
    * @return 小运
    */
   public XiaoYun[] getXiaoYun() {
-    int n = 10;
+    return getXiaoYun(10);
+  }
+
+  /**
+   * 获取小运
+   * @param n 轮数
+   * @return 小运
+   */
+  public XiaoYun[] getXiaoYun(int n) {
     if (index < 1) {
       n = endYear-startYear+1;
     }

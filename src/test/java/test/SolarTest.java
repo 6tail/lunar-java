@@ -1,6 +1,7 @@
 package test;
 
 import com.nlf.calendar.Solar;
+import com.nlf.calendar.util.SolarUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -42,6 +43,11 @@ public class SolarTest {
   public void test9(){
     Solar solar = new Solar(26,4,13);
     Assert.assertEquals("二六年三月初八",solar.getLunar().toString());
+  }
+
+  @Test
+  public void test10(){
+    Assert.assertEquals(false, SolarUtil.isLeapYear(1500));
   }
 
   @Test

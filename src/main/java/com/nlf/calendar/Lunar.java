@@ -2590,6 +2590,6 @@ public class Lunar {
     Calendar startCalendar = ExactDate.fromYmd(startSolar.getYear(), startSolar.getMonth(), startSolar.getDay());
 
     int days = (int) ((currentCalendar.getTimeInMillis() - startCalendar.getTimeInMillis()) / MS_PER_DAY);
-    return LunarUtil.WU_HOU[offset * 3 + days / 5];
+    return LunarUtil.WU_HOU[(offset * 3 + days / 5) % LunarUtil.WU_HOU.length];
   }
 }

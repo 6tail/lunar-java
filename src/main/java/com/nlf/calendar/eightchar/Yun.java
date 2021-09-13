@@ -145,12 +145,21 @@ public class Yun {
   }
 
   /**
-   * 获取大运
+   * 获取10轮大运
    *
    * @return 大运
    */
   public DaYun[] getDaYun() {
-    int n = 10;
+    return getDaYun(10);
+  }
+
+  /**
+   * 获取大运
+   *
+   * @param n 轮数
+   * @return 大运
+   */
+  public DaYun[] getDaYun(int n) {
     DaYun[] l = new DaYun[n];
     for (int i = 0; i < n; i++) {
       l[i] = new DaYun(this, i);

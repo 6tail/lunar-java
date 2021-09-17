@@ -25,6 +25,8 @@ public class LunarYear {
 
   private static final Map<Integer, Integer> LEAP = new HashMap<Integer, Integer>();
 
+  private static final Map<Integer, LunarYear> CACHE = new HashMap<Integer, LunarYear>();
+
   static {
     for (int y : LEAP_11) {
       LEAP.put(y, 13);
@@ -66,12 +68,17 @@ public class LunarYear {
    * @return 农历年
    */
   public static LunarYear fromYear(int lunarYear) {
-    return new LunarYear(lunarYear);
+    LunarYear obj = CACHE.get(lunarYear);
+    if (null == obj) {
+      obj = new LunarYear(lunarYear);
+      CACHE.put(lunarYear, obj);
+    }
+    return obj;
   }
 
   private void compute() {
     // 节气(中午12点)
-    double[] jq = new double[25];
+    double[] jq = new double[27];
     // 合朔，即每月初一(中午12点)
     double[] hs = new double[16];
     // 每月天数
@@ -87,7 +94,7 @@ public class LunarYear {
       t += ShouXingUtil.ONE_THIRD - ShouXingUtil.dtT(t);
       jieQiJulianDays.add(t + Solar.J2000);
       // 按中午12点算的节气
-      if (i > 0 && i < 26) {
+      if (i > 0 && i < 28) {
         jq[i - 1] = Math.round(t);
       }
     }

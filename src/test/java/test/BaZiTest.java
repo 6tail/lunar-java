@@ -240,4 +240,22 @@ public class BaZiTest {
     }
   }
 
+  @Test
+  public void test4() {
+    Lunar lunar = Lunar.fromYmd(1985, 12, 27);
+    Assert.assertEquals("1995-11-05", lunar.getEightChar().getYun(1).getStartSolar().toYmd());
+  }
+
+  @Test
+  public void test5() {
+    Lunar lunar = Lunar.fromYmd(1985, 1, 27);
+    Assert.assertEquals("1989-03-28", lunar.getEightChar().getYun(1).getStartSolar().toYmd());
+  }
+
+  @Test
+  public void test6() {
+    Lunar lunar = Lunar.fromYmd(1986, 12, 27);
+    Assert.assertEquals("1990-04-15", lunar.getEightChar().getYun(1).getStartSolar().toYmd());
+  }
+
 }

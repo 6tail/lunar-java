@@ -105,7 +105,7 @@ public class LunarUtil{
   /** 彭祖百忌.地支 */
   public static final String[] PENGZU_ZHI = {"","子不问卜自惹祸殃","丑不冠带主不还乡","寅不祭祀神鬼不尝","卯不穿井水泉不香","辰不哭泣必主重丧","巳不远行财物伏藏","午不苫盖屋主更张","未不服药毒气入肠","申不安床鬼祟入房","酉不会客醉坐颠狂","戌不吃犬作怪上床","亥不嫁娶不利新郎"};
   /** 数字 */
-  public static final String[] NUMBER = {"〇","一","二","三","四","五","六","七","八","九"};
+  public static final String[] NUMBER = {"〇","一","二","三","四","五","六","七","八","九","十","十一","十二"};
   /** 月 */
   public static final String[] MONTH = {"","正","二","三","四","五","六","七","八","九","十","冬","腊"};
   /** 季节 */
@@ -1094,6 +1094,32 @@ public class LunarUtil{
       put("酉",Collections.nCopies(1,"辛"));
       put("戌",Arrays.asList("戊","辛","丁"));
       put("亥",Arrays.asList("壬","甲"));
+    }
+  };
+
+  /** 禄（甲禄在寅，乙禄在卯，丙戊禄在巳、丁己禄在午、庚禄在申、辛禄在酉、壬禄在亥、癸禄在子） */
+  public static final Map<String,String> LU = new HashMap<String, String>(){
+    private static final long serialVersionUID = -1L;
+    {
+      put("甲","寅");
+      put("乙","卯");
+      put("丙","巳");
+      put("丁","午");
+      put("戊","巳");
+      put("己","午");
+      put("庚","申");
+      put("辛","酉");
+      put("壬","亥");
+      put("癸","子");
+
+      put("寅","甲");
+      put("卯","乙");
+      put("巳","丙,戊");
+      put("午","丁,己");
+      put("申","庚");
+      put("酉","辛");
+      put("亥","壬");
+      put("子","癸");
     }
   };
 

@@ -109,6 +109,15 @@ public class BaZiTestNew {
   }
 
   @Test
+  public void testBazi2Solar3() {
+    List<Solar> l = Solar.fromBaZi("辛丑", "丁酉", "丙寅", "戊戌");
+    // [2021-09-15 20:00:00 星期三 处女座, 1961-09-30 20:00:00 星期六 天秤座]
+    for (Solar solar : l) {
+      System.out.println(solar.toFullString());
+    }
+  }
+
+  @Test
   public void testBaziShiShenZhi() {
     Solar solar = new Solar(2020, 1, 1, 22, 35, 0);
     Lunar lunar = solar.getLunar();

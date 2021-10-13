@@ -2604,4 +2604,42 @@ public class Lunar {
     int days = (int) ((currentCalendar.getTimeInMillis() - startCalendar.getTimeInMillis()) / MS_PER_DAY);
     return LunarUtil.WU_HOU[(offset * 3 + days / 5) % LunarUtil.WU_HOU.length];
   }
+
+  /**
+   * 获取日禄
+   * @return 日禄
+   */
+  public String getDayLu() {
+    String gan = LunarUtil.LU.get(getDayGan());
+    String zhi = LunarUtil.LU.get(getDayZhi());
+    String lu = gan + "命互禄";
+    if (null != zhi) {
+      lu += " " + zhi + "命进禄";
+    }
+    return lu;
+  }
+
+  /**
+   * 获取时辰
+   *
+   * @return 时辰
+   */
+  public LunarTime getTime() {
+    return new LunarTime(year, month, day, hour, minute, second);
+  }
+
+  /**
+   * 获取当天的时辰列表
+   *
+   * @return 时辰列表
+   */
+  public List<LunarTime> getTimes() {
+    List<LunarTime> l = new ArrayList<LunarTime>();
+    l.add(new LunarTime(year, month, day, 0, 0, 0));
+    for(int i = 0; i < 12; i++){
+      l.add(new LunarTime(year, month, day, (i+1)*2-1, 0, 0));
+    }
+    return l;
+  }
+
 }

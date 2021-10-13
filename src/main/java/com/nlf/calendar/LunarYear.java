@@ -1,5 +1,6 @@
 package com.nlf.calendar;
 
+import com.nlf.calendar.util.LunarUtil;
 import com.nlf.calendar.util.ShouXingUtil;
 
 import java.util.ArrayList;
@@ -209,6 +210,58 @@ public class LunarYear {
       }
     }
     return 0;
+  }
+
+  /**
+   * 获取治水（正月第一个辰日是初几，就是几龙治水）
+   *
+   * @return 治水，如：二龙治水
+   */
+  public String getZhiShui() {
+    int offset = 4 - Solar.fromJulianDay(getMonth(1).getFirstJulianDay()).getLunar().getDayZhiIndex();
+    if (offset < 0) {
+      offset += 12;
+    }
+    return LunarUtil.NUMBER[offset+1] + "龙治水";
+  }
+
+  /**
+   * 获取分饼（正月第一个丙日是初几，就是几人分饼）
+   *
+   * @return 分饼，如：六人分饼
+   */
+  public String getFenBing() {
+    int offset = 2 - Solar.fromJulianDay(getMonth(1).getFirstJulianDay()).getLunar().getDayGanIndex();
+    if (offset < 0) {
+      offset += 10;
+    }
+    return LunarUtil.NUMBER[offset+1] + "人分饼";
+  }
+
+  /**
+   * 获取耕田（正月第一个丑日是初几，就是几牛耕田）
+   *
+   * @return 耕田，如：六牛耕田
+   */
+  public String getGengTian() {
+    int offset = 1 - Solar.fromJulianDay(getMonth(1).getFirstJulianDay()).getLunar().getDayZhiIndex();
+    if (offset < 0) {
+      offset += 12;
+    }
+    return LunarUtil.NUMBER[offset+1] + "牛耕田";
+  }
+
+  /**
+   * 获取得金（正月第一个辛日是初几，就是几日得金）
+   *
+   * @return 得金，如：一日得金
+   */
+  public String getDeJin() {
+    int offset = 7 - Solar.fromJulianDay(getMonth(1).getFirstJulianDay()).getLunar().getDayGanIndex();
+    if (offset < 0) {
+      offset += 10;
+    }
+    return LunarUtil.NUMBER[offset+1] + "日得金";
   }
 
   @Override

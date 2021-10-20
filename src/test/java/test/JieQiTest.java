@@ -173,4 +173,17 @@ public class JieQiTest {
     Assert.assertEquals("冬至", lunar.getPrevQi().getName());
     Assert.assertEquals("冬至", lunar.getPrevJieQi().getName());
   }
+
+  @Test
+  public void test7() {
+    Lunar lunar = Lunar.fromYmd(2012, 9, 1);
+    Assert.assertEquals("2012-09-07 13:29:00", lunar.getJieQiTable().get("白露").toYmdHms());
+  }
+
+  @Test
+  public void test8() {
+    Lunar lunar = Lunar.fromYmd(2050, 12, 1);
+    Assert.assertEquals("2050-12-07 06:41:00", lunar.getJieQiTable().get("大雪").toYmdHms());
+  }
+
 }

@@ -10,35 +10,13 @@ lunar是一款无第三方依赖的公历(阳历)和农历(阴历、老黄历)�
 
 [English](https://github.com/6tail/lunar-java/blob/master/README_EN.md)
 
-### 正式版本
+### Maven
 
 ```xml
 <dependency>
   <groupId>cn.6tail</groupId>
   <artifactId>lunar</artifactId>
-  <version>1.2.6</version>
-</dependency>
-```
- 
-### 快照版本
-
-```xml
-<repository>
-  <id>sonatype</id>
-  <url>https://oss.sonatype.org/content/groups/public/</url>
-  <snapshots>
-    <enabled>true</enabled>
-    <updatePolicy>daily</updatePolicy>
-    <checksumPolicy>warn</checksumPolicy>
-  </snapshots>
-</repository>
-```
-
-```xml
-<dependency>
-  <groupId>cn.6tail</groupId>
-  <artifactId>lunar</artifactId>
-  <version>1.2.0-SNAPSHOT</version>
+  <version>1.2.7</version>
 </dependency>
 ```
 

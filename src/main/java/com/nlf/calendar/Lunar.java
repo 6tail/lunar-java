@@ -753,7 +753,7 @@ public class Lunar {
    * @return 中文年，如二零零一
    */
   public String getYearInChinese() {
-    String y = (year + "");
+    String y = year + "";
     StringBuilder s = new StringBuilder();
     for (int i = 0, j = y.length(); i < j; i++) {
       s.append(LunarUtil.NUMBER[y.charAt(i) - '0']);
@@ -979,6 +979,9 @@ public class Lunar {
     List<String> fs = LunarUtil.OTHER_FESTIVAL.get(month + "-" + day);
     if (null != fs) {
       l.addAll(fs);
+    }
+    if(solar.toYmd().equals(jieQi.get("清明").next(-1).toYmd())) {
+      l.add("寒食节");
     }
     return l;
   }
@@ -2640,6 +2643,15 @@ public class Lunar {
       l.add(new LunarTime(year, month, day, (i+1)*2-1, 0, 0));
     }
     return l;
+  }
+
+  /**
+   * 获取佛历
+   *
+   * @return 佛历
+   */
+  public Foto getFoto() {
+    return Foto.fromLunar(this);
   }
 
 }

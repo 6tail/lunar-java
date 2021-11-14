@@ -1159,12 +1159,22 @@ public class Lunar {
   }
 
   /**
-   * 获取日福神方位
+   * 获取日福神方位（默认流派：2）
    *
    * @return 福神方位，如艮
    */
   public String getDayPositionFu() {
-    return LunarUtil.POSITION_FU[dayGanIndex + 1];
+    return getDayPositionFu(2);
+  }
+
+  /**
+   * 获取日福神方位
+   *
+   * @param sect 流派，1或2
+   * @return 福神方位，如艮
+   */
+  public String getDayPositionFu(int sect) {
+    return (1==sect?LunarUtil.POSITION_FU:LunarUtil.POSITION_FU_2)[dayGanIndex + 1];
   }
 
   /**
@@ -1249,12 +1259,22 @@ public class Lunar {
   }
 
   /**
-   * 获取时辰福神方位
+   * 获取时辰福神方位，默认流派2
    *
    * @return 福神方位，如艮
    */
   public String getTimePositionFu() {
-    return LunarUtil.POSITION_FU[timeGanIndex + 1];
+    return getTimePositionFu(2);
+  }
+
+  /**
+   * 获取时辰福神方位
+   *
+   * @param sect 流派，1或2
+   * @return 福神方位，如艮
+   */
+  public String getTimePositionFu(int sect) {
+    return (1==sect?LunarUtil.POSITION_FU:LunarUtil.POSITION_FU_2)[timeGanIndex + 1];
   }
 
   /**
@@ -1592,11 +1612,7 @@ public class Lunar {
    * @return 逐日胎神方位
    */
   public String getDayPositionTai() {
-    int offset = dayGanIndex - dayZhiIndex;
-    if (offset < 0) {
-      offset += 12;
-    }
-    return LunarUtil.POSITION_TAI_DAY[offset * 5 + dayGanIndex];
+    return LunarUtil.POSITION_TAI_DAY[LunarUtil.getJiaZiIndex(getDayInGanZhi())];
   }
 
   /**

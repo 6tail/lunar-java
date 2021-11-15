@@ -136,21 +136,41 @@ public class LunarTime {
   }
 
   /**
-   * 获取福神方位
+   * 获取福神方位（默认流派：2）
    *
    * @return 福神方位，如艮
    */
   public String getPositionFu() {
-    return LunarUtil.POSITION_FU[ganIndex + 1];
+    return getPositionFu(2);
+  }
+
+  /**
+   * 获取福神方位
+   *
+   * @param sect 流派，1或2
+   * @return 福神方位，如艮
+   */
+  public String getPositionFu(int sect) {
+    return (1 == sect ? LunarUtil.POSITION_FU : LunarUtil.POSITION_FU_2)[ganIndex + 1];
+  }
+
+  /**
+   * 获取福神方位描述（默认流派：2）
+   *
+   * @return 福神方位描述，如东北
+   */
+  public String getPositionFuDesc() {
+    return getPositionFuDesc(2);
   }
 
   /**
    * 获取福神方位描述
    *
+   * @param sect 流派，1或2
    * @return 福神方位描述，如东北
    */
-  public String getPositionFuDesc() {
-    return LunarUtil.POSITION_DESC.get(getPositionFu());
+  public String getPositionFuDesc(int sect) {
+    return LunarUtil.POSITION_DESC.get(getPositionFu(sect));
   }
 
   /**
@@ -342,12 +362,12 @@ public class LunarTime {
    */
   public String getMinHm() {
     int hour = lunar.getHour();
-    if (hour <1){
+    if (hour < 1) {
       return "00:00";
     } else if (hour > 22) {
       return "23:00";
     }
-    return String.format("%02d:00", hour % 2 == 0? hour - 1 : hour);
+    return String.format("%02d:00", hour % 2 == 0 ? hour - 1 : hour);
   }
 
   /**
@@ -357,12 +377,12 @@ public class LunarTime {
    */
   public String getMaxHm() {
     int hour = lunar.getHour();
-    if (hour <1){
+    if (hour < 1) {
       return "00:59";
     } else if (hour > 22) {
       return "23:59";
     }
-    return String.format("%02d:59", hour % 2 == 0? hour : hour + 1);
+    return String.format("%02d:59", hour % 2 == 0 ? hour : hour + 1);
   }
 
   @Override

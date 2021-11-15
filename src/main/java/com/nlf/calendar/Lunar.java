@@ -1178,12 +1178,22 @@ public class Lunar {
   }
 
   /**
-   * 获取日福神方位描述
+   * 获取日福神方位描述（默认流派：2）
    *
    * @return 福神方位描述，如东北
    */
   public String getDayPositionFuDesc() {
-    return LunarUtil.POSITION_DESC.get(getDayPositionFu());
+    return getDayPositionFuDesc(2);
+  }
+
+  /**
+   * 获取日福神方位描述
+   *
+   * @param sect 流派，1或2
+   * @return 福神方位描述，如东北
+   */
+  public String getDayPositionFuDesc(int sect) {
+    return LunarUtil.POSITION_DESC.get(getDayPositionFu(sect));
   }
 
   /**
@@ -1278,12 +1288,22 @@ public class Lunar {
   }
 
   /**
-   * 获取时辰福神方位描述
+   * 获取时辰福神方位描述，默认流派2
    *
    * @return 福神方位描述，如东北
    */
   public String getTimePositionFuDesc() {
-    return LunarUtil.POSITION_DESC.get(getTimePositionFu());
+    return getTimePositionFuDesc(2);
+  }
+
+  /**
+   * 获取时辰福神方位描述
+   *
+   * @param sect 流派，1或2
+   * @return 福神方位描述，如东北
+   */
+  public String getTimePositionFuDesc(int sect) {
+    return LunarUtil.POSITION_DESC.get(getTimePositionFu(sect));
   }
 
   /**

@@ -414,7 +414,7 @@ public class LunarUtil{
       put("鬼","南");
       put("娄","西");
       put("牛","北");
-      put("氐","南");
+      put("氐","东");
       put("柳","南");
       put("胃","西");
       put("女","北");

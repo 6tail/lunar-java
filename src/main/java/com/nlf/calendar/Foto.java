@@ -28,12 +28,12 @@ public class Foto {
     return new Foto(lunar);
   }
 
-  public static Foto fromYmdHms(int lunarYear, int lunarMonth, int lunarDay, int hour, int minute, int second) {
-    return Foto.fromLunar(Lunar.fromYmdHms(lunarYear + DEAD_YEAR - 1, lunarMonth, lunarDay, hour, minute, second));
+  public static Foto fromYmdHms(int year, int month, int day, int hour, int minute, int second) {
+    return Foto.fromLunar(Lunar.fromYmdHms(year + DEAD_YEAR - 1, month, day, hour, minute, second));
   }
 
-  public static Foto fromYmd(int lunarYear, int lunarMonth, int lunarDay) {
-    return fromYmdHms(lunarYear, lunarMonth, lunarDay, 0, 0, 0);
+  public static Foto fromYmd(int year, int month, int day) {
+    return fromYmdHms(year, month, day, 0, 0, 0);
   }
 
   public Lunar getLunar() {

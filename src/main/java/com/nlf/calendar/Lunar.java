@@ -2690,4 +2690,13 @@ public class Lunar {
     return Foto.fromLunar(this);
   }
 
+  /**
+   * 获取道历
+   *
+   * @return 佛历
+   */
+  public Tao getTao() {
+    return Tao.fromLunar(this);
+  }
+
 }

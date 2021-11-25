@@ -64,6 +64,10 @@ public class FotoFestival {
 
   @Override
   public String toString() {
+    return name;
+  }
+
+  public String toFullString() {
     StringBuilder s = new StringBuilder();
     s.append(name);
     if (null != result && result.length() > 0) {

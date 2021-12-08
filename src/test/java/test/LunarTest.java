@@ -387,4 +387,11 @@ public class LunarTest {
     Assert.assertEquals("厕灶厨 外西南", lunar.getDayPositionTai());
   }
 
+  @Test
+  public void test53() {
+    Solar solar = Solar.fromYmd(2021, 11, 27);
+    Lunar lunar = solar.getLunar();
+    Assert.assertEquals("[嫁娶, 祭祀, 祈福, 求嗣, 开光, 出行, 解除, 出火, 拆卸, 进人口, 入宅, 移徙, 安床, 栽种, 动土, 修造, 纳畜, 入殓, 安葬, 立碑, 除服, 成服]", lunar.getDayYi().toString());
+  }
+
 }

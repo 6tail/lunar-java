@@ -18,4 +18,14 @@ public class FotoTest {
     Assert.assertEquals("二五六五年十月十四 (三元降) (四天王巡行)", foto.toFullString());
   }
 
+  @Test
+  public void test1() {
+    Foto foto = Foto.fromLunar(Lunar.fromYmd(2020, 4, 13));
+    Assert.assertEquals("氐", foto.getXiu());
+    Assert.assertEquals("土", foto.getZheng());
+    Assert.assertEquals("貉", foto.getAnimal());
+    Assert.assertEquals("东", foto.getGong());
+    Assert.assertEquals("青龙", foto.getShou());
+  }
+
 }

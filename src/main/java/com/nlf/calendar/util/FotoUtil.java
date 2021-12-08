@@ -261,4 +261,25 @@ public class FotoUtil {
       put("12-30", Collections.nCopies(1, new FotoFestival("诸神下降，察访善恶", "犯者男女俱亡")));
     }
   };
+
+  /**
+   * 27星宿，佛教从印度传入中国，印度把28星宿改为27星宿，把牛宿(牛金牛)纳入了女宿(女土蝠)。
+   */
+  public static final String[] XIU_27 = {"角", "亢", "氐", "房", "心", "尾", "箕", "斗", "女", "虚", "危", "室", "壁", "奎", "娄", "胃", "昴", "毕", "觜", "参", "井", "鬼", "柳", "星", "张", "翼", "轸"};
+
+  /**
+   * 每月初一的27星宿偏移
+   */
+  private static final int[] XIU_OFFSET = {11, 13, 15, 17, 19, 21, 24, 0, 2, 4, 7, 9};
+
+  /**
+   * 获取27星宿
+   *
+   * @param month 佛历月
+   * @param day   佛历日
+   * @return 星宿
+   */
+  public static String getXiu(int month, int day) {
+    return XIU_27[(XIU_OFFSET[Math.abs(month)-1] + day - 1) % XIU_27.length];
+  }
 }

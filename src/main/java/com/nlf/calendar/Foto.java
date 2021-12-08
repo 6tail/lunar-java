@@ -83,11 +83,21 @@ public class Foto {
     return l;
   }
 
+  /**
+   * 是否月斋
+   *
+   * @return true/false
+   */
   public boolean isMonthZhai() {
     int m = getMonth();
     return 1 == m || 5 == m || 9 == m;
   }
 
+  /**
+   * 是否杨公忌
+   *
+   * @return true/false
+   */
   public boolean isDayYangGong() {
     for (FotoFestival f : getFestivals()) {
       if ("杨公忌".equals(f.getName())) {
@@ -97,11 +107,21 @@ public class Foto {
     return false;
   }
 
+  /**
+   * 是否朔望斋
+   *
+   * @return true/false
+   */
   public boolean isDayZhaiShuoWang() {
     int d = getDay();
     return 1 == d || 15 == d;
   }
 
+  /**
+   * 是否六斋日
+   *
+   * @return true/false
+   */
   public boolean isDayZhaiSix() {
     int d = getDay();
     if (8 == d || 14 == d || 15 == d || 23 == d || 29 == d || 30 == d) {
@@ -113,11 +133,21 @@ public class Foto {
     return false;
   }
 
+  /**
+   * 是否十斋日
+   *
+   * @return true/false
+   */
   public boolean isDayZhaiTen() {
     int d = getDay();
     return 1 == d || 8 == d || 14 == d || 15 == d || 18 == d || 23 == d || 24 == d || 28 == d || 29 == d || 30 == d;
   }
 
+  /**
+   * 是否观音斋
+   *
+   * @return true/false
+   */
   public boolean isDayZhaiGuanYin() {
     String k = getMonth() + "-" + getDay();
     for (String d : FotoUtil.DAY_ZHAI_GUAN_YIN) {
@@ -126,6 +156,69 @@ public class Foto {
       }
     }
     return false;
+  }
+
+  /**
+   * 获取星宿
+   *
+   * @return 星宿
+   */
+  public String getXiu() {
+    return FotoUtil.getXiu(getMonth(), getDay());
+  }
+
+  /**
+   * 获取宿吉凶
+   *
+   * @return 吉/凶
+   */
+  public String getXiuLuck() {
+    return LunarUtil.XIU_LUCK.get(getXiu());
+  }
+
+  /**
+   * 获取宿歌诀
+   *
+   * @return 宿歌诀
+   */
+  public String getXiuSong() {
+    return LunarUtil.XIU_SONG.get(getXiu());
+  }
+
+  /**
+   * 获取政
+   *
+   * @return 政
+   */
+  public String getZheng() {
+    return LunarUtil.ZHENG.get(getXiu());
+  }
+
+  /**
+   * 获取动物
+   *
+   * @return 动物
+   */
+  public String getAnimal() {
+    return LunarUtil.ANIMAL.get(getXiu());
+  }
+
+  /**
+   * 获取宫
+   *
+   * @return 宫
+   */
+  public String getGong() {
+    return LunarUtil.GONG.get(getXiu());
+  }
+
+  /**
+   * 获取兽
+   *
+   * @return 兽
+   */
+  public String getShou() {
+    return LunarUtil.SHOU.get(getGong());
   }
 
   @Override

@@ -186,4 +186,12 @@ public class JieQiTest {
     Assert.assertEquals("2050-12-07 06:41:00", lunar.getJieQiTable().get("大雪").toYmdHms());
   }
 
+  @Test
+  public void test9() {
+    Solar solar = Solar.fromYmd(2021, 12, 21);
+    Assert.assertEquals("冬至", solar.getLunar().getJieQi());
+    Assert.assertEquals("", solar.getLunar().getJie());
+    Assert.assertEquals("冬至", solar.getLunar().getQi());
+  }
+
 }

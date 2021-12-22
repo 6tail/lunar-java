@@ -169,4 +169,9 @@ public class TaoUtil {
    */
   public static final String[] WU_LA = {"1-1", "5-5", "7-7", "10-1", "12-8"};
 
+  /**
+   * 暗戊
+   */
+  public static final String[] AN_WU = {"未", "戌", "辰", "寅", "午", "子", "酉", "申", "巳", "亥", "卯", "丑"};
+
 }

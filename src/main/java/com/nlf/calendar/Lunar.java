@@ -1954,12 +1954,22 @@ public class Lunar {
    * @return 节气
    */
   public JieQi getNextJie() {
+    return getNextJie(false);
+  }
+
+  /**
+   * 获取下一节令（顺推的第一个节令）
+   *
+   * @param wholeDay 是否按天计
+   * @return 节气
+   */
+  public JieQi getNextJie(boolean wholeDay) {
     int l = JIE_QI_IN_USE.length/2;
     String[] conditions = new String[l];
     for(int i=0;i<l;i++){
       conditions[i] = JIE_QI_IN_USE[i*2];
     }
-    return getNearJieQi(true, conditions);
+    return getNearJieQi(true, conditions, wholeDay);
   }
 
   /**
@@ -1968,12 +1978,22 @@ public class Lunar {
    * @return 节气
    */
   public JieQi getPrevJie() {
+    return getPrevJie(false);
+  }
+
+  /**
+   * 获取上一节令（逆推的第一个节令）
+   *
+   * @param wholeDay 是否按天计
+   * @return 节气
+   */
+  public JieQi getPrevJie(boolean wholeDay) {
     int l = JIE_QI_IN_USE.length/2;
     String[] conditions = new String[l];
     for(int i=0;i<l;i++){
       conditions[i] = JIE_QI_IN_USE[i*2];
     }
-    return getNearJieQi(false, conditions);
+    return getNearJieQi(false, conditions, wholeDay);
   }
 
   /**
@@ -1982,12 +2002,22 @@ public class Lunar {
    * @return 节气
    */
   public JieQi getNextQi() {
+    return getNextQi(false);
+  }
+
+  /**
+   * 获取下一气令（顺推的第一个气令）
+   *
+   * @param wholeDay 是否按天计
+   * @return 节气
+   */
+  public JieQi getNextQi(boolean wholeDay) {
     int l = JIE_QI_IN_USE.length/2;
     String[] conditions = new String[l];
     for(int i=0;i<l;i++){
       conditions[i] = JIE_QI_IN_USE[i*2+1];
     }
-    return getNearJieQi(true, conditions);
+    return getNearJieQi(true, conditions, wholeDay);
   }
 
   /**
@@ -1996,12 +2026,22 @@ public class Lunar {
    * @return 节气
    */
   public JieQi getPrevQi() {
+    return getPrevQi(false);
+  }
+
+  /**
+   * 获取上一气令（逆推的第一个气令）
+   *
+   * @param wholeDay 是否按天计
+   * @return 节气
+   */
+  public JieQi getPrevQi(boolean wholeDay) {
     int l = JIE_QI_IN_USE.length/2;
     String[] conditions = new String[l];
     for(int i=0;i<l;i++){
       conditions[i] = JIE_QI_IN_USE[i*2+1];
     }
-    return getNearJieQi(false, conditions);
+    return getNearJieQi(false, conditions, wholeDay);
   }
 
   /**
@@ -2010,7 +2050,17 @@ public class Lunar {
    * @return 节气
    */
   public JieQi getNextJieQi() {
-    return getNearJieQi(true, null);
+    return getNextJieQi(false);
+  }
+
+  /**
+   * 获取下一节气（顺推的第一个节气）
+   *
+   * @param wholeDay 是否按天计
+   * @return 节气
+   */
+  public JieQi getNextJieQi(boolean wholeDay) {
+    return getNearJieQi(true, null, wholeDay);
   }
 
   /**
@@ -2019,7 +2069,17 @@ public class Lunar {
    * @return 节气
    */
   public JieQi getPrevJieQi() {
-    return getNearJieQi(false, null);
+    return getPrevJieQi(false);
+  }
+
+  /**
+   * 获取上一节气（逆推的第一个节气）
+   *
+   * @param wholeDay 是否按天计
+   * @return 节气
+   */
+  public JieQi getPrevJieQi(boolean wholeDay) {
+    return getNearJieQi(false, null, wholeDay);
   }
 
   /**
@@ -2027,9 +2087,10 @@ public class Lunar {
    *
    * @param forward    是否顺推，true为顺推，false为逆推
    * @param conditions 过滤条件，如果设置过滤条件，仅返回匹配该名称的
+   * @param wholeDay 是否按天计
    * @return 节气
    */
-  protected JieQi getNearJieQi(boolean forward, String[] conditions) {
+  protected JieQi getNearJieQi(boolean forward, String[] conditions, boolean wholeDay) {
     String name = null;
     Solar near = null;
     Set<String> filters = new HashSet<String>();
@@ -2037,7 +2098,7 @@ public class Lunar {
       Collections.addAll(filters, conditions);
     }
     boolean filter = !filters.isEmpty();
-    String today = solar.toYmdHms();
+    String today = wholeDay ? solar.toYmd() : solar.toYmdHms();
     for (Map.Entry<String, Solar> entry : jieQi.entrySet()) {
       String jq = convertJieQi(entry.getKey());
       if (filter) {
@@ -2046,22 +2107,34 @@ public class Lunar {
         }
       }
       Solar solar = entry.getValue();
-      String day = solar.toYmdHms();
+      String day = wholeDay ? solar.toYmd() : solar.toYmdHms();
       if (forward) {
         if (day.compareTo(today) < 0) {
           continue;
         }
-        if (null == near || day.compareTo(near.toYmdHms()) < 0) {
+        if (null == near) {
           name = jq;
           near = solar;
+        } else {
+          String nearDay = wholeDay ? near.toYmd() : near.toYmdHms();
+          if (day.compareTo(nearDay) < 0) {
+            name = jq;
+            near = solar;
+          }
         }
       } else {
         if (day.compareTo(today) > 0) {
           continue;
         }
-        if (null == near || day.compareTo(near.toYmdHms()) > 0) {
+        if (null == near) {
           name = jq;
           near = solar;
+        } else {
+          String nearDay = wholeDay ? near.toYmd() : near.toYmdHms();
+          if (day.compareTo(nearDay) > 0) {
+            name = jq;
+            near = solar;
+          }
         }
       }
     }
@@ -2626,7 +2699,7 @@ public class Lunar {
    */
   @SuppressWarnings("MagicConstant")
   public String getWuHou() {
-    JieQi jieQi = getPrevJieQi();
+    JieQi jieQi = getPrevJieQi(true);
     String name = jieQi.getName();
     int offset = 0;
     for (int i = 0, j = JIE_QI.length; i < j; i++) {
@@ -2642,6 +2715,21 @@ public class Lunar {
 
     int days = (int) ((currentCalendar.getTimeInMillis() - startCalendar.getTimeInMillis()) / MS_PER_DAY);
     return LunarUtil.WU_HOU[(offset * 3 + days / 5) % LunarUtil.WU_HOU.length];
+  }
+
+  /**
+   * 获取候
+   *
+   * @return 候
+   */
+  public String getHou() {
+    JieQi jieQi = getPrevJieQi(true);
+    String name = jieQi.getName();
+    Calendar currentCalendar = ExactDate.fromYmd(solar.getYear(), solar.getMonth(), solar.getDay());
+    Solar startSolar = jieQi.getSolar();
+    Calendar startCalendar = ExactDate.fromYmd(startSolar.getYear(), startSolar.getMonth(), startSolar.getDay());
+    int days = (int) ((currentCalendar.getTimeInMillis() - startCalendar.getTimeInMillis()) / MS_PER_DAY);
+    return String.format("%s %s", name, LunarUtil.HOU[(days / 5) % LunarUtil.HOU.length]);
   }
 
   /**

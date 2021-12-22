@@ -16,7 +16,7 @@ lunar是一款无第三方依赖的公历(阳历)、农历(阴历、老黄历)�
 <dependency>
   <groupId>cn.6tail</groupId>
   <artifactId>lunar</artifactId>
-  <version>1.2.14</version>
+  <version>1.2.15</version>
 </dependency>
 ```
 
@@ -56,6 +56,8 @@ lunar是一款无第三方依赖的公历(阳历)、农历(阴历、老黄历)�
 请移步至 [http://6tail.cn/calendar/api.html](http://6tail.cn/calendar/api.html "http://6tail.cn/calendar/api.html")
 
 ## 更新日志
+
+v1.2.15 南京大XX纪念日更改为国家公祭日；新增初候、二候、三候；新增三元九运；新增道历戊日。
 
 v1.2.14 佛历新增27宿；修复宜忌重复的问题；修复获取气时缺冬至的问题。
 

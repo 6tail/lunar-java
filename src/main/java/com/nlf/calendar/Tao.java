@@ -149,6 +149,33 @@ public class Tao {
     return TaoUtil.BA_HUI.containsKey(lunar.getDayInGanZhi());
   }
 
+  /**
+   * 是否明戊日
+   *
+   * @return true/false
+   */
+  public boolean isDayMingWu() {
+    return "戊".equals(lunar.getDayGan());
+  }
+
+  /**
+   * 是否暗戊日
+   *
+   * @return true/false
+   */
+  public boolean isDayAnWu() {
+    return lunar.getDayZhi().equals(TaoUtil.AN_WU[Math.abs(getMonth()) - 1]);
+  }
+
+  /**
+   * 是否戊日
+   *
+   * @return true/false
+   */
+  public boolean isDayWu() {
+    return isDayMingWu() || isDayAnWu();
+  }
+
   @Override
   public String toString() {
     return String.format("%s年%s月%s", getYearInChinese(), getMonthInChinese(), getDayInChinese());

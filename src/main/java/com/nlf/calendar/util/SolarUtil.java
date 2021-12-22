@@ -128,7 +128,7 @@ public class SolarUtil {
       put("11-28", Collections.nCopies(1, "恩格斯诞辰纪念日"));
       put("12-1", Collections.nCopies(1, "世界艾滋病日"));
       put("12-12", Collections.nCopies(1, "西安事变纪念日"));
-      put("12-13", Collections.nCopies(1, "南京大屠杀纪念日"));
+      put("12-13", Collections.nCopies(1, "国家公祭日"));
       put("12-26", Collections.nCopies(1, "毛泽东诞辰纪念日"));
     }
   };

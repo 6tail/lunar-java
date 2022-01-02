@@ -93,6 +93,46 @@ public class LunarMonth {
     return firstJulianDay;
   }
 
+  /**
+   * 获取太岁方位
+   *
+   * @return 太岁方位，如艮
+   */
+  public String getPositionTaiSui() {
+    String p;
+    int m = Math.abs(month);
+    switch(m) {
+      case 1:
+      case 5:
+      case 9:
+        p = "艮";
+        break;
+      case 3:
+      case 7:
+      case 11:
+        p = "坤";
+        break;
+      case 4:
+      case 8:
+      case 12:
+        p = "巽";
+        break;
+      default:
+        p = LunarUtil.POSITION_GAN[Solar.fromJulianDay(this.getFirstJulianDay()).getLunar().getMonthGanIndex()];
+    }
+    return p;
+  }
+
+  /**
+   * 获取太岁方位描述
+   *
+   * @return 太岁方位描述，如东北
+   */
+  public String getPositionTaiSuiDesc() {
+    return LunarUtil.POSITION_DESC.get(getPositionTaiSui());
+  }
+
+
   @Override
   public String toString() {
     return year + "年" + (isLeap() ? "闰" : "") + LunarUtil.MONTH[Math.abs(month)] + "月(" + dayCount + "天)";

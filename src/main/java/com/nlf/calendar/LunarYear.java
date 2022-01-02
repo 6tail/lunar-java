@@ -53,6 +53,16 @@ public class LunarYear {
   private int year;
 
   /**
+   * 天干下标
+   */
+  private int ganIndex;
+
+  /**
+   * 地支下标
+   */
+  private int zhiIndex;
+
+  /**
    * 农历月们
    */
   private List<LunarMonth> months = new ArrayList<LunarMonth>();
@@ -69,6 +79,17 @@ public class LunarYear {
    */
   public LunarYear(int lunarYear) {
     this.year = lunarYear;
+    int offset = lunarYear - 4;
+    int yearGanIndex = offset % 10;
+    int yearZhiIndex = offset % 12;
+    if (yearGanIndex < 0) {
+      yearGanIndex += 10;
+    }
+    if (yearZhiIndex < 0) {
+      yearZhiIndex += 12;
+    }
+    this.ganIndex = yearGanIndex;
+    this.zhiIndex = yearZhiIndex;
     compute();
   }
 
@@ -194,6 +215,33 @@ public class LunarYear {
   }
 
   /**
+   * 获取天干
+   *
+   * @return 天干
+   */
+  public String getGan() {
+    return LunarUtil.GAN[ganIndex + 1];
+  }
+
+  /**
+   * 获取地支
+   *
+   * @return 地支
+   */
+  public String getZhi() {
+    return LunarUtil.ZHI[zhiIndex + 1];
+  }
+
+  /**
+   * 获取干支
+   *
+   * @return 干支
+   */
+  public String getGanZhi() {
+    return getGan() + getZhi();
+  }
+
+  /**
    * 获取农历月
    *
    * @param lunarMonth 月，1-12，闰月为负数，如闰2月为-2
@@ -222,30 +270,38 @@ public class LunarYear {
     return 0;
   }
 
-  /**
-   * 获取治水（正月第一个辰日是初几，就是几龙治水）
-   *
-   * @return 治水，如：二龙治水
-   */
-  public String getZhiShui() {
-    int offset = 4 - Solar.fromJulianDay(getMonth(1).getFirstJulianDay()).getLunar().getDayZhiIndex();
-    if (offset < 0) {
-      offset += 12;
-    }
-    return LunarUtil.NUMBER[offset+1] + "龙治水";
-  }
-
-  /**
-   * 获取分饼（正月第一个丙日是初几，就是几人分饼）
-   *
-   * @return 分饼，如：六人分饼
-   */
-  public String getFenBing() {
-    int offset = 2 - Solar.fromJulianDay(getMonth(1).getFirstJulianDay()).getLunar().getDayGanIndex();
+  protected String getZaoByGan(int index, String name) {
+    int offset = index - Solar.fromJulianDay(getMonth(1).getFirstJulianDay()).getLunar().getDayGanIndex();
     if (offset < 0) {
       offset += 10;
     }
-    return LunarUtil.NUMBER[offset+1] + "人分饼";
+    return name.replaceFirst("几", LunarUtil.NUMBER[offset + 1]);
+  }
+
+  protected String getZaoByZhi(int index, String name) {
+    int offset = index - Solar.fromJulianDay(getMonth(1).getFirstJulianDay()).getLunar().getDayZhiIndex();
+    if (offset < 0) {
+      offset += 12;
+    }
+    return name.replaceFirst("几", LunarUtil.NUMBER[offset + 1]);
+  }
+
+  /**
+   * 获取几鼠偷粮
+   *
+   * @return 几鼠偷粮
+   */
+  public String getTouLiang() {
+    return getZaoByZhi(0, "几鼠偷粮");
+  }
+
+  /**
+   * 获取草子几分
+   *
+   * @return 草子几分
+   */
+  public String getCaoZi() {
+    return getZaoByZhi(0, "草子几分");
   }
 
   /**
@@ -254,11 +310,79 @@ public class LunarYear {
    * @return 耕田，如：六牛耕田
    */
   public String getGengTian() {
-    int offset = 1 - Solar.fromJulianDay(getMonth(1).getFirstJulianDay()).getLunar().getDayZhiIndex();
-    if (offset < 0) {
-      offset += 12;
-    }
-    return LunarUtil.NUMBER[offset+1] + "牛耕田";
+    return getZaoByZhi(1, "几牛耕田");
+  }
+
+  /**
+   * 获取花收几分
+   *
+   * @return 花收几分
+   */
+  public String getHuaShou() {
+    return getZaoByZhi(3, "花收几分");
+  }
+
+  /**
+   * 获取治水（正月第一个辰日是初几，就是几龙治水）
+   *
+   * @return 治水，如：二龙治水
+   */
+  public String getZhiShui() {
+    return getZaoByZhi(4, "几龙治水");
+  }
+
+  /**
+   * 获取几马驮谷
+   *
+   * @return 几马驮谷
+   */
+  public String getTuoGu() {
+    return getZaoByZhi(6, "几马驮谷");
+  }
+
+  /**
+   * 获取几鸡抢米
+   *
+   * @return 几鸡抢米
+   */
+  public String getQiangMi() {
+    return getZaoByZhi(9, "几鸡抢米");
+  }
+
+  /**
+   * 获取几姑看蚕
+   *
+   * @return 几姑看蚕
+   */
+  public String getKanCan() {
+    return getZaoByZhi(9, "几姑看蚕");
+  }
+
+  /**
+   * 获取几屠共猪
+   *
+   * @return 几屠共猪
+   */
+  public String getGongZhu() {
+    return getZaoByZhi(11, "几屠共猪");
+  }
+
+  /**
+   * 获取甲田几分
+   *
+   * @return 甲田几分
+   */
+  public String getJiaTian() {
+    return getZaoByGan(0, "甲田几分");
+  }
+
+  /**
+   * 获取分饼（正月第一个丙日是初几，就是几人分饼）
+   *
+   * @return 分饼，如：六人分饼
+   */
+  public String getFenBing() {
+    return getZaoByGan(2, "几人分饼");
   }
 
   /**
@@ -267,11 +391,25 @@ public class LunarYear {
    * @return 得金，如：一日得金
    */
   public String getDeJin() {
-    int offset = 7 - Solar.fromJulianDay(getMonth(1).getFirstJulianDay()).getLunar().getDayGanIndex();
-    if (offset < 0) {
-      offset += 10;
-    }
-    return LunarUtil.NUMBER[offset+1] + "日得金";
+    return getZaoByGan(7, "几日得金");
+  }
+
+  /**
+   * 获取几人几丙
+   *
+   * @return 几人几丙
+   */
+  public String getRenBing() {
+    return getZaoByGan(2, getZaoByZhi(2, "几人几丙"));
+  }
+
+  /**
+   * 获取几人几锄
+   *
+   * @return 几人几锄
+   */
+  public String getRenChu() {
+    return getZaoByGan(3, getZaoByZhi(2, "几人几锄"));
   }
 
   /**
@@ -290,6 +428,154 @@ public class LunarYear {
    */
   public String getYun() {
     return YUN[((year + 2696) / 20) % 9] + "运";
+  }
+
+  /**
+   * 获取九星
+   *
+   * @return 九星
+   */
+  public NineStar getNineStar() {
+    int index = LunarUtil.getJiaZiIndex(this.getGanZhi()) + 1;
+    int n = 65;
+    if ("中元".equals(getYuan())) {
+      n = 68;
+    } else if ("下元".equals(getYuan())) {
+      n = 62;
+    }
+    int offset = (n - index) % 9;
+    if (0 == offset) {
+      offset = 9;
+    }
+    return NineStar.fromIndex(offset - 1);
+  }
+
+  /**
+   * 获取喜神方位
+   *
+   * @return 喜神方位，如艮
+   */
+  public String getPositionXi() {
+    return LunarUtil.POSITION_XI[ganIndex + 1];
+  }
+
+  /**
+   * 获取喜神方位描述
+   *
+   * @return 喜神方位描述，如东北
+   */
+  public String getPositionXiDesc() {
+    return LunarUtil.POSITION_DESC.get(getPositionXi());
+  }
+
+  /**
+   * 获取阳贵神方位
+   *
+   * @return 阳贵神方位，如艮
+   */
+  public String getPositionYangGui() {
+    return LunarUtil.POSITION_YANG_GUI[ganIndex + 1];
+  }
+
+  /**
+   * 获取阳贵神方位描述
+   *
+   * @return 阳贵神方位描述，如东北
+   */
+  public String getPositionYangGuiDesc() {
+    return LunarUtil.POSITION_DESC.get(getPositionYangGui());
+  }
+
+  /**
+   * 获取阴贵神方位
+   *
+   * @return 阴贵神方位，如艮
+   */
+  public String getPositionYinGui() {
+    return LunarUtil.POSITION_YIN_GUI[ganIndex + 1];
+  }
+
+  /**
+   * 获取阴贵神方位描述
+   *
+   * @return 阴贵神方位描述，如东北
+   */
+  public String getPositionYinGuiDesc() {
+    return LunarUtil.POSITION_DESC.get(getPositionYinGui());
+  }
+
+  /**
+   * 获取福神方位（默认流派：2）
+   *
+   * @return 福神方位，如艮
+   */
+  public String getPositionFu() {
+    return getPositionFu(2);
+  }
+
+  /**
+   * 获取福神方位
+   *
+   * @param sect 流派，1或2
+   * @return 福神方位，如艮
+   */
+  public String getPositionFu(int sect) {
+    return (1 == sect ? LunarUtil.POSITION_FU : LunarUtil.POSITION_FU_2)[ganIndex + 1];
+  }
+
+  /**
+   * 获取福神方位描述（默认流派：2）
+   *
+   * @return 福神方位描述，如东北
+   */
+  public String getPositionFuDesc() {
+    return getPositionFuDesc(2);
+  }
+
+  /**
+   * 获取福神方位描述
+   *
+   * @param sect 流派，1或2
+   * @return 福神方位描述，如东北
+   */
+  public String getPositionFuDesc(int sect) {
+    return LunarUtil.POSITION_DESC.get(getPositionFu(sect));
+  }
+
+  /**
+   * 获取财神方位
+   *
+   * @return 财神方位，如艮
+   */
+  public String getPositionCai() {
+    return LunarUtil.POSITION_CAI[ganIndex + 1];
+  }
+
+  /**
+   * 获取财神方位描述
+   *
+   * @return 财神方位描述，如东北
+   */
+  public String getPositionCaiDesc() {
+    return LunarUtil.POSITION_DESC.get(getPositionCai());
+  }
+
+  /**
+   * 获取太岁方位
+   *
+   * @return 太岁方位，如艮
+   */
+  public String getPositionTaiSui() {
+    return LunarUtil.POSITION_TAI_SUI_YEAR[zhiIndex];
+  }
+
+  /**
+   * 获取太岁方位描述
+   *
+   * @return 太岁方位描述，如东北
+   */
+  public String getPositionTaiSuiDesc() {
+    return LunarUtil.POSITION_DESC.get(getPositionTaiSui());
   }
 
   @Override

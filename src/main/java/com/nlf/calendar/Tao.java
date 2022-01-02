@@ -176,6 +176,35 @@ public class Tao {
     return isDayMingWu() || isDayAnWu();
   }
 
+  /**
+   * 是否天赦日
+   *
+   * @return true/false
+   */
+  public boolean isDayTianShe() {
+    boolean ret = false;
+    String mz = lunar.getMonthZhi();
+    String dgz = lunar.getDayInGanZhi();
+    if ("寅卯辰".contains(mz)) {
+      if ("戊寅".equals(dgz)) {
+        ret = true;
+      }
+    } else if ("巳午未".contains(mz)) {
+      if ("甲午".equals(dgz)) {
+        ret = true;
+      }
+    } else if ("申酉戌".contains(mz)) {
+      if ("戊申".equals(dgz)) {
+        ret = true;
+      }
+    } else if ("亥子丑".contains(mz)) {
+      if ("甲子".equals(dgz)) {
+        ret = true;
+      }
+    }
+    return ret;
+  }
+
   @Override
   public String toString() {
     return String.format("%s年%s月%s", getYearInChinese(), getMonthInChinese(), getDayInChinese());

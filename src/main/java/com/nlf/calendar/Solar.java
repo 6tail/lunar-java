@@ -278,7 +278,7 @@ public class Solar {
     if (offsetYear < 0) {
       offsetYear = offsetYear + 60;
     }
-    int startYear = today.getYear() - offsetYear;
+    int startYear = lunar.getYear() - offsetYear;
     int hour = 0;
     String timeZhi = timeGanZhi.substring(1);
     for (int i = 0, j = LunarUtil.ZHI.length; i < j; i++) {

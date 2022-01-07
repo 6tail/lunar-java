@@ -132,6 +132,22 @@ public class LunarMonth {
     return LunarUtil.POSITION_DESC.get(getPositionTaiSui());
   }
 
+  /**
+   * 获取月九星
+   *
+   * @return 九星
+   */
+  public NineStar getNineStar() {
+    int index = LunarYear.fromYear(year).getZhiIndex() % 3;
+    int m = Math.abs(month);
+    int monthZhiIndex = (13 + m) % 12;
+    int n = 27 - (index * 3);
+    if (monthZhiIndex < LunarUtil.BASE_MONTH_ZHI_INDEX) {
+      n -= 3;
+    }
+    int offset = (n - monthZhiIndex) % 9;
+    return NineStar.fromIndex(offset);
+  }
 
   @Override
   public String toString() {

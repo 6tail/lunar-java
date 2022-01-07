@@ -215,6 +215,24 @@ public class LunarYear {
   }
 
   /**
+   * 获取天干序号，从0开始
+   *
+   * @return 序号
+   */
+  public int getGanIndex() {
+    return ganIndex;
+  }
+
+  /**
+   * 获取地支序号，从0开始
+   *
+   * @return 序号
+   */
+  public int getZhiIndex() {
+    return zhiIndex;
+  }
+
+  /**
    * 获取天干
    *
    * @return 天干
@@ -436,15 +454,10 @@ public class LunarYear {
    * @return 九星
    */
   public NineStar getNineStar() {
-    int index = LunarUtil.getJiaZiIndex(this.getGanZhi()) + 1;
-    int n = 65;
-    if ("中元".equals(getYuan())) {
-      n = 68;
-    } else if ("下元".equals(getYuan())) {
-      n = 62;
-    }
-    int offset = (n - index) % 9;
-    if (0 == offset) {
+    int index = LunarUtil.getJiaZiIndex(getGanZhi()) + 1;
+    int yuan = ((this.year + 2696) / 60) % 3;
+    int offset = (62 + yuan * 3 - index) % 9;
+    if(0 == offset){
       offset = 9;
     }
     return NineStar.fromIndex(offset - 1);
@@ -586,4 +599,5 @@ public class LunarYear {
   public String toFullString() {
     return year + "年";
   }
+
 }

@@ -1207,36 +1207,200 @@ public class Lunar {
   }
 
   /**
-   * 获取日太岁方位
+   * 获取年太岁方位（默认流派2新年以立春零点起算）
    *
-   * @return 日太岁方位，如艮
+   * @return 太岁方位，如艮
    */
-  public String getDayPositionTaiSui() {
+  public String getYearPositionTaiSui() {
+    return getYearPositionTaiSui(2);
+  }
+
+  /**
+   * 获取年太岁方位
+   *
+   * @param sect 流派：2为新年以立春零点起算；1为新年以正月初一起算；3为新年以立春节气交接的时刻起算
+   * @return 太岁方位，如艮
+   */
+  public String getYearPositionTaiSui(int sect) {
+    int yearZhiIndex;
+    switch (sect) {
+      case 1:
+        yearZhiIndex = this.yearZhiIndex;
+        break;
+      case 3:
+        yearZhiIndex = this.yearZhiIndexExact;
+        break;
+      default:
+        yearZhiIndex = this.yearZhiIndexByLiChun;
+    }
+    return LunarUtil.POSITION_TAI_SUI_YEAR[yearZhiIndex];
+  }
+
+  /**
+   * 获取年太岁方位描述（默认流派2新年以立春零点起算）
+   *
+   * @return 太岁方位描述，如东北
+   */
+  public String getYearPositionTaiSuiDesc() {
+    return getYearPositionTaiSuiDesc(2);
+  }
+
+  /**
+   * 获取年太岁方位描述
+   *
+   * @param sect 流派：2为新年以立春零点起算；1为新年以正月初一起算；3为新年以立春节气交接的时刻起算
+   * @return 太岁方位描述，如东北
+   */
+  public String getYearPositionTaiSuiDesc(int sect) {
+    return LunarUtil.POSITION_DESC.get(getYearPositionTaiSui(sect));
+  }
+
+  protected String getMonthPositionTaiSui(int monthZhiIndex, int monthGanIndex){
     String p;
-    String gz = getDayInGanZhi();
-    if ("甲子,乙丑,丙寅,丁卯,戊辰,已巳".contains(gz)) {
-      p = "震";
-    } else if ("丙子,丁丑,戊寅,已卯,庚辰,辛巳".contains(gz)) {
-      p = "离";
-    } else if ("戊子,已丑,庚寅,辛卯,壬辰,癸巳".contains(gz)) {
-      p = "中";
-    } else if ("庚子,辛丑,壬寅,癸卯,甲辰,乙巳".contains(gz)) {
-      p = "兑";
-    } else if ("壬子,癸丑,甲寅,乙卯,丙辰,丁巳".contains(gz)) {
-      p = "坎";
-    } else{
-      p = LunarYear.fromYear(this.getYear()).getPositionTaiSui();
+    int m = monthZhiIndex - LunarUtil.BASE_MONTH_ZHI_INDEX;
+    if (m < 0) {
+      m += 12;
+    }
+    switch(m) {
+      case 0:
+      case 4:
+      case 8:
+        p = "艮";
+        break;
+      case 2:
+      case 6:
+      case 10:
+        p = "坤";
+        break;
+      case 3:
+      case 7:
+      case 11:
+        p = "巽";
+        break;
+      default:
+        p = LunarUtil.POSITION_GAN[monthGanIndex];
     }
     return p;
   }
 
   /**
-   * 获取日太岁方位描述
+   * 获取月太岁方位（默认流派2新的一月以节交接当天零点起算）
    *
-   * @return 日太岁方位描述，如东北
+   * @return 太岁方位，如艮
+   */
+  public String getMonthPositionTaiSui() {
+    return getMonthPositionTaiSui(2);
+  }
+
+  /**
+   * 获取月太岁方位
+   *
+   * @param sect 流派：2为新的一月以节交接当天零点起算；3为新的一月以节交接准确时刻起算
+   * @return 太岁方位，如艮
+   */
+  public String getMonthPositionTaiSui(int sect) {
+    int monthZhiIndex;
+    int monthGanIndex;
+    switch (sect) {
+      case 3:
+        monthZhiIndex = this.monthZhiIndexExact;
+        monthGanIndex = this.monthGanIndexExact;
+        break;
+      default:
+        monthZhiIndex = this.monthZhiIndex;
+        monthGanIndex = this.monthGanIndex;
+    }
+    return getMonthPositionTaiSui(monthZhiIndex, monthGanIndex);
+  }
+
+  /**
+   * 获取月太岁方位描述（默认流派2新的一月以节交接当天零点起算）
+   *
+   * @return 太岁方位描述，如东北
+   */
+  public String getMonthPositionTaiSuiDesc() {
+    return getMonthPositionTaiSuiDesc(2);
+  }
+
+  /**
+   * 获取月太岁方位描述
+   *
+   * @param sect 流派：2为新的一月以节交接当天零点起算；3为新的一月以节交接准确时刻起算
+   * @return 太岁方位描述，如东北
+   */
+  public String getMonthPositionTaiSuiDesc(int sect) {
+    return LunarUtil.POSITION_DESC.get(getMonthPositionTaiSui(sect));
+  }
+
+  protected String getDayPositionTaiSui(String dayInGanZhi, int yearZhiIndex){
+    String p;
+    if ("甲子,乙丑,丙寅,丁卯,戊辰,已巳".contains(dayInGanZhi)) {
+      p = "震";
+    } else if ("丙子,丁丑,戊寅,已卯,庚辰,辛巳".contains(dayInGanZhi)) {
+      p = "离";
+    } else if ("戊子,已丑,庚寅,辛卯,壬辰,癸巳".contains(dayInGanZhi)) {
+      p = "中";
+    } else if ("庚子,辛丑,壬寅,癸卯,甲辰,乙巳".contains(dayInGanZhi)) {
+      p = "兑";
+    } else if ("壬子,癸丑,甲寅,乙卯,丙辰,丁巳".contains(dayInGanZhi)) {
+      p = "坎";
+    } else{
+      p = LunarUtil.POSITION_TAI_SUI_YEAR[yearZhiIndex];
+    }
+    return p;
+  }
+
+  /**
+   * 获取日太岁方位（默认流派2新年以立春零点起算）
+   *
+   * @return 太岁方位，如艮
+   */
+  public String getDayPositionTaiSui() {
+    return getDayPositionTaiSui(2);
+  }
+
+  /**
+   * 获取日太岁方位
+   *
+   * @param sect 流派：2新年以立春零点起算；1新年以正月初一起算；3新年以立春节气交接的时刻起算
+   * @return 太岁方位，如艮
+   */
+  public String getDayPositionTaiSui(int sect) {
+    String dayInGanZhi;
+    int yearZhiIndex;
+    switch (sect) {
+      case 1:
+        dayInGanZhi = getDayInGanZhi();
+        yearZhiIndex = this.yearZhiIndex;
+        break;
+      case 3:
+        dayInGanZhi = getDayInGanZhi();
+        yearZhiIndex = this.yearZhiIndexExact;
+        break;
+      default:
+        dayInGanZhi = getDayInGanZhiExact2();
+        yearZhiIndex = this.yearZhiIndexByLiChun;
+    }
+    return getDayPositionTaiSui(dayInGanZhi, yearZhiIndex);
+  }
+
+  /**
+   * 获取日太岁方位描述（默认流派2新年以立春零点起算）
+   *
+   * @return 太岁方位描述，如东北
    */
   public String getDayPositionTaiSuiDesc() {
-    return LunarUtil.POSITION_DESC.get(getDayPositionTaiSui());
+    return getDayPositionTaiSuiDesc(2);
+  }
+
+  /**
+   * 获取日太岁方位描述
+   *
+   * @param sect 流派：2新年以立春零点起算；1新年以正月初一起算；3新年以立春节气交接的时刻起算
+   * @return 太岁方位描述，如东北
+   */
+  public String getDayPositionTaiSuiDesc(int sect) {
+    return LunarUtil.POSITION_DESC.get(getDayPositionTaiSui(sect));
   }
 
   /**
@@ -1855,37 +2019,92 @@ public class Lunar {
     return LunarUtil.YUE_XIANG[day];
   }
 
+  protected NineStar getYearNineStar(String yearInGanZhi) {
+    int index = LunarUtil.getJiaZiIndex(yearInGanZhi) + 1;
+    int yearOffset = 0;
+    if (index != LunarUtil.getJiaZiIndex(this.getYearInGanZhi()) + 1) {
+      yearOffset = -1;
+    }
+    int yuan = ((this.year + yearOffset + 2696) / 60) % 3;
+    int offset = (62 + yuan * 3 - index) % 9;
+    if(0 == offset){
+      offset = 9;
+    }
+    return NineStar.fromIndex(offset - 1);
+  }
+
   /**
-   * 获取值年九星（流年紫白星起例歌诀：年上吉星论甲子，逐年星逆中宫起；上中下作三元汇，一上四中七下兑。）
+   * 获取值年九星（默认流派2新年以立春零点起算。流年紫白星起例歌诀：年上吉星论甲子，逐年星逆中宫起；上中下作三元汇，一上四中七下兑。）
    *
    * @return 值年九星
    */
   public NineStar getYearNineStar() {
-    return LunarYear.fromYear(year).getNineStar();
+    return getYearNineStar(2);
+  }
+
+  /**
+   * 获取值年九星（流年紫白星起例歌诀：年上吉星论甲子，逐年星逆中宫起；上中下作三元汇，一上四中七下兑。）
+   *
+   * @param sect 流派：2为新年以立春零点起算；1为新年以正月初一起算；3为新年以立春节气交接的时刻起算
+   * @return 值年九星
+   */
+  public NineStar getYearNineStar(int sect) {
+    String yearInGanZhi;
+    switch (sect) {
+      case 1:
+        yearInGanZhi = this.getYearInGanZhi();
+        break;
+      case 3:
+        yearInGanZhi = this.getYearInGanZhiExact();
+        break;
+      default:
+        yearInGanZhi = this.getYearInGanZhiByLiChun();
+    }
+    return getYearNineStar(yearInGanZhi);
+  }
+
+  protected NineStar getMonthNineStar(int yearZhiIndex, int monthZhiIndex) {
+    int index = yearZhiIndex % 3;
+    int n = 27 - (index * 3);
+    if (monthZhiIndex < LunarUtil.BASE_MONTH_ZHI_INDEX) {
+      n -= 3;
+    }
+    int offset = (n - monthZhiIndex) % 9;
+    return NineStar.fromIndex(offset);
+  }
+
+  /**
+   * 获取值月九星（流派2新的一月以节交接当天零点起算。月紫白星歌诀：子午卯酉八白起，寅申巳亥二黑求，辰戌丑未五黄中。）
+   *
+   * @return 值月九星
+   */
+  public NineStar getMonthNineStar() {
+    return getMonthNineStar(2);
   }
 
   /**
    * 获取值月九星（月紫白星歌诀：子午卯酉八白起，寅申巳亥二黑求，辰戌丑未五黄中。）
    *
+   * @param sect 流派：2为新的一月以节交接当天零点起算；3为新的一月以节交接准确时刻起算
    * @return 值月九星
    */
-  public NineStar getMonthNineStar() {
-    int n = 12;
-    String yearZhi = getYearZhi();
-    if ("子午卯酉".contains(yearZhi)) {
-      n = 18;
-    } else if ("辰戌丑未".contains(yearZhi)) {
-      n = 15;
+  public NineStar getMonthNineStar(int sect) {
+    int yearZhiIndex;
+    int monthZhiIndex;
+    switch (sect) {
+      case 1:
+        yearZhiIndex = this.yearZhiIndex;
+        monthZhiIndex = this.monthZhiIndex;
+        break;
+      case 3:
+        yearZhiIndex = this.yearZhiIndexExact;
+        monthZhiIndex = this.monthZhiIndexExact;
+        break;
+      default:
+        yearZhiIndex = this.yearZhiIndexByLiChun;
+        monthZhiIndex = this.monthZhiIndex;
     }
-    int m = month;
-    if(m < 0){
-      m = -m;
-    }
-    int offset = (n - m) % 9;
-    if(0 == offset){
-      offset = 9;
-    }
-    return NineStar.fromIndex(offset - 1);
+    return getMonthNineStar(yearZhiIndex, monthZhiIndex);
   }
 
   /**

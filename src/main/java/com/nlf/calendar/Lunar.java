@@ -833,16 +833,14 @@ public class Lunar {
    * @return 节令
    */
   public String getJie() {
-    String jie = "";
-    for(int i=0,j=JIE_QI_IN_USE.length;i<j;i+=2){
+    for(int i=0, j=JIE_QI_IN_USE.length; i<j; i+=2){
       String key = JIE_QI_IN_USE[i];
       Solar d = jieQi.get(key);
       if (d.getYear() == solar.getYear() && d.getMonth() == solar.getMonth() && d.getDay() == solar.getDay()) {
-        jie = key;
-        break;
+        return convertJieQi(key);
       }
     }
-    return convertJieQi(jie);
+    return "";
   }
 
   /**
@@ -851,16 +849,14 @@ public class Lunar {
    * @return 气令
    */
   public String getQi() {
-    String qi = "";
-    for(int i=1,j=JIE_QI_IN_USE.length;i<j;i+=2){
+    for(int i=1, j=JIE_QI_IN_USE.length; i<j; i+=2){
       String key = JIE_QI_IN_USE[i];
       Solar d = jieQi.get(key);
       if (d.getYear() == solar.getYear() && d.getMonth() == solar.getMonth() && d.getDay() == solar.getDay()) {
-        qi = key;
-        break;
+        return convertJieQi(key);
       }
     }
-    return convertJieQi(qi);
+    return "";
   }
 
   /**
@@ -2389,15 +2385,13 @@ public class Lunar {
    * @return 节气名称
    */
   public String getJieQi() {
-    String name = "";
     for (Map.Entry<String, Solar> jq : jieQi.entrySet()) {
       Solar d = jq.getValue();
       if (d.getYear() == solar.getYear() && d.getMonth() == solar.getMonth() && d.getDay() == solar.getDay()) {
-        name = jq.getKey();
-        break;
+        return convertJieQi(jq.getKey());
       }
     }
-    return convertJieQi(name);
+    return "";
   }
 
   /**
@@ -2406,8 +2400,13 @@ public class Lunar {
    * @return 节气对象
    */
   public JieQi getCurrentJieQi() {
-    String name = getJieQi();
-    return name.length() > 0 ? new JieQi(name, solar) : null;
+    for (Map.Entry<String, Solar> jq : jieQi.entrySet()) {
+      Solar d = jq.getValue();
+      if (d.getYear() == solar.getYear() && d.getMonth() == solar.getMonth() && d.getDay() == solar.getDay()) {
+        return new JieQi(convertJieQi(jq.getKey()), d);
+      }
+    }
+    return null;
   }
 
   /**
@@ -2416,8 +2415,14 @@ public class Lunar {
    * @return 节气对象
    */
   public JieQi getCurrentJie() {
-    String name = getJie();
-    return name.length() > 0 ? new JieQi(name, solar) : null;
+    for(int i=0, j=JIE_QI_IN_USE.length; i<j; i+=2){
+      String key = JIE_QI_IN_USE[i];
+      Solar d = jieQi.get(key);
+      if (d.getYear() == solar.getYear() && d.getMonth() == solar.getMonth() && d.getDay() == solar.getDay()) {
+        return new JieQi(convertJieQi(key), d);
+      }
+    }
+    return null;
   }
 
   /**
@@ -2426,8 +2431,14 @@ public class Lunar {
    * @return 节气对象
    */
   public JieQi getCurrentQi() {
-    String name = getQi();
-    return name.length() > 0 ? new JieQi(name, solar) : null;
+    for(int i=1, j=JIE_QI_IN_USE.length; i<j; i+=2){
+      String key = JIE_QI_IN_USE[i];
+      Solar d = jieQi.get(key);
+      if (d.getYear() == solar.getYear() && d.getMonth() == solar.getMonth() && d.getDay() == solar.getDay()) {
+        return new JieQi(convertJieQi(key), d);
+      }
+    }
+    return null;
   }
 
   public String toFullString() {
@@ -2964,10 +2975,8 @@ public class Lunar {
   public String getHou() {
     JieQi jieQi = getPrevJieQi(true);
     String name = jieQi.getName();
-    Calendar currentCalendar = ExactDate.fromYmd(solar.getYear(), solar.getMonth(), solar.getDay());
     Solar startSolar = jieQi.getSolar();
-    Calendar startCalendar = ExactDate.fromYmd(startSolar.getYear(), startSolar.getMonth(), startSolar.getDay());
-    int days = ExactDate.getDaysBetween(startCalendar, currentCalendar);
+    int days = ExactDate.getDaysBetween(startSolar.getYear(), startSolar.getMonth(), startSolar.getDay(), solar.getYear(), solar.getMonth(), solar.getDay());
     return String.format("%s %s", name, LunarUtil.HOU[(days / 5) % LunarUtil.HOU.length]);
   }
 

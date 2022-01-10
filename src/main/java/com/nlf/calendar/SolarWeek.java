@@ -159,10 +159,11 @@ public class SolarWeek {
   public int getIndex() {
     Calendar c = ExactDate.fromYmd(year, month, 1);
     int firstDayWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
-    if (firstDayWeek == 0) {
-      firstDayWeek = 7;
+    int offset = firstDayWeek - start;
+    if(offset < 0) {
+      offset += 7;
     }
-    return (int) Math.ceil((day + firstDayWeek - start) / 7D);
+    return (int) Math.ceil((day + offset) / 7D);
   }
 
   /**

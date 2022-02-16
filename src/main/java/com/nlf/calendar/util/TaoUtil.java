@@ -17,7 +17,7 @@ public class TaoUtil {
     private static final long serialVersionUID = 1;
 
     {
-      put("1-1", Collections.nCopies(1, new TaoFestival("天腊之辰", "天腊，此日五帝会于束方九炁青天")));
+      put("1-1", Collections.nCopies(1, new TaoFestival("天腊之辰", "天腊，此日五帝会于东方九炁青天")));
       put("1-3", Arrays.asList(new TaoFestival("郝真人圣诞"), new TaoFestival("孙真人圣诞")));
       put("1-5", Collections.nCopies(1, new TaoFestival("孙祖清静元君诞")));
       put("1-7", Collections.nCopies(1, new TaoFestival("举迁赏会", "此日上元赐福，天官同地水二官考校罪福")));
@@ -52,7 +52,7 @@ public class TaoUtil {
       put("4-20", Collections.nCopies(1, new TaoFestival("眼光圣母娘娘诞")));
       put("4-28", Collections.nCopies(1, new TaoFestival("神农先帝诞")));
       put("5-1", Collections.nCopies(1, new TaoFestival("南极长生大帝圣诞")));
-      put("5-5", Arrays.asList(new TaoFestival("地腊之辰", "地腊，此日五帝会於南方三炁丹天"), new TaoFestival("南方雷祖圣诞"), new TaoFestival("地祗温元帅圣诞"), new TaoFestival("雷霆邓天君圣诞")));
+      put("5-5", Arrays.asList(new TaoFestival("地腊之辰", "地腊，此日五帝会于南方三炁丹天"), new TaoFestival("南方雷祖圣诞"), new TaoFestival("地祗温元帅圣诞"), new TaoFestival("雷霆邓天君圣诞")));
       put("5-11", Collections.nCopies(1, new TaoFestival("城隍爷圣诞")));
       put("5-13", Arrays.asList(new TaoFestival("关圣帝君降神"), new TaoFestival("关平太子圣诞")));
       put("5-18", Collections.nCopies(1, new TaoFestival("张天师圣诞")));
@@ -94,7 +94,7 @@ public class TaoUtil {
       put("9-22", Collections.nCopies(1, new TaoFestival("增福财神诞")));
       put("9-23", Collections.nCopies(1, new TaoFestival("萨翁真君圣诞")));
       put("9-28", Collections.nCopies(1, new TaoFestival("五显灵官马元帅圣诞")));
-      put("10-1", Arrays.asList(new TaoFestival("民岁腊之辰", "民岁腊，此日五帝会於北方五炁黑天"), new TaoFestival("东皇大帝圣诞")));
+      put("10-1", Arrays.asList(new TaoFestival("民岁腊之辰", "民岁腊，此日五帝会于北方五炁黑天"), new TaoFestival("东皇大帝圣诞")));
       put("10-3", Collections.nCopies(1, new TaoFestival("三茅应化真君圣诞")));
       put("10-6", Collections.nCopies(1, new TaoFestival("天曹诸司五岳五帝圣诞")));
       put("10-15", Arrays.asList(new TaoFestival("下元水官大帝圣诞"), new TaoFestival("建生大会", "此日下元解厄，水官同天地二官考校罪福")));
@@ -105,7 +105,7 @@ public class TaoUtil {
       put("11-9", Collections.nCopies(1, new TaoFestival("湘子韩祖圣诞")));
       put("11-11", Collections.nCopies(1, new TaoFestival("太乙救苦天尊圣诞")));
       put("11-26", Collections.nCopies(1, new TaoFestival("北方五道圣诞")));
-      put("12-8", Collections.nCopies(1, new TaoFestival("王侯腊之辰", "王侯腊，此日五帝会於上方玄都玉京")));
+      put("12-8", Collections.nCopies(1, new TaoFestival("王侯腊之辰", "王侯腊，此日五帝会于上方玄都玉京")));
       put("12-16", Arrays.asList(new TaoFestival("南岳大帝圣诞"), new TaoFestival("福德正神诞")));
       put("12-20", Collections.nCopies(1, new TaoFestival("鲁班先师圣诞")));
       put("12-21", Collections.nCopies(1, new TaoFestival("天猷上帝圣诞")));

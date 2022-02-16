@@ -5,6 +5,11 @@ import com.nlf.calendar.Solar;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 /**
  * 农历测试
  *
@@ -392,6 +397,22 @@ public class LunarTest {
     Solar solar = Solar.fromYmd(2021, 11, 27);
     Lunar lunar = solar.getLunar();
     Assert.assertEquals("[嫁娶, 祭祀, 祈福, 求嗣, 开光, 出行, 解除, 出火, 拆卸, 进人口, 入宅, 移徙, 安床, 栽种, 动土, 修造, 纳畜, 入殓, 安葬, 立碑, 除服, 成服]", lunar.getDayYi().toString());
+  }
+
+  @Test
+  public void test54() throws ParseException {
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    format.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+    Date date = format.parse("1986-08-14");
+    Lunar lunar = new Lunar(date);
+    Assert.assertEquals("一九八六年七月初九", lunar.toString());
+  }
+
+  @Test
+  public void test55() {
+    Solar solar = new Solar(1986, 8, 14);
+    Lunar lunar = solar.getLunar();
+    Assert.assertEquals("一九八六年七月初九", lunar.toString());
   }
 
 }

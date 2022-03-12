@@ -15,25 +15,50 @@ public class Yun {
    * 性别(1男，0女)
    */
   private int gender;
+
   /**
    * 起运年数
    */
   private int startYear;
+
   /**
    * 起运月数
    */
   private int startMonth;
+
   /**
    * 起运天数
    */
   private int startDay;
+
+  /**
+   * 起运小时数
+   */
+  private int startHour;
+
   /**
    * 是否顺推
    */
   private boolean forward;
+
   private Lunar lunar;
 
+  /**
+   * 使用默认流派1初始化运
+   * @param eightChar 八字
+   * @param gender 性别，1男，0女
+   */
   public Yun(EightChar eightChar, int gender) {
+    this(eightChar, gender, 1);
+  }
+
+  /**
+   * 初始化运
+   * @param eightChar 八字
+   * @param gender 性别，1男，0女
+   * @param sect 流派，1按天数和时辰数计算，3天1年，1天4个月，1时辰10天；2按分钟数计算
+   */
+  public Yun(EightChar eightChar, int gender, int sect) {
     this.lunar = eightChar.getLunar();
     this.gender = gender;
     // 阳
@@ -41,14 +66,13 @@ public class Yun {
     // 男
     boolean man = 1 == gender;
     forward = (yang && man) || (!yang && !man);
-    computeStart();
+    computeStart(sect);
   }
 
   /**
    * 起运计算
    */
-  @SuppressWarnings("MagicConstant")
-  private void computeStart() {
+  private void computeStart(int sect) {
     // 上节
     JieQi prev = lunar.getPrevJie();
     // 下节
@@ -58,24 +82,46 @@ public class Yun {
     // 阳男阴女顺推，阴男阳女逆推
     Solar start = forward ? current : prev.getSolar();
     Solar end = forward ? next.getSolar() : current;
-    int endTimeZhiIndex = (end.getHour() == 23) ? 11 : LunarUtil.getTimeZhiIndex(end.toYmdHms().substring(11, 16));
-    int startTimeZhiIndex = (start.getHour() == 23) ? 11 : LunarUtil.getTimeZhiIndex(start.toYmdHms().substring(11, 16));
-    // 时辰差
-    int hourDiff = endTimeZhiIndex - startTimeZhiIndex;
-    // 天数差
-    int dayDiff = ExactDate.getDaysBetween(start.getYear(), start.getMonth(), start.getDay(), end.getYear(), end.getMonth(), end.getDay());
-    if (hourDiff < 0) {
-      hourDiff += 12;
-      dayDiff--;
+
+    int year;
+    int month;
+    int day;
+    int hour = 0;
+
+    if (2 == sect) {
+      long minutes = (end.getCalendar().getTimeInMillis() - start.getCalendar().getTimeInMillis()) / 60000;
+      long y = minutes / 4320;
+      minutes -= y * 4320;
+      long m = minutes / 360;
+      minutes -= m * 360;
+      long d = minutes / 12;
+      minutes -= d * 12;
+      long h = minutes * 2;
+      year = (int)y;
+      month = (int)m;
+      day = (int)d;
+      hour = (int)h;
+    } else {
+      int endTimeZhiIndex = (end.getHour() == 23) ? 11 : LunarUtil.getTimeZhiIndex(end.toYmdHms().substring(11, 16));
+      int startTimeZhiIndex = (start.getHour() == 23) ? 11 : LunarUtil.getTimeZhiIndex(start.toYmdHms().substring(11, 16));
+      // 时辰差
+      int hourDiff = endTimeZhiIndex - startTimeZhiIndex;
+      // 天数差
+      int dayDiff = ExactDate.getDaysBetween(start.getYear(), start.getMonth(), start.getDay(), end.getYear(), end.getMonth(), end.getDay());
+      if (hourDiff < 0) {
+        hourDiff += 12;
+        dayDiff--;
+      }
+      int monthDiff = hourDiff * 10 / 30;
+      month = dayDiff * 4 + monthDiff;
+      day = hourDiff * 10 - monthDiff * 30;
+      year = month / 12;
+      month = month - year * 12;
     }
-    int monthDiff = hourDiff * 10 / 30;
-    int month = dayDiff * 4 + monthDiff;
-    int day = hourDiff * 10 - monthDiff * 30;
-    int year = month / 12;
-    month = month - year * 12;
     this.startYear = year;
     this.startMonth = month;
     this.startDay = day;
+    this.startHour = hour;
   }
 
   /**
@@ -115,6 +161,15 @@ public class Yun {
   }
 
   /**
+   * 获取起运小时数
+   *
+   * @return 起运小时数
+   */
+  public int getStartHour() {
+    return startHour;
+  }
+
+  /**
    * 是否顺推
    *
    * @return true/false
@@ -132,13 +187,13 @@ public class Yun {
    *
    * @return 阳历日期
    */
-  @SuppressWarnings("MagicConstant")
   public Solar getStartSolar() {
     Solar birth = lunar.getSolar();
-    Calendar c = ExactDate.fromYmd(birth.getYear(), birth.getMonth(), birth.getDay());
+    Calendar c = ExactDate.fromYmdHms(birth.getYear(), birth.getMonth(), birth.getDay(), birth.getHour(), birth.getMinute(), birth.getSecond());
     c.add(Calendar.YEAR, startYear);
     c.add(Calendar.MONTH, startMonth);
     c.add(Calendar.DATE, startDay);
+    c.add(Calendar.HOUR, startHour);
     return Solar.fromCalendar(c);
   }
 

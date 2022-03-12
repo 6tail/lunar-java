@@ -556,13 +556,24 @@ public class EightChar {
   }
 
   /**
-   * 获取运
+   * 使用默认流派1获取运
    *
    * @param gender 性别：1男，0女
    * @return 运
    */
   public Yun getYun(int gender) {
-    return new Yun(this, gender);
+    return getYun(gender, 1);
+  }
+
+  /**
+   * 获取运
+   *
+   * @param gender 性别：1男，0女
+   * @param sect 流派，1按天数和时辰数计算，3天1年，1天4个月，1时辰10天；2按分钟数计算
+   * @return 运
+   */
+  public Yun getYun(int gender, int sect) {
+    return new Yun(this, gender, sect);
   }
 
   /**

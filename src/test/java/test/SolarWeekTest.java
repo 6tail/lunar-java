@@ -71,4 +71,16 @@ public class SolarWeekTest {
     Assert.assertEquals(2, week.getIndex());
   }
 
+  @Test
+  public void test10() {
+    SolarWeek week = SolarWeek.fromYmd(2022, 3, 6, 0);
+    Assert.assertEquals(11, week.getIndexInYear());
+  }
+
+  @Test
+  public void test11() {
+    SolarWeek week = SolarWeek.fromYmd(2022, 3, 6, 1);
+    Assert.assertEquals(10, week.getIndexInYear());
+  }
+
 }

@@ -155,7 +155,6 @@ public class SolarWeek {
    *
    * @return 周序号，从1开始
    */
-  @SuppressWarnings("MagicConstant")
   public int getIndex() {
     Calendar c = ExactDate.fromYmd(year, month, 1);
     int firstDayWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
@@ -164,6 +163,21 @@ public class SolarWeek {
       offset += 7;
     }
     return (int) Math.ceil((day + offset) / 7D);
+  }
+
+  /**
+   * 获取当前日期是在当年第几周
+   *
+   * @return 周序号，从1开始
+   */
+  public int getIndexInYear() {
+    Calendar c = ExactDate.fromYmd(year, 1, 1);
+    int firstDayWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
+    int offset = firstDayWeek - start;
+    if(offset < 0) {
+      offset += 7;
+    }
+    return (int) Math.ceil((SolarUtil.getDaysInYear(year, month, day) + offset) / 7D);
   }
 
   /**
@@ -228,7 +242,6 @@ public class SolarWeek {
    *
    * @return 本周第一天的阳历日期
    */
-  @SuppressWarnings("MagicConstant")
   public Solar getFirstDay() {
     Calendar c = ExactDate.fromYmd(year, month, day);
     int week = c.get(Calendar.DAY_OF_WEEK) - 1;
@@ -260,6 +273,7 @@ public class SolarWeek {
    *
    * @return 本周的阳历日期列表
    */
+  @SuppressWarnings("all")
   public List<Solar> getDays() {
     Solar firstDay = getFirstDay();
     List<Solar> l = new ArrayList<Solar>();

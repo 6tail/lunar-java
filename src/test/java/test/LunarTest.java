@@ -415,4 +415,12 @@ public class LunarTest {
     Assert.assertEquals("一九八六年七月初九", lunar.toString());
   }
 
+  @Test
+  public void test56() {
+    Solar solar = new Solar(2022, 4, 5);
+    Lunar lunar = solar.getLunar();
+    Assert.assertEquals("甲辰", lunar.getMonthInGanZhi());
+    Assert.assertEquals(4, lunar.getDayJi().size());
+  }
+
 }

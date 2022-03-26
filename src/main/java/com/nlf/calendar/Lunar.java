@@ -1828,21 +1828,41 @@ public class Lunar {
   }
 
   /**
-   * 获取每日宜，如果没有，返回["无"]
+   * 使用默认流派1（以节交接当天起算月）获取每日宜，如果没有，返回["无"]
    *
    * @return 宜
    */
   public List<String> getDayYi() {
-    return LunarUtil.getDayYi(getMonthInGanZhiExact(), getDayInGanZhi());
+    return getDayYi(1);
+  }
+
+  /**
+   * 获取每日宜，如果没有，返回["无"]
+   *
+   * @param sect 流派，1以节交接当天起算月，2以节交接时刻起算月
+   * @return 宜
+   */
+  public List<String> getDayYi(int sect) {
+    return LunarUtil.getDayYi(2 == sect ? getMonthInGanZhiExact() : getMonthInGanZhi(), getDayInGanZhi());
+  }
+
+  /**
+   * 使用默认流派1（以节交接当天起算月）获取每日忌，如果没有，返回["无"]
+   *
+   * @return 忌
+   */
+  public List<String> getDayJi() {
+    return getDayJi(1);
   }
 
   /**
    * 获取每日忌，如果没有，返回["无"]
    *
+   * @param sect 流派，1以节交接当天起算月，2以节交接时刻起算月
    * @return 忌
    */
-  public List<String> getDayJi() {
-    return LunarUtil.getDayJi(getMonthInGanZhiExact(), getDayInGanZhi());
+  public List<String> getDayJi(int sect) {
+    return LunarUtil.getDayJi(2 == sect ? getMonthInGanZhiExact() : getMonthInGanZhi(), getDayInGanZhi());
   }
 
   /**

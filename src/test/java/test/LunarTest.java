@@ -420,6 +420,7 @@ public class LunarTest {
     Solar solar = new Solar(2022, 4, 5);
     Lunar lunar = solar.getLunar();
     Assert.assertEquals("甲辰", lunar.getMonthInGanZhi());
+    Assert.assertEquals("癸卯", lunar.getMonthInGanZhiExact());
     Assert.assertEquals(4, lunar.getDayJi().size());
   }
 

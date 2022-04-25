@@ -11,8 +11,9 @@ public class LiuYue {
   /**
    * 序数，0-9
    */
-  private int index;
-  private LiuNian liuNian;
+  private final int index;
+
+  private final LiuNian liuNian;
 
   public LiuYue(LiuNian liuNian, int index) {
     this.liuNian = liuNian;

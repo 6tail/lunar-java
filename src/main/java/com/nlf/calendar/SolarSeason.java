@@ -14,11 +14,13 @@ public class SolarSeason {
   /**
    * 年
    */
-  private int year;
+  private final int year;
+
   /**
    * 月
    */
-  private int month;
+  private final int month;
+
   /**
    * 一个季度的月数
    */

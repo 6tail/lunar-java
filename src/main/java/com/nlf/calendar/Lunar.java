@@ -35,7 +35,7 @@ public class Lunar {
   /**
    * 对应阳历
    */
-  private Solar solar;
+  private final Solar solar;
   /**
    * 时对应的天干下标，0-9
    */
@@ -116,15 +116,15 @@ public class Lunar {
   /**
    * 阳历小时
    */
-  private int hour;
+  private final int hour;
   /**
    * 阳历分钟
    */
-  private int minute;
+  private final int minute;
   /**
    * 阳历秒钟
    */
-  private int second;
+  private final int second;
   /**
    * 八字
    */
@@ -132,7 +132,7 @@ public class Lunar {
   /**
    * 24节气表（对应阳历的准确时刻）
    */
-  private Map<String, Solar> jieQi = new LinkedHashMap<String, Solar>();
+  private final Map<String, Solar> jieQi = new LinkedHashMap<String, Solar>();
 
   /**
    * 默认使用当前日期初始化
@@ -191,7 +191,6 @@ public class Lunar {
    *
    * @param date 阳历日期
    */
-  @SuppressWarnings("MagicConstant")
   public Lunar(Date date) {
     solar = new Solar(date);
     int currentYear = solar.getYear();
@@ -968,8 +967,26 @@ public class Lunar {
     if (null != fs) {
       l.addAll(fs);
     }
-    if (solar.toYmd().equals(jieQi.get("清明").next(-1).toYmd())) {
+    String solarYmd = solar.toYmd();
+    if (solarYmd.equals(jieQi.get("清明").next(-1).toYmd())) {
       l.add("寒食节");
+    }
+    Solar jq = jieQi.get("立春");
+    int offset = 4 - jq.getLunar().getDayGanIndex();
+    if (offset < 0) {
+      offset += 10;
+    }
+    if (solarYmd.equals(jq.next(offset + 40).toYmd())) {
+      l.add("春社");
+    }
+
+    jq = jieQi.get("立秋");
+    offset = 4 - jq.getLunar().getDayGanIndex();
+    if (offset < 0) {
+      offset += 10;
+    }
+    if (solarYmd.equals(jq.next(offset + 40).toYmd())) {
+      l.add("秋社");
     }
     return l;
   }
@@ -1292,14 +1309,12 @@ public class Lunar {
   public String getMonthPositionTaiSui(int sect) {
     int monthZhiIndex;
     int monthGanIndex;
-    switch (sect) {
-      case 3:
-        monthZhiIndex = this.monthZhiIndexExact;
-        monthGanIndex = this.monthGanIndexExact;
-        break;
-      default:
-        monthZhiIndex = this.monthZhiIndex;
-        monthGanIndex = this.monthGanIndex;
+    if (sect == 3) {
+      monthZhiIndex = this.monthZhiIndexExact;
+      monthGanIndex = this.monthGanIndexExact;
+    } else {
+      monthZhiIndex = this.monthZhiIndex;
+      monthGanIndex = this.monthGanIndex;
     }
     return getMonthPositionTaiSui(monthZhiIndex, monthGanIndex);
   }
@@ -2458,7 +2473,7 @@ public class Lunar {
 
   public String toFullString() {
     StringBuilder s = new StringBuilder();
-    s.append(toString());
+    s.append(this);
     s.append(" ");
     s.append(getYearInGanZhi());
     s.append("(");
@@ -2862,7 +2877,6 @@ public class Lunar {
    *
    * @return 数九，如果不是数九天，返回null
    */
-  @SuppressWarnings("MagicConstant")
   public ShuJiu getShuJiu() {
     Calendar currentCalendar = ExactDate.fromYmd(solar.getYear(), solar.getMonth(), solar.getDay());
     Solar start = jieQi.get("DONG_ZHI");
@@ -2889,7 +2903,6 @@ public class Lunar {
    *
    * @return 三伏，如果不是伏天，返回null
    */
-  @SuppressWarnings("MagicConstant")
   public Fu getFu() {
     Calendar currentCalendar = ExactDate.fromYmd(solar.getYear(), solar.getMonth(), solar.getDay());
     Solar xiaZhi = jieQi.get("夏至");
@@ -2962,7 +2975,6 @@ public class Lunar {
    *
    * @return 物候
    */
-  @SuppressWarnings("MagicConstant")
   public String getWuHou() {
     JieQi jieQi = getPrevJieQi(true);
     String name = jieQi.getName();

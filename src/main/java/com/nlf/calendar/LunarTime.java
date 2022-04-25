@@ -15,17 +15,17 @@ public class LunarTime {
   /**
    * 天干下标，0-9
    */
-  private int ganIndex;
+  private final int ganIndex;
 
   /**
    * 地支下标，0-11
    */
-  private int zhiIndex;
+  private final int zhiIndex;
 
   /**
    * 阴历
    */
-  private Lunar lunar;
+  private final Lunar lunar;
 
   public LunarTime(int lunarYear, int lunarMonth, int lunarDay, int hour, int minute, int second) {
     this.lunar = Lunar.fromYmdHms(lunarYear, lunarMonth, lunarDay, hour, minute, second);
@@ -316,10 +316,7 @@ public class LunarTime {
     //顺逆
     String solarYmd = lunar.getSolar().toYmd();
     Map<String, Solar> jieQi = lunar.getJieQiTable();
-    boolean asc = false;
-    if (solarYmd.compareTo(jieQi.get("冬至").toYmd()) >= 0 && solarYmd.compareTo(jieQi.get("夏至").toYmd()) < 0) {
-      asc = true;
-    }
+    boolean asc = solarYmd.compareTo(jieQi.get("冬至").toYmd()) >= 0 && solarYmd.compareTo(jieQi.get("夏至").toYmd()) < 0;
     int start = asc ? 7 : 3;
     String dayZhi = lunar.getDayZhi();
     if ("子午卯酉".contains(dayZhi)) {

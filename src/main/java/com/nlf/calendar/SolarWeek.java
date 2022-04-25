@@ -16,19 +16,22 @@ public class SolarWeek {
   /**
    * 年
    */
-  private int year;
+  private final int year;
+
   /**
    * 月
    */
-  private int month;
+  private final int month;
+
   /**
    * 日
    */
-  private int day;
+  private final int day;
+
   /**
    * 星期几作为一周的开始，1234560分别代表星期一至星期天
    */
-  private int start;
+  private final int start;
 
   /**
    * 默认当月
@@ -187,7 +190,6 @@ public class SolarWeek {
    * @param separateMonth 是否按月单独计算
    * @return 推移后的阳历周
    */
-  @SuppressWarnings("MagicConstant")
   public SolarWeek next(int weeks, boolean separateMonth) {
     if (0 == weeks) {
       return new SolarWeek(year, month, day, start);

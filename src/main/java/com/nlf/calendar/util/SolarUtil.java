@@ -42,6 +42,8 @@ public class SolarUtil {
       put("8-1", "建军节");
       put("9-10", "教师节");
       put("10-1", "国庆节");
+      put("10-31", "万圣节前夜");
+      put("11-1", "万圣节");
       put("12-24", "平安夜");
       put("12-25", "圣诞节");
     }
@@ -53,6 +55,7 @@ public class SolarUtil {
     private static final long serialVersionUID = -1;
 
     {
+      put("3-0-1", "全国中小学生安全教育日");
       put("5-2-0", "母亲节");
       put("6-3-0", "父亲节");
       put("11-4-4", "感恩节");

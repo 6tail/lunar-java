@@ -14,7 +14,7 @@ public class Yun {
   /**
    * 性别(1男，0女)
    */
-  private int gender;
+  private final int gender;
 
   /**
    * 起运年数
@@ -39,9 +39,9 @@ public class Yun {
   /**
    * 是否顺推
    */
-  private boolean forward;
+  private final boolean forward;
 
-  private Lunar lunar;
+  private final Lunar lunar;
 
   /**
    * 使用默认流派1初始化运

@@ -333,4 +333,22 @@ public class GanZhiTest {
     Assert.assertEquals("丁丑",lunar.getMonthInGanZhiExact());
   }
 
+  @Test
+  public void test19() {
+    Solar solar = new Solar(2022,4,6,20,18,0);
+    Lunar lunar = solar.getLunar();
+    Assert.assertEquals("壬寅",lunar.getYearInGanZhi());
+    Assert.assertEquals("壬寅",lunar.getYearInGanZhiByLiChun());
+    Assert.assertEquals("壬寅",lunar.getYearInGanZhiExact());
+
+    Assert.assertEquals("甲辰",lunar.getMonthInGanZhi());
+    Assert.assertEquals("甲辰",lunar.getMonthInGanZhiExact());
+
+    Assert.assertEquals("己丑",lunar.getDayInGanZhi());
+    Assert.assertEquals("己丑",lunar.getDayInGanZhiExact());
+    Assert.assertEquals("己丑",lunar.getDayInGanZhiExact2());
+
+    Assert.assertEquals("甲戌",lunar.getTimeInGanZhi());
+  }
+
 }

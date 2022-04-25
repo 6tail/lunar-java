@@ -424,4 +424,39 @@ public class LunarTest {
     Assert.assertEquals(4, lunar.getDayJi().size());
   }
 
+  @Test
+  public void test57() {
+    Solar solar = new Solar(1991, 2, 5);
+    Lunar lunar = solar.getLunar();
+    Assert.assertEquals("庚寅", lunar.getMonthInGanZhi());
+  }
+
+  @Test
+  public void test58() {
+    Solar solar = new Solar(2021, 3, 21);
+    Lunar lunar = solar.getLunar();
+    Assert.assertEquals("春社", lunar.getOtherFestivals().get(0));
+  }
+
+  @Test
+  public void test59() {
+    Solar solar = new Solar(2022, 3, 16);
+    Lunar lunar = solar.getLunar();
+    Assert.assertEquals("春社", lunar.getOtherFestivals().get(0));
+  }
+
+  @Test
+  public void test60() {
+    Solar solar = new Solar(1722, 9, 25);
+    Lunar lunar = solar.getLunar();
+    Assert.assertEquals("秋社", lunar.getOtherFestivals().get(0));
+  }
+
+  @Test
+  public void test61() {
+    Solar solar = new Solar(840, 9, 14);
+    Lunar lunar = solar.getLunar();
+    Assert.assertEquals("秋社", lunar.getOtherFestivals().get(0));
+  }
+
 }

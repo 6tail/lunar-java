@@ -14,7 +14,7 @@ public class SolarYear {
   /**
    * 年
    */
-  private int year;
+  private final int year;
 
   /**
    * 一年的月数

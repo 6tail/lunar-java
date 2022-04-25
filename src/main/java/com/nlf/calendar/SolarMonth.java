@@ -16,11 +16,11 @@ public class SolarMonth {
   /**
    * 年
    */
-  private int year;
+  private final int year;
   /**
    * 月
    */
-  private int month;
+  private final int month;
 
   /**
    * 默认当月
@@ -128,7 +128,6 @@ public class SolarMonth {
    * @param months 月数
    * @return 阳历月
    */
-  @SuppressWarnings("MagicConstant")
   public SolarMonth next(int months) {
     Calendar c = ExactDate.fromYmd(year, month, 1);
     c.add(Calendar.MONTH, months);

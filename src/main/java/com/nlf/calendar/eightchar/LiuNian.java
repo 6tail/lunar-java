@@ -12,20 +12,24 @@ public class LiuNian {
   /**
    * 序数，0-9
    */
-  private int index;
+  private final int index;
+
   /**
    * 大运
    */
-  private DaYun daYun;
+  private final DaYun daYun;
+
   /**
    * 年
    */
-  private int year;
+  private final int year;
+
   /**
    * 年龄
    */
-  private int age;
-  private Lunar lunar;
+  private final int age;
+
+  private final Lunar lunar;
 
   public LiuNian(DaYun daYun, int index) {
     this.daYun = daYun;

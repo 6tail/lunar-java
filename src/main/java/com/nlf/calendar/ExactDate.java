@@ -18,6 +18,7 @@ public class ExactDate {
    */
   private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("GMT+8");
 
+  @SuppressWarnings("MagicConstant")
   public static Calendar fromYmdHms(int year, int month, int day, int hour, int minute, int second) {
     Calendar c = Calendar.getInstance(TIME_ZONE);
     c.set(year, month - 1, day, hour, minute, second);

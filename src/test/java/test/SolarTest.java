@@ -47,7 +47,7 @@ public class SolarTest {
 
   @Test
   public void test10(){
-    Assert.assertEquals(false, SolarUtil.isLeapYear(1500));
+    Assert.assertFalse(SolarUtil.isLeapYear(1500));
   }
 
   @Test
@@ -71,6 +71,12 @@ public class SolarTest {
     Assert.assertEquals("2020-01-18",date.next(1).toString());
     // 仅工作日，周日调休按上班算
     Assert.assertEquals("2020-01-19",date.next(1,true).toString());
+  }
+
+  @Test
+  public void test11(){
+    Solar solar = new Solar(2022, 3, 28);
+    Assert.assertEquals("全国中小学生安全教育日",solar.getFestivals().get(0));
   }
 
 }

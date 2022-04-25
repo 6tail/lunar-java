@@ -18,7 +18,7 @@ public class Foto {
   /**
    * 阴历
    */
-  private Lunar lunar;
+  private final Lunar lunar;
 
   public Foto(Lunar lunar) {
     this.lunar = lunar;
@@ -228,7 +228,7 @@ public class Foto {
 
   public String toFullString() {
     StringBuilder s = new StringBuilder();
-    s.append(toString());
+    s.append(this);
     for (FotoFestival f : getFestivals()) {
       s.append(" (");
       s.append(f);

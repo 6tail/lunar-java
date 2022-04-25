@@ -12,24 +12,29 @@ public class XiaoYun {
   /**
    * 序数，0-9
    */
-  private int index;
+  private final int index;
+
   /**
    * 大运
    */
-  private DaYun daYun;
+  private final DaYun daYun;
+
   /**
    * 年
    */
-  private int year;
+  private final int year;
+
   /**
    * 年龄
    */
-  private int age;
+  private final int age;
+
   /**
    * 是否顺推
    */
-  private boolean forward;
-  private Lunar lunar;
+  private final boolean forward;
+
+  private final Lunar lunar;
 
   public XiaoYun(DaYun daYun, int index, boolean forward) {
     this.daYun = daYun;

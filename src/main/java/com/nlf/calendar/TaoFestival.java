@@ -10,12 +10,12 @@ public class TaoFestival {
   /**
    * 名称
    */
-  private String name;
+  private final String name;
 
   /**
    * 备注
    */
-  private String remark;
+  private final String remark;
 
   public TaoFestival(String name, String remark) {
     this.name = name;

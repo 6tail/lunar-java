@@ -10,22 +10,22 @@ public class FotoFestival {
   /**
    * 是日何日，如：雷斋日
    */
-  private String name;
+  private final String name;
 
   /**
    * 犯之因果，如：犯者夺纪
    */
-  private String result;
+  private final String result;
 
   /**
    * 是否每月同
    */
-  private boolean everyMonth;
+  private final boolean everyMonth;
 
   /**
    * 备注，如：宜先一日即戒
    */
-  private String remark;
+  private final String remark;
 
   public FotoFestival(String name, String result, boolean everyMonth, String remark) {
     this.name = name;

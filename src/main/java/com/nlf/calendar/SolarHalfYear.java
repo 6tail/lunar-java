@@ -14,11 +14,11 @@ public class SolarHalfYear {
   /**
    * 年
    */
-  private int year;
+  private final int year;
   /**
    * 月
    */
-  private int month;
+  private final int month;
 
   /**
    * 半年的月数
@@ -124,7 +124,6 @@ public class SolarHalfYear {
    * @param halfYears 推移的半年数，负数为倒推
    * @return 推移后的半年
    */
-  @SuppressWarnings("MagicConstant")
   public SolarHalfYear next(int halfYears) {
     if (0 == halfYears) {
       return new SolarHalfYear(year, month);

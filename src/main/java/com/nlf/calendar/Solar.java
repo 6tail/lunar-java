@@ -19,34 +19,41 @@ public class Solar {
    * 2000年儒略日数(2000-1-1 12:00:00 UTC)
    */
   public static final double J2000 = 2451545;
+
   /**
    * 年
    */
-  private int year;
+  private final int year;
+
   /**
    * 月
    */
-  private int month;
+  private final int month;
+
   /**
    * 日
    */
-  private int day;
+  private final int day;
+
   /**
    * 时
    */
-  private int hour;
+  private final int hour;
+
   /**
    * 分
    */
-  private int minute;
+  private final int minute;
+
   /**
    * 秒
    */
-  private int second;
+  private final int second;
+
   /**
    * 日历
    */
-  private Calendar calendar;
+  private final Calendar calendar;
 
   /**
    * 默认使用当前日期初始化
@@ -76,7 +83,6 @@ public class Solar {
    * @param minute 分钟，0到59
    * @param second 秒钟，0到59
    */
-  @SuppressWarnings("MagicConstant")
   public Solar(int year, int month, int day, int hour, int minute, int second) {
     calendar = ExactDate.fromYmdHms(year, month, day, hour, minute, second);
     this.year = year;
@@ -123,7 +129,6 @@ public class Solar {
    *
    * @param julianDay 儒略日
    */
-  @SuppressWarnings("MagicConstant")
   public Solar(double julianDay) {
     int d = (int) (julianDay + 0.5);
     double f = julianDay + 0.5 - d;
@@ -381,6 +386,12 @@ public class Solar {
     if (null != f) {
       l.add(f);
     }
+    if (day + 7 >= SolarUtil.getDaysOfMonth(year, month)) {
+      f = SolarUtil.WEEK_FESTIVAL.get(month + "-0-" + week);
+      if (null != f) {
+        l.add(f);
+      }
+    }
     return l;
   }
 
@@ -515,10 +526,7 @@ public class Solar {
     int m = this.month;
     double d = this.day + ((this.second * 1D / 60 + this.minute) / 60 + this.hour) / 24;
     int n = 0;
-    boolean g = false;
-    if (y * 372 + m * 31 + (int) d >= 588829) {
-      g = true;
-    }
+    boolean g = y * 372 + m * 31 + (int) d >= 588829;
     if (m <= 2) {
       m += 12;
       y--;
@@ -595,7 +603,6 @@ public class Solar {
    * @param onlyWorkday 是否仅限工作日
    * @return 阳历日期
    */
-  @SuppressWarnings("MagicConstant")
   public Solar next(int days, boolean onlyWorkday) {
     Calendar c = ExactDate.fromYmdHms(year, month, day, hour, minute, second);
     if (0 != days) {

@@ -50,27 +50,27 @@ public class LunarYear {
   /**
    * 农历年
    */
-  private int year;
+  private final int year;
 
   /**
    * 天干下标
    */
-  private int ganIndex;
+  private final int ganIndex;
 
   /**
    * 地支下标
    */
-  private int zhiIndex;
+  private final int zhiIndex;
 
   /**
    * 农历月们
    */
-  private List<LunarMonth> months = new ArrayList<LunarMonth>();
+  private final List<LunarMonth> months = new ArrayList<LunarMonth>();
 
   /**
    * 节气儒略日们
    */
-  private List<Double> jieQiJulianDays = new ArrayList<Double>();
+  private final List<Double> jieQiJulianDays = new ArrayList<Double>();
 
   /**
    * 初始化

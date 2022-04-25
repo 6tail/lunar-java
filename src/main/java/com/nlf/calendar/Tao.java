@@ -18,7 +18,7 @@ public class Tao {
   /**
    * 阴历
    */
-  private Lunar lunar;
+  private final Lunar lunar;
 
   public Tao(Lunar lunar) {
     this.lunar = lunar;

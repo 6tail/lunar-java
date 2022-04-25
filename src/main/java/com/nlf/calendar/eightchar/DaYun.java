@@ -12,28 +12,34 @@ public class DaYun {
   /**
    * 开始年(含)
    */
-  private int startYear;
+  private final int startYear;
+
   /**
    * 结束年(含)
    */
-  private int endYear;
+  private final int endYear;
+
   /**
    * 开始年龄(含)
    */
-  private int startAge;
+  private final int startAge;
+
   /**
    * 结束年龄(含)
    */
-  private int endAge;
+  private final int endAge;
+
   /**
    * 序数，0-9
    */
-  private int index;
+  private final int index;
+
   /**
    * 运
    */
-  private Yun yun;
-  private Lunar lunar;
+  private final Yun yun;
+
+  private final Lunar lunar;
 
   public DaYun(Yun yun, int index) {
     this.yun = yun;

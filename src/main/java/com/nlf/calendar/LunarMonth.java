@@ -14,22 +14,22 @@ public class LunarMonth {
   /**
    * 农历年
    */
-  private int year;
+  private final int year;
 
   /**
    * 农历月：1-12，闰月为负数，如闰2月为-2
    */
-  private int month;
+  private final int month;
 
   /**
    * 天数，大月30天，小月29天
    */
-  private int dayCount;
+  private final int dayCount;
 
   /**
    * 初一的儒略日
    */
-  private double firstJulianDay;
+  private final double firstJulianDay;
 
   /**
    * 初始化

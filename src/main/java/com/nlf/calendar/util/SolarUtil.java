@@ -100,6 +100,7 @@ public class SolarUtil {
       put("5-5", Collections.nCopies(1, "马克思诞辰纪念日"));
       put("5-8", Collections.nCopies(1, "世界红十字日"));
       put("5-11", Collections.nCopies(1, "世界肥胖日"));
+      put("5-25", Collections.nCopies(1, "525心理健康节"));
       put("5-27", Collections.nCopies(1, "上海解放日"));
       put("5-31", Collections.nCopies(1, "世界无烟日"));
       put("6-5", Collections.nCopies(1, "世界环境日"));

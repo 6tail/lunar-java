@@ -1904,7 +1904,7 @@ public class Lunar {
    * @return 日冲，如申
    */
   public String getDayChong() {
-    return LunarUtil.CHONG[dayZhiIndex + 1];
+    return LunarUtil.CHONG[dayZhiIndex];
   }
 
   /**
@@ -1946,7 +1946,7 @@ public class Lunar {
    * @return 无情之克的日冲天干，如甲
    */
   public String getDayChongGan() {
-    return LunarUtil.CHONG_GAN[dayGanIndex + 1];
+    return LunarUtil.CHONG_GAN[dayGanIndex];
   }
 
   /**
@@ -1955,7 +1955,7 @@ public class Lunar {
    * @return 有情之克的日冲天干，如甲
    */
   public String getDayChongGanTie() {
-    return LunarUtil.CHONG_GAN_TIE[dayGanIndex + 1];
+    return LunarUtil.CHONG_GAN_TIE[dayGanIndex];
   }
 
   /**
@@ -1964,7 +1964,7 @@ public class Lunar {
    * @return 时冲，如申
    */
   public String getTimeChong() {
-    return LunarUtil.CHONG[timeZhiIndex + 1];
+    return LunarUtil.CHONG[timeZhiIndex];
   }
 
   /**
@@ -2006,7 +2006,7 @@ public class Lunar {
    * @return 无情之克的时冲天干，如甲
    */
   public String getTimeChongGan() {
-    return LunarUtil.CHONG_GAN[timeGanIndex + 1];
+    return LunarUtil.CHONG_GAN[timeGanIndex];
   }
 
   /**
@@ -2015,7 +2015,7 @@ public class Lunar {
    * @return 有情之克的时冲天干，如甲
    */
   public String getTimeChongGanTie() {
-    return LunarUtil.CHONG_GAN_TIE[timeGanIndex + 1];
+    return LunarUtil.CHONG_GAN_TIE[timeGanIndex];
   }
 
   /**

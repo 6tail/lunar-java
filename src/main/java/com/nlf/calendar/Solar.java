@@ -386,7 +386,7 @@ public class Solar {
     if (null != f) {
       l.add(f);
     }
-    if (day + 7 >= SolarUtil.getDaysOfMonth(year, month)) {
+    if (day + 7 > SolarUtil.getDaysOfMonth(year, month)) {
       f = SolarUtil.WEEK_FESTIVAL.get(month + "-0-" + week);
       if (null != f) {
         l.add(f);

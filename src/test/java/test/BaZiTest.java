@@ -231,6 +231,24 @@ public class BaZiTest {
   }
 
   @Test
+  public void testShenGong1() {
+    Lunar lunar = new Solar(1994, 12, 6, 2, 0, 0).getLunar();
+    Assert.assertEquals("身宫", "丁丑", lunar.getEightChar().getShenGong());
+  }
+
+  @Test
+  public void testShenGong2() {
+    Lunar lunar = new Solar(1990, 12, 11, 6, 0, 0).getLunar();
+    Assert.assertEquals("身宫", "庚辰", lunar.getEightChar().getShenGong());
+  }
+
+  @Test
+  public void testShenGong3() {
+    Lunar lunar = new Solar(1993, 5, 23, 4, 0, 0).getLunar();
+    Assert.assertEquals("身宫", "庚申", lunar.getEightChar().getShenGong());
+  }
+
+  @Test
   public void testBaZi2Solar() {
     Solar solar = Solar.fromYmdHms(2027,1,27,12,0,0);
     System.out.println(solar.getLunar().getEightChar().toString());

@@ -235,7 +235,7 @@ public class LunarTime {
    * @return 时冲，如申
    */
   public String getChong() {
-    return LunarUtil.CHONG[zhiIndex + 1];
+    return LunarUtil.CHONG[zhiIndex];
   }
 
   /**
@@ -277,7 +277,7 @@ public class LunarTime {
    * @return 无情之克的时冲天干，如甲
    */
   public String getChongGan() {
-    return LunarUtil.CHONG_GAN[ganIndex + 1];
+    return LunarUtil.CHONG_GAN[ganIndex];
   }
 
   /**
@@ -286,7 +286,7 @@ public class LunarTime {
    * @return 有情之克的时冲天干，如甲
    */
   public String getChongGanTie() {
-    return LunarUtil.CHONG_GAN_TIE[ganIndex + 1];
+    return LunarUtil.CHONG_GAN_TIE[ganIndex];
   }
 
   /**

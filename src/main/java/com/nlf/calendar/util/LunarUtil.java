@@ -351,32 +351,17 @@ public class LunarUtil{
     }
   };
   /** 地支相冲（子午相冲，丑未相冲，寅申相冲，辰戌相冲，卯酉相冲，巳亥相冲），由于地支对应十二生肖，也就对应了生肖相冲 */
-  public static final String[] CHONG = {"","午","未","申","酉","戌","亥","子","丑","寅","卯","辰","巳"};
+  public static final String[] CHONG = {"午","未","申","酉","戌","亥","子","丑","寅","卯","辰","巳"};
   /** 天干相冲之无情之克（阳克阳，阴克阴） */
-  public static final String[] CHONG_GAN = {"","戊","己","庚","辛","壬","癸","甲","乙","丙","丁"};
-  /** 天干四冲（无情之克中克得最严重的4个） */
-  public static final Map<String,String> CHONG_GAN_BAD = new HashMap<String,String>(){
-    private static final long serialVersionUID = -1;
-    {
-      put("庚","甲");
-      put("辛","乙");
-      put("壬","丙");
-      put("癸","丁");
-    }
-  };
+  public static final String[] CHONG_GAN = {"戊","己","庚","辛","壬","癸","甲","乙","丙","丁"};
   /** 天干相冲之有情之克（阳克阴，阴克阳） */
-  public static final String[] CHONG_GAN_TIE = {"","己","戊","辛","庚","癸","壬","乙","甲","丁","丙"};
-  /** 天干五合（有情之克中最有情的5个） */
-  public static final Map<String,String> CHONG_GAN_TIE_GOOD = new HashMap<String,String>(){
-    private static final long serialVersionUID = -1;
-    {
-      put("甲","己");
-      put("丙","辛");
-      put("戊","癸");
-      put("庚","乙");
-      put("壬","丁");
-    }
-  };
+  public static final String[] CHONG_GAN_TIE = {"己","戊","辛","庚","癸","壬","乙","甲","丁","丙"};
+  /** 天干四冲（无情之克中克得最严重的4个） */
+  public static final String[] CHONG_GAN_4 = {"庚","辛","壬","癸","","","甲","乙","丙","丁"};
+  /** 天干五合（有情之克中最有情的5个，甲己合，乙庚合，丙辛合，丁壬合，戊癸合） */
+  public static final String[] HE_GAN_5 = {"己","庚","辛","壬","癸","甲","乙","丙","丁","戊"};
+  /** 地支六合（子丑合，寅亥合，卯戌合，辰酉合，巳申合，午未合） */
+  public static final String[] HE_ZHI_6 = {"丑","子","亥","戌","酉","申","未","午","巳","辰","卯","寅"};
   /** 煞（逢巳日、酉日、丑日必煞东；亥日、卯日、未日必煞西；申日、子日、辰日必煞南；寅日、午日、戌日必煞北） */
   public static final Map<String,String> SHA = new HashMap<String,String>(){
     private static final long serialVersionUID = -1;

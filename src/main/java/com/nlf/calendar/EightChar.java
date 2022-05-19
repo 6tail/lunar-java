@@ -475,6 +475,26 @@ public class EightChar {
   }
 
   /**
+   * 获取胎息
+   *
+   * @return 胎息
+   */
+  public String getTaiXi() {
+    int ganIndex = (2 == sect) ? lunar.getDayGanIndexExact2() : lunar.getDayGanIndexExact();
+    int zhiIndex = (2 == sect) ? lunar.getDayZhiIndexExact2() : lunar.getDayZhiIndexExact();
+    return LunarUtil.HE_GAN_5[ganIndex] + LunarUtil.HE_ZHI_6[zhiIndex];
+  }
+
+  /**
+   * 获取胎息纳音
+   *
+   * @return 纳音
+   */
+  public String getTaiXiNaYin() {
+    return LunarUtil.NAYIN.get(getTaiXi());
+  }
+
+  /**
    * 获取命宫
    *
    * @return 命宫
@@ -531,7 +551,10 @@ public class EightChar {
         timeZhiIndex = i;
       }
     }
-    int zhiIndex = (2 + (monthZhiIndex + timeZhiIndex)) % 12;
+    int zhiIndex = 2 + monthZhiIndex + timeZhiIndex;
+    if (zhiIndex > 12) {
+      zhiIndex -= 12;
+    }
     int jiaZiIndex = LunarUtil.getJiaZiIndex(lunar.getMonthInGanZhiExact()) - (monthZhiIndex - zhiIndex);
     if (jiaZiIndex >= 60) {
       jiaZiIndex -= 60;

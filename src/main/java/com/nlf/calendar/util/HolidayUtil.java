@@ -17,6 +17,8 @@ public class HolidayUtil {
   private static final int SIZE = 18;
   /** 0 */
   private static final char ZERO = '0';
+  /** 删除标识 */
+  private static final String TAG_REMOVE = "~";
   /** 默认节假日名称（元旦0，春节1，清明2，劳动3，端午4，中秋5，国庆6，国庆中秋7，抗战胜利日8） */
   public static final String[] NAMES = {"元旦节","春节","清明节","劳动节","端午节","中秋节","国庆节","国庆中秋","抗战胜利日"};
   /** 默认节假日数据，日期YYYYMMDD+名称下标+是否调休+对应节日YYYYMMDD */
@@ -188,35 +190,38 @@ public class HolidayUtil {
    * @param data 需要修正或追加的节假日数据，每18位表示1天依次排列，格式：当天年月日YYYYMMDD(8位)+节假日名称下标(1位)+调休标识(1位)+节假日当天YYYYMMDD(8位)。例：202005023120200501代表2020-05-02为劳动节放假，对应节假日为2020-05-01
    */
   public static void fix(String[] names, String data){
-    if(null!=names){
+    if(null != names){
       NAMES_IN_USE = names;
     }
-    if(null==data){
+    if(null == data){
       return;
     }
     StringBuilder append = new StringBuilder();
-    while(data.length()>=SIZE){
-      String segment = data.substring(0,SIZE);
-      String day = segment.substring(0,8);
+    while(data.length() >= SIZE){
+      String segment = data.substring(0, SIZE);
+      String day = segment.substring(0, 8);
+      boolean remove = TAG_REMOVE.equals(segment.substring(8, 9));
       Holiday holiday = getHoliday(day);
-      if(null==holiday){
-        append.append(segment);
+      if(null == holiday){
+        if (!remove) {
+          append.append(segment);
+        }
       }else{
         int nameIndex = -1;
-        for(int i=0,j=NAMES_IN_USE.length;i<j;i++){
+        for(int i = 0,j = NAMES_IN_USE.length; i < j; i++){
           if(NAMES_IN_USE[i].equals(holiday.getName())){
             nameIndex = i;
             break;
           }
         }
         if(nameIndex>-1) {
-          String old = day+(char)(nameIndex+ZERO)+(holiday.isWork()?ZERO:'1')+holiday.getTarget().replace("-","");
-          DATA_IN_USE = DATA_IN_USE.replace(old, segment);
+          String old = day + (char)(nameIndex + ZERO) + (holiday.isWork() ? ZERO : '1') + holiday.getTarget().replace("-","");
+          DATA_IN_USE = DATA_IN_USE.replace(old, remove ? "" : segment);
         }
       }
       data = data.substring(SIZE);
     }
-    if(append.length()>0){
+    if(append.length() > 0){
       DATA_IN_USE += append.toString();
     }
   }

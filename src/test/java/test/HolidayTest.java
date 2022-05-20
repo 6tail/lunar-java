@@ -125,4 +125,15 @@ public class HolidayTest {
     Assert.assertNotNull(holiday.getTarget());
     Assert.assertEquals("2016-10-01",holiday.getTarget());
   }
+
+  @Test
+  public void testRemove() {
+    Holiday holiday = HolidayUtil.getHoliday(2010,1,1);
+    Assert.assertNotNull(holiday);
+    Assert.assertEquals("元旦",holiday.getName());
+
+    HolidayUtil.fix("20100101~000000000000000000000000000");
+    holiday = HolidayUtil.getHoliday(2010,1,1);
+    Assert.assertNull(holiday);
+  }
 }

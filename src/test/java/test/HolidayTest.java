@@ -94,8 +94,11 @@ public class HolidayTest {
     Assert.assertEquals("2020-01-01 春节 2020-01-01", HolidayUtil.getHoliday("2020-01-01") + "");
     Assert.assertEquals("2099-01-01 元旦节 2099-01-01", HolidayUtil.getHoliday("2099-01-01") + "");
 
-    // 更改节假日名称
-    String[] names = HolidayUtil.NAMES;
+    // 自定义节假日名称
+    String[] names = new String[HolidayUtil.NAMES.length];
+    for (int i = 0, j = HolidayUtil.NAMES.length; i < j; i++) {
+      names[i] = HolidayUtil.NAMES[i];
+    }
     names[0] = "元旦";
     names[1] = "大年初一";
 
@@ -128,9 +131,11 @@ public class HolidayTest {
 
   @Test
   public void testRemove() {
+    // 设置默认的节假日名称
+    HolidayUtil.fix(HolidayUtil.NAMES, null);
     Holiday holiday = HolidayUtil.getHoliday(2010,1,1);
     Assert.assertNotNull(holiday);
-    Assert.assertEquals("元旦",holiday.getName());
+    Assert.assertEquals("元旦节",holiday.getName());
 
     HolidayUtil.fix("20100101~000000000000000000000000000");
     holiday = HolidayUtil.getHoliday(2010,1,1);

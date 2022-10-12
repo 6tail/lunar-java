@@ -183,6 +183,9 @@ public class Lunar {
     this.second = second;
     Solar noon = Solar.fromJulianDay(m.getFirstJulianDay() + lunarDay - 1);
     this.solar = Solar.fromYmdHms(noon.getYear(), noon.getMonth(), noon.getDay(), hour, minute, second);
+    if (noon.getYear() != lunarYear) {
+      y = LunarYear.fromYear(noon.getYear());
+    }
     compute(y);
   }
 

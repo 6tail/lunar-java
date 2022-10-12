@@ -7,7 +7,7 @@
     <groupId>cn.6tail</groupId>
     <artifactId>lunar</artifactId>
     <packaging>jar</packaging>
-    <version>1.2.24</version>
+    <version>1.2.25</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <url>https://github.com/6tail/lunar-java</url>
     <description>a calendar library for Solar and Chinese Lunar</description>
@@ -48,6 +48,7 @@
         <sourceEncoding>UTF-8</sourceEncoding>
         <source-version>1.5</source-version>
         <target-version>1.5</target-version>
+        <creator>6tail</creator>
         <maven-compiler-plugin-version>3.3</maven-compiler-plugin-version>
         <maven-surefire-plugin-version>2.5</maven-surefire-plugin-version>
         <maven-javadoc-plugin-version>2.9</maven-javadoc-plugin-version>
@@ -60,7 +61,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13.1</version>
+            <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -154,6 +155,12 @@
                     <descriptors>
                         <descriptor>${basedir}/src/assembly/assembly.xml</descriptor>
                     </descriptors>
+                    <archive>
+                        <manifestEntries>
+                            <Created-By>${creator}</Created-By>
+                            <Built-By>${creator}</Built-By>
+                        </manifestEntries>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>

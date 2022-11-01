@@ -103,4 +103,18 @@ public class WuHouTest {
     Assert.assertEquals(solar.toString(),"小寒 初候",lunar.getHou());
   }
 
+  @Test
+  public void test15(){
+    Solar solar = new Solar(2022,8,22);
+    Lunar lunar = solar.getLunar();
+    Assert.assertEquals(solar.toString(),"寒蝉鸣",lunar.getWuHou());
+  }
+
+  @Test
+  public void test16(){
+    Solar solar = new Solar(2022,8,23);
+    Lunar lunar = solar.getLunar();
+    Assert.assertEquals(solar.toString(),"鹰乃祭鸟",lunar.getWuHou());
+  }
+
 }

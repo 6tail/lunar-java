@@ -7,7 +7,7 @@
     <groupId>cn.6tail</groupId>
     <artifactId>lunar</artifactId>
     <packaging>jar</packaging>
-    <version>1.2.25</version>
+    <version>1.2.26</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <url>https://github.com/6tail/lunar-java</url>
     <description>a calendar library for Solar and Chinese Lunar</description>
@@ -105,6 +105,7 @@
                         </goals>
                         <configuration>
                             <additionalparam>-Xdoclint:none</additionalparam>
+                            <source>${source-version}</source>
                         </configuration>
                     </execution>
                 </executions>

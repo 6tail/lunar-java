@@ -2990,7 +2990,11 @@ public class Lunar {
     }
     Solar startSolar = jieQi.getSolar();
     int days = ExactDate.getDaysBetween(startSolar.getYear(), startSolar.getMonth(), startSolar.getDay(), solar.getYear(), solar.getMonth(), solar.getDay());
-    return LunarUtil.WU_HOU[(offset * 3 + days / 5) % LunarUtil.WU_HOU.length];
+    int index = days / 5;
+    if (index > 2) {
+      index = 2;
+    }
+    return LunarUtil.WU_HOU[(offset * 3 + index) % LunarUtil.WU_HOU.length];
   }
 
   /**

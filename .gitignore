@@ -14,3 +14,4 @@ target/
 *.diff
 *.patch
 *.tmp
+.DS_Store

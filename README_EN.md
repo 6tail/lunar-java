@@ -12,7 +12,7 @@ lunar is a calendar library for Solar and Chinese Lunar.
 <dependency>
   <groupId>cn.6tail</groupId>
   <artifactId>lunar</artifactId>
-  <version>1.2.25</version>
+  <version>1.2.27</version>
 </dependency>
 ```
 
@@ -49,4 +49,4 @@ Output:
 
 ## Documentation
 
-Please visit [http://6tail.cn/calendar/api.html](http://6tail.cn/calendar/api.html "http://6tail.cn/calendar/api.html")
+Please visit [https://6tail.cn/calendar/api.html](https://6tail.cn/calendar/api.html "https://6tail.cn/calendar/api.html")

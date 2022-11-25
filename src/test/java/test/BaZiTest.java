@@ -259,6 +259,14 @@ public class BaZiTest {
   }
 
   @Test
+  public void testBaZi2Solar1() {
+    List<Solar> l = Solar.fromBaZi("壬寅","庚戌","己未","乙亥");
+    for(Solar s:l){
+      System.out.println(s.toFullString());
+    }
+  }
+
+  @Test
   public void test4() {
     Lunar lunar = Lunar.fromYmd(1985, 12, 27);
     Assert.assertEquals("1995-11-05", lunar.getEightChar().getYun(1).getStartSolar().toYmd());
@@ -294,5 +302,15 @@ public class BaZiTest {
     Assert.assertEquals("月柱", "甲寅", eightChar.getMonth());
     Assert.assertEquals("日柱", "庚子", eightChar.getDay());
     Assert.assertEquals("时柱", "戊子", eightChar.getTime());
+  }
+
+  @Test
+  public void test13(){
+    Lunar lunar = Lunar.fromYmdHms(1991, 4, 5, 3, 37, 0);
+    EightChar eightChar = lunar.getEightChar();
+    Assert.assertEquals("年柱", "辛未", eightChar.getYear());
+    Assert.assertEquals("月柱", "癸巳", eightChar.getMonth());
+    Assert.assertEquals("日柱", "戊子", eightChar.getDay());
+    Assert.assertEquals("时柱", "甲寅", eightChar.getTime());
   }
 }

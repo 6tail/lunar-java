@@ -2049,13 +2049,16 @@ public class Lunar {
   }
 
   protected NineStar getYearNineStar(String yearInGanZhi) {
-    int index = LunarUtil.getJiaZiIndex(yearInGanZhi) + 1;
-    int yearOffset = 0;
-    if (index != LunarUtil.getJiaZiIndex(this.getYearInGanZhi()) + 1) {
-      yearOffset = -1;
+    int indexExact = LunarUtil.getJiaZiIndex(yearInGanZhi) + 1;
+    int index = LunarUtil.getJiaZiIndex(this.getYearInGanZhi()) + 1;
+    int yearOffset = indexExact - index;
+    if (yearOffset > 1) {
+      yearOffset -= 60;
+    } else if (yearOffset < -1) {
+      yearOffset += 60;
     }
     int yuan = ((this.year + yearOffset + 2696) / 60) % 3;
-    int offset = (62 + yuan * 3 - index) % 9;
+    int offset = (62 + yuan * 3 - indexExact) % 9;
     if (0 == offset) {
       offset = 9;
     }

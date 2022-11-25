@@ -162,18 +162,6 @@ public class LunarTest {
   }
 
   @Test
-  public void test23() {
-    Lunar lunar = Lunar.fromYmd(2022, 1, 1);
-    Assert.assertEquals("六白金开阳", lunar.getYearNineStar().toString());
-  }
-
-  @Test
-  public void test24() {
-    Lunar lunar = Lunar.fromYmd(2033, 1, 1);
-    Assert.assertEquals("四绿木天权", lunar.getYearNineStar().toString());
-  }
-
-  @Test
   public void test25() {
     Solar solar = new Solar(2021, 6, 7, 21, 18, 0);
     Lunar lunar = solar.getLunar();

@@ -130,11 +130,10 @@ public class SolarMonth {
   public List<SolarWeek> getWeeks(int start) {
     List<SolarWeek> l = new ArrayList<SolarWeek>();
     SolarWeek week = SolarWeek.fromYmd(year, month, 1, start);
-    Solar firstDay = week.getFirstDay();
     while (true) {
       l.add(week);
       week = week.next(1, false);
-      firstDay = week.getFirstDay();
+      Solar firstDay = week.getFirstDay();
       if (firstDay.getYear() > year || firstDay.getMonth() > month) {
         break;
       }

@@ -447,4 +447,16 @@ public class LunarTest {
     Assert.assertEquals("秋社", lunar.getOtherFestivals().get(0));
   }
 
+  @Test
+  public void test62() {
+    Lunar lunar = Lunar.fromYmd(1582, 9, 18);
+    Assert.assertEquals("1582-10-04", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test63() {
+    Lunar lunar = Lunar.fromYmd(1582, 9, 19);
+    Assert.assertEquals("1582-10-15", lunar.getSolar().toString());
+  }
+
 }

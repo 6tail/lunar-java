@@ -1,5 +1,6 @@
 package test;
 
+import com.nlf.calendar.Solar;
 import com.nlf.calendar.SolarWeek;
 import com.nlf.calendar.util.SolarUtil;
 import org.junit.Assert;
@@ -40,5 +41,17 @@ public class WeekTest {
     Assert.assertEquals("2019-04-28",week.getFirstDay().toString());
     //当周第一天（本月）
     Assert.assertEquals("2019-05-01",week.getFirstDayInMonth().toString());
+  }
+
+  @Test
+  public void test1(){
+    Solar solar = Solar.fromYmd(1582, 10, 1);
+    Assert.assertEquals(1, solar.getWeek());
+  }
+
+  @Test
+  public void test2(){
+    Solar solar = Solar.fromYmd(1582, 10, 15);
+    Assert.assertEquals(5, solar.getWeek());
   }
 }

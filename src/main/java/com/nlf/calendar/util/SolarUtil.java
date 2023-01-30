@@ -157,6 +157,9 @@ public class SolarUtil {
    * @return 天数
    */
   public static int getDaysOfYear(int year) {
+    if (1582 == year) {
+      return 355;
+    }
     return isLeapYear(year) ? 366 : 365;
   }
 
@@ -193,10 +196,15 @@ public class SolarUtil {
     for (int i = 1; i < month; i++) {
       days += getDaysOfMonth(year, i);
     }
-    days += day;
-    if (1582 == year && 10 == month && day >= 15) {
-      days -= 10;
+    int d = day;
+    if (1582 == year && 10 == month) {
+      if (day >= 15) {
+        d -= 10;
+      } else if (day > 4) {
+        throw new IllegalArgumentException(String.format("wrong solar year %d month %d day %d", year, month, day));
+      }
     }
+    days += d;
     return days;
   }
 
@@ -212,5 +220,65 @@ public class SolarUtil {
     int days = getDaysOfMonth(year, month);
     int week = ExactDate.fromYmd(year, month, 1).get(Calendar.DAY_OF_WEEK) - 1;
     return (int) Math.ceil((days + week - start) * 1D / WEEK.length);
+  }
+
+  /**
+   * 获取两个日期之间相差的天数（如果日期a比日期b小，天数为正，如果日期a比日期b大，天数为负）
+   *
+   * @param ay 年a
+   * @param am 月a
+   * @param ad 日a
+   * @param by 年b
+   * @param bm 月b
+   * @param bd 日b
+   * @return 天数
+   */
+  public static int getDaysBetween(int ay, int am, int ad, int by, int bm, int bd) {
+    int n;
+    int days;
+    int i;
+    if (ay == by) {
+      n = getDaysInYear(by, bm, bd) - getDaysInYear(ay, am, ad);
+    } else if (ay > by) {
+      days = getDaysOfYear(by) - getDaysInYear(by, bm, bd);
+      for (i = by + 1; i < ay; i++) {
+        days += getDaysOfYear(i);
+      }
+      days += getDaysInYear(ay, am, ad);
+      n = -days;
+    } else {
+      days = getDaysOfYear(ay) - getDaysInYear(ay, am, ad);
+      for (i = ay + 1; i < by; i++) {
+        days += getDaysOfYear(i);
+      }
+      days += getDaysInYear(by, bm, bd);
+      n = days;
+    }
+    return n;
+  }
+
+  public static int getWeek(int y, int m, int d) {
+    if (1582 == y && 10 == m) {
+      if (d > 4 && d < 15) {
+        throw new IllegalArgumentException(String.format("wrong solar year %d month %d day %d", y, m, d));
+      }
+    }
+    Calendar start = ExactDate.fromYmd(1582, 10, 15);
+    Calendar current = ExactDate.fromYmd(y, m, d);
+    // 蔡勒公式
+    if (m < 3) {
+      m += 12;
+      y--;
+    }
+    int c = y/100;
+    y = y - c * 100;
+    int w;
+    int x = y + y / 4 + c / 4 - 2 * c;
+    if (current.before(start)) {
+      w = (x + (13*(m+1))/5 + d + 2) % 7;
+    } else {
+      w = (x + (26*(m+1))/10 + d - 1) % 7;
+    }
+    return (w + 7) % 7;
   }
 }

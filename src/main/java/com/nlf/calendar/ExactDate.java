@@ -52,27 +52,7 @@ public class ExactDate {
    * @return 天数
    */
   public static int getDaysBetween(int ay, int am, int ad, int by, int bm, int bd) {
-    int n;
-    int days;
-    int i;
-    if (ay == by) {
-      n = SolarUtil.getDaysInYear(by, bm, bd) - SolarUtil.getDaysInYear(ay, am, ad);
-    } else if (ay > by) {
-      days = SolarUtil.getDaysOfYear(by) - SolarUtil.getDaysInYear(by, bm, bd);
-      for (i = by + 1; i < ay; i++) {
-        days += SolarUtil.getDaysOfYear(i);
-      }
-      days += SolarUtil.getDaysInYear(ay, am, ad);
-      n = -days;
-    } else {
-      days = SolarUtil.getDaysOfYear(ay) - SolarUtil.getDaysInYear(ay, am, ad);
-      for (i = ay + 1; i < by; i++) {
-        days += SolarUtil.getDaysOfYear(i);
-      }
-      days += SolarUtil.getDaysInYear(by, bm, bd);
-      n = days;
-    }
-    return n;
+    return SolarUtil.getDaysBetween(ay, am, ad, by, bm, bd);
   }
 
   /**
@@ -83,6 +63,6 @@ public class ExactDate {
    * @return 天数
    */
   public static int getDaysBetween(Calendar calendar0, Calendar calendar1) {
-    return getDaysBetween(calendar0.get(Calendar.YEAR), calendar0.get(Calendar.MONTH) + 1, calendar0.get(Calendar.DATE), calendar1.get(Calendar.YEAR), calendar1.get(Calendar.MONTH) + 1, calendar1.get(Calendar.DATE));
+    return SolarUtil.getDaysBetween(calendar0.get(Calendar.YEAR), calendar0.get(Calendar.MONTH) + 1, calendar0.get(Calendar.DATE), calendar1.get(Calendar.YEAR), calendar1.get(Calendar.MONTH) + 1, calendar1.get(Calendar.DATE));
   }
 }

@@ -277,64 +277,38 @@ public class Solar {
   public static List<Solar> fromBaZi(String yearGanZhi, String monthGanZhi, String dayGanZhi, String timeGanZhi, int sect, int baseYear) {
     sect = (1 == sect) ? 1 : 2;
     List<Solar> l = new ArrayList<Solar>();
-    Solar today = new Solar();
-    Lunar lunar = today.getLunar();
-    int offsetYear = LunarUtil.getJiaZiIndex(lunar.getYearInGanZhiExact()) - LunarUtil.getJiaZiIndex(yearGanZhi);
-    if (offsetYear < 0) {
-      offsetYear = offsetYear + 60;
+    List<Integer> years = new ArrayList<Integer>();
+    Solar today = fromDate(new Date());
+    int offsetYear = LunarUtil.getJiaZiIndex(today.getLunar().getYearInGanZhiExact())-LunarUtil.getJiaZiIndex(yearGanZhi);
+    if(offsetYear < 0){
+      offsetYear += 60;
     }
-    int startYear = lunar.getYear() - offsetYear;
+    int startYear = today.getYear() - offsetYear - 1;
+    while (startYear >= baseYear) {
+      years.add(startYear);
+      startYear -= 60;
+    }
     int hour = 0;
     String timeZhi = timeGanZhi.substring(1);
-    for (int i = 0, j = LunarUtil.ZHI.length; i < j; i++) {
-      if (LunarUtil.ZHI[i].equals(timeZhi)) {
+    for(int i = 0, j = LunarUtil.ZHI.length; i < j; i++){
+      if(LunarUtil.ZHI[i].equals(timeZhi)){
         hour = (i - 1) * 2;
       }
     }
-    while (startYear >= baseYear) {
-      int year = startYear - 1;
-      int counter = 0;
-      int month = 12;
-      int day;
-      boolean found = false;
-      while (counter < 15) {
-        if (year >= baseYear) {
-          day = 1;
-          Solar solar = new Solar(year, month, day, hour, 0, 0);
-          lunar = solar.getLunar();
-          if (lunar.getYearInGanZhiExact().equals(yearGanZhi) && lunar.getMonthInGanZhiExact().equals(monthGanZhi)) {
-            found = true;
-            break;
-          }
-        }
-        month++;
-        if (month > 12) {
-          month = 1;
-          year++;
-        }
-        counter++;
-      }
-      if (found) {
-        counter = 0;
-        month--;
-        if (month < 1) {
-          month = 12;
-          year--;
-        }
-        day = 1;
-        Solar solar = new Solar(year, month, day, hour, 0, 0);
-        while (counter < 61) {
-          lunar = solar.getLunar();
+    for (Integer integer : years) {
+      inner: for (int x = 0; x < 3; x++) {
+        int year = integer + x;
+        Solar solar = fromYmdHms(year, 1, 1, hour, 0, 0);
+        while (solar.getYear() == year) {
+          Lunar lunar = solar.getLunar();
           String dgz = (2 == sect) ? lunar.getDayInGanZhiExact2() : lunar.getDayInGanZhiExact();
           if (lunar.getYearInGanZhiExact().equals(yearGanZhi) && lunar.getMonthInGanZhiExact().equals(monthGanZhi) && dgz.equals(dayGanZhi) && lunar.getTimeInGanZhi().equals(timeGanZhi)) {
             l.add(solar);
-            break;
+            break inner;
           }
           solar = solar.next(1);
-          counter++;
         }
       }
-      startYear -= 60;
     }
     return l;
   }

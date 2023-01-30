@@ -6,6 +6,7 @@ import com.nlf.calendar.Solar;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -250,20 +251,71 @@ public class BaZiTest {
 
   @Test
   public void testBaZi2Solar() {
-    Solar solar = Solar.fromYmdHms(2027,1,27,12,0,0);
-    System.out.println(solar.getLunar().getEightChar().toString());
-    List<Solar> l = Solar.fromBaZi("丙午","辛丑","丙午","甲午");
-    for(Solar s:l){
-      System.out.println(s.toFullString());
+    List<Solar> l = Solar.fromBaZi("丙辰","丁酉","丙子","甲午");
+    List<String> actual = new ArrayList<String>();
+    for (Solar solar : l) {
+      actual.add(solar.toYmdHms());
     }
+
+    List<String> expected = new ArrayList<String>();
+    expected.add("1976-09-21 12:00:00");
+    expected.add("1916-10-06 12:00:00");
+    Assert.assertEquals(expected, actual);
   }
 
   @Test
   public void testBaZi2Solar1() {
     List<Solar> l = Solar.fromBaZi("壬寅","庚戌","己未","乙亥");
-    for(Solar s:l){
-      System.out.println(s.toFullString());
+    List<String> actual = new ArrayList<String>();
+    for (Solar solar : l) {
+      actual.add(solar.toYmdHms());
     }
+
+    List<String> expected = new ArrayList<String>();
+    expected.add("2022-11-02 22:00:00");
+    Assert.assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testBaZi2Solar2() {
+    List<Solar> l = Solar.fromBaZi("己卯","辛未","甲戌","壬申");
+    List<String> actual = new ArrayList<String>();
+    for (Solar solar : l) {
+      actual.add(solar.toYmdHms());
+    }
+
+    List<String> expected = new ArrayList<String>();
+    expected.add("1999-07-21 16:00:00");
+    expected.add("1939-08-05 16:00:00");
+    Assert.assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testBaZi2Solar3() {
+    List<Solar> l = Solar.fromBaZi("庚子","戊子","己卯","庚午");
+    List<String> actual = new ArrayList<String>();
+    for (Solar solar : l) {
+      actual.add(solar.toYmdHms());
+    }
+
+    List<String> expected = new ArrayList<String>();
+    expected.add("1960-12-17 12:00:00");
+    expected.add("1901-01-01 12:00:00");
+    Assert.assertEquals(expected, actual);
+  }
+
+  @Test
+  public void testBaZi2Solar4() {
+    List<Solar> l = Solar.fromBaZi("庚子","癸未","乙丑","丁亥");
+    List<String> actual = new ArrayList<String>();
+    for (Solar solar : l) {
+      actual.add(solar.toYmdHms());
+    }
+
+    List<String> expected = new ArrayList<String>();
+    expected.add("2020-07-21 22:00:00");
+    expected.add("1960-08-05 22:00:00");
+    Assert.assertEquals(expected, actual);
   }
 
   @Test

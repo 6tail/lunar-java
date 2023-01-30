@@ -79,4 +79,70 @@ public class SolarTest {
     Assert.assertEquals("全国中小学生安全教育日",solar.getFestivals().get(0));
   }
 
+  @Test
+  public void test12(){
+    Solar solar = new Solar(2022, 1, 1);
+    Assert.assertEquals("2022-01-02", solar.next(1).toYmd());
+  }
+
+  @Test
+  public void test13(){
+    Solar solar = new Solar(2022, 1, 31);
+    Assert.assertEquals("2022-02-01", solar.next(1).toYmd());
+  }
+
+  @Test
+  public void test14(){
+    Solar solar = new Solar(2022, 1, 1);
+    Assert.assertEquals("2023-01-01", solar.next(365).toYmd());
+  }
+
+  @Test
+  public void test15(){
+    Solar solar = new Solar(2023, 1, 1);
+    Assert.assertEquals("2022-01-01", solar.next(-365).toYmd());
+  }
+
+  @Test
+  public void test16(){
+    Solar solar = new Solar(1582, 10, 4);
+    Assert.assertEquals("1582-10-15", solar.next(1).toYmd());
+  }
+
+  @Test
+  public void test17(){
+    Solar solar = new Solar(1582, 10, 4);
+    Assert.assertEquals("1582-11-01", solar.next(18).toYmd());
+  }
+
+  @Test
+  public void test18(){
+    Solar solar = new Solar(1582, 11, 1);
+    Assert.assertEquals("1582-10-04", solar.next(-18).toYmd());
+  }
+
+  @Test
+  public void test19(){
+    Solar solar = new Solar(1582, 11, 1);
+    Assert.assertEquals("1582-10-15", solar.next(-17).toYmd());
+  }
+
+  @Test
+  public void test20(){
+    int days = SolarUtil.getDaysBetween(1582, 10, 4, 1582, 10, 15);
+    Assert.assertEquals(1, days);
+  }
+
+  @Test
+  public void test21(){
+    int days = SolarUtil.getDaysBetween(1582, 10, 4, 1582, 11, 1);
+    Assert.assertEquals(18, days);
+  }
+
+  @Test
+  public void test22(){
+    int days = SolarUtil.getDaysBetween(1582, 1, 1, 1583, 1, 1);
+    Assert.assertEquals(355, days);
+  }
+
 }

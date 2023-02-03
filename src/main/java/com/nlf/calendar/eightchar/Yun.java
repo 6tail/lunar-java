@@ -1,9 +1,10 @@
 package com.nlf.calendar.eightchar;
 
-import com.nlf.calendar.*;
+import com.nlf.calendar.EightChar;
+import com.nlf.calendar.JieQi;
+import com.nlf.calendar.Lunar;
+import com.nlf.calendar.Solar;
 import com.nlf.calendar.util.LunarUtil;
-
-import java.util.Calendar;
 
 /**
  * 运
@@ -89,7 +90,7 @@ public class Yun {
     int hour = 0;
 
     if (2 == sect) {
-      long minutes = (end.getCalendar().getTimeInMillis() - start.getCalendar().getTimeInMillis()) / 60000;
+      long minutes = end.subtractMinute(start);
       long y = minutes / 4320;
       minutes -= y * 4320;
       long m = minutes / 360;
@@ -107,7 +108,7 @@ public class Yun {
       // 时辰差
       int hourDiff = endTimeZhiIndex - startTimeZhiIndex;
       // 天数差
-      int dayDiff = ExactDate.getDaysBetween(start.getYear(), start.getMonth(), start.getDay(), end.getYear(), end.getMonth(), end.getDay());
+      int dayDiff = end.subtract(start);
       if (hourDiff < 0) {
         hourDiff += 12;
         dayDiff--;
@@ -188,13 +189,11 @@ public class Yun {
    * @return 阳历日期
    */
   public Solar getStartSolar() {
-    Solar birth = lunar.getSolar();
-    Calendar c = ExactDate.fromYmdHms(birth.getYear(), birth.getMonth(), birth.getDay(), birth.getHour(), birth.getMinute(), birth.getSecond());
-    c.add(Calendar.YEAR, startYear);
-    c.add(Calendar.MONTH, startMonth);
-    c.add(Calendar.DATE, startDay);
-    c.add(Calendar.HOUR, startHour);
-    return Solar.fromCalendar(c);
+    Solar solar = lunar.getSolar();
+    solar = solar.nextYear(startYear);
+    solar = solar.nextMonth(startMonth);
+    solar = solar.next(startDay);
+    return solar.nextHour(startHour);
   }
 
   /**

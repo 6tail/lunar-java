@@ -1,6 +1,6 @@
 package com.nlf.calendar.util;
 
-import com.nlf.calendar.ExactDate;
+import com.nlf.calendar.Solar;
 
 import java.util.*;
 
@@ -217,9 +217,7 @@ public class SolarUtil {
    * @return 周数
    */
   public static int getWeeksOfMonth(int year, int month, int start) {
-    int days = getDaysOfMonth(year, month);
-    int week = ExactDate.fromYmd(year, month, 1).get(Calendar.DAY_OF_WEEK) - 1;
-    return (int) Math.ceil((days + week - start) * 1D / WEEK.length);
+    return (int) Math.ceil((getDaysOfMonth(year, month) + Solar.fromYmd(year, month, 1).getWeek() - start) * 1D / WEEK.length);
   }
 
   /**
@@ -257,28 +255,4 @@ public class SolarUtil {
     return n;
   }
 
-  public static int getWeek(int y, int m, int d) {
-    if (1582 == y && 10 == m) {
-      if (d > 4 && d < 15) {
-        throw new IllegalArgumentException(String.format("wrong solar year %d month %d day %d", y, m, d));
-      }
-    }
-    Calendar start = ExactDate.fromYmd(1582, 10, 15);
-    Calendar current = ExactDate.fromYmd(y, m, d);
-    // 蔡勒公式
-    if (m < 3) {
-      m += 12;
-      y--;
-    }
-    int c = y/100;
-    y = y - c * 100;
-    int w;
-    int x = y + y / 4 + c / 4 - 2 * c;
-    if (current.before(start)) {
-      w = (x + (13*(m+1))/5 + d + 2) % 7;
-    } else {
-      w = (x + (26*(m+1))/10 + d - 1) % 7;
-    }
-    return (w + 7) % 7;
-  }
 }

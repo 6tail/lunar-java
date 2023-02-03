@@ -33,14 +33,15 @@ public class SolarMonth {
    * 通过日期初始化
    */
   public SolarMonth(Date date) {
-    Calendar c = ExactDate.fromDate(date);
-    year = c.get(Calendar.YEAR);
-    month = c.get(Calendar.MONTH) + 1;
+    Solar solar = Solar.fromDate(date);
+    year = solar.getYear();
+    month = solar.getMonth();
   }
 
   /**
    * 通过日历初始化
    */
+  @Deprecated
   public SolarMonth(Calendar calendar) {
     year = calendar.get(Calendar.YEAR);
     month = calendar.get(Calendar.MONTH) + 1;
@@ -73,6 +74,7 @@ public class SolarMonth {
    * @param calendar 日历
    * @return 阳历月
    */
+  @Deprecated
   public static SolarMonth fromCalendar(Calendar calendar) {
     return new SolarMonth(calendar);
   }
@@ -148,9 +150,18 @@ public class SolarMonth {
    * @return 阳历月
    */
   public SolarMonth next(int months) {
-    Calendar c = ExactDate.fromYmd(year, month, 1);
-    c.add(Calendar.MONTH, months);
-    return new SolarMonth(c);
+    int n = months < 0 ? -1 : 1;
+    int m = Math.abs(months);
+    int y = year + m / 12 * n;
+    m = month + m % 12 * n;
+    if (m > 12) {
+      m -= 12;
+      y++;
+    } else if (m < 1) {
+      m += 12;
+      y--;
+    }
+    return new SolarMonth(y, m);
   }
 
   @Override

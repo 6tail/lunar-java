@@ -1,9 +1,6 @@
 package com.nlf.calendar;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import com.nlf.calendar.util.HolidayUtil;
 import com.nlf.calendar.util.LunarUtil;
@@ -15,6 +12,11 @@ import com.nlf.calendar.util.SolarUtil;
  * @author 6tail
  */
 public class Solar {
+  /**
+   * 时区
+   */
+  public static final TimeZone TIME_ZONE = TimeZone.getTimeZone("GMT+8");
+
   /**
    * 2000年儒略日数(2000-1-1 12:00:00 UTC)
    */
@@ -51,11 +53,6 @@ public class Solar {
   private final int second;
 
   /**
-   * 日历
-   */
-  private final Calendar calendar;
-
-  /**
    * 默认使用当前日期初始化
    */
   public Solar() {
@@ -84,7 +81,20 @@ public class Solar {
    * @param second 秒钟，0到59
    */
   public Solar(int year, int month, int day, int hour, int minute, int second) {
-    calendar = ExactDate.fromYmdHms(year, month, day, hour, minute, second);
+    if (1582 == year && 10 == month) {
+      if (day > 4 && day < 15) {
+        throw new IllegalArgumentException(String.format("wrong solar year %d month %d day %d", year, month, day));
+      }
+    }
+    if (hour < 0 || hour > 23) {
+      throw new IllegalArgumentException(String.format("wrong hour %d", hour));
+    }
+    if (minute < 0 || minute > 59) {
+      throw new IllegalArgumentException(String.format("wrong minute %d", minute));
+    }
+    if (second < 0 || second > 59) {
+      throw new IllegalArgumentException(String.format("wrong second %d", second));
+    }
     this.year = year;
     this.month = month;
     this.day = day;
@@ -99,13 +109,15 @@ public class Solar {
    * @param date 日期
    */
   public Solar(Date date) {
-    calendar = ExactDate.fromDate(date);
-    year = calendar.get(Calendar.YEAR);
-    month = calendar.get(Calendar.MONTH) + 1;
-    day = calendar.get(Calendar.DATE);
-    hour = calendar.get(Calendar.HOUR_OF_DAY);
-    minute = calendar.get(Calendar.MINUTE);
-    second = calendar.get(Calendar.SECOND);
+    Calendar c = Calendar.getInstance(TIME_ZONE);
+    c.setTime(date);
+    c.set(Calendar.MILLISECOND, 0);
+    year = c.get(Calendar.YEAR);
+    month = c.get(Calendar.MONTH) + 1;
+    day = c.get(Calendar.DATE);
+    hour = c.get(Calendar.HOUR_OF_DAY);
+    minute = c.get(Calendar.MINUTE);
+    second = c.get(Calendar.SECOND);
   }
 
   /**
@@ -115,7 +127,6 @@ public class Solar {
    */
   public Solar(Calendar calendar) {
     calendar.set(Calendar.MILLISECOND, 0);
-    this.calendar = calendar;
     year = calendar.get(Calendar.YEAR);
     month = calendar.get(Calendar.MONTH) + 1;
     day = calendar.get(Calendar.DATE);
@@ -169,8 +180,6 @@ public class Solar {
       minute -= 60;
       hour++;
     }
-
-    calendar = ExactDate.fromYmdHms(year, month, day, hour, minute, second);
     this.year = year;
     this.month = month;
     this.day = day;
@@ -295,9 +304,9 @@ public class Solar {
         hour = (i - 1) * 2;
       }
     }
-    for (Integer integer : years) {
+    for (Integer y : years) {
       inner: for (int x = 0; x < 3; x++) {
-        int year = integer + x;
+        int year = y + x;
         Solar solar = fromYmdHms(year, 1, 1, hour, 0, 0);
         while (solar.getYear() == year) {
           Lunar lunar = solar.getLunar();
@@ -328,7 +337,26 @@ public class Solar {
    * @return 0123456
    */
   public int getWeek() {
-    return calendar.get(Calendar.DAY_OF_WEEK) - 1;
+    Solar start = fromYmd(1582, 10, 15);
+    int y = year;
+    int m = month;
+    int d = day;
+    Solar current = fromYmd(y, m, d);
+    // 蔡勒公式
+    if (m < 3) {
+      m += 12;
+      y--;
+    }
+    int c = y / 100;
+    y = y - c * 100;
+    int x = y + y / 4 + c / 4 - 2 * c;
+    int w;
+    if (current.isBefore(start)) {
+      w = (x + 13 * (m + 1) / 5 + d + 2) % 7;
+    } else {
+      w = (x + 26 * (m + 1) / 10 + d - 1) % 7;
+    }
+    return (w + 7) % 7;
   }
 
   /**
@@ -487,7 +515,7 @@ public class Solar {
    * @return 农历
    */
   public Lunar getLunar() {
-    return new Lunar(calendar.getTime());
+    return new Lunar(this);
   }
 
   /**
@@ -510,15 +538,6 @@ public class Solar {
       n = 2 - n + (int) (n * 1D / 4);
     }
     return (int) (365.25 * (y + 4716)) + (int) (30.6001 * (m + 1)) + d + n - 1524.5;
-  }
-
-  /**
-   * 获取日历
-   *
-   * @return 日历
-   */
-  public Calendar getCalendar() {
-    return calendar;
   }
 
   @Override
@@ -561,13 +580,195 @@ public class Solar {
   }
 
   /**
+   * 阳历日期相减，获得相差天数
+   * @param solar 阳历
+   * @return 天数
+   */
+  public int subtract(Solar solar) {
+    return SolarUtil.getDaysBetween(solar.getYear(), solar.getMonth(), solar.getDay(), year, month, day);
+  }
+
+  /**
+   * 阳历日期相减，获得相差分钟数
+   * @param solar 阳历
+   * @return 分钟数
+   */
+  public int subtractMinute(Solar solar) {
+    int days = subtract(solar);
+    int cm = hour * 60 + minute;
+    int sm = solar.getHour() * 60 + solar.getMinute();
+    int m = cm - sm;
+    if (m < 0) {
+      m += 1440;
+      days--;
+    }
+    m += days * 1440;
+    return m;
+  }
+
+  /**
+   * 是否在指定日期之后
+   * @param solar 阳历
+   * @return true/false
+   */
+  public boolean isAfter(Solar solar) {
+    if (year > solar.getYear()) {
+      return true;
+    } else if (year < solar.getYear()) {
+      return false;
+    }
+    if (month > solar.getMonth()) {
+      return true;
+    } else if (month < solar.getMonth()) {
+      return false;
+    }
+    if (day > solar.getDay()) {
+      return true;
+    } else if (day < solar.getDay()) {
+      return false;
+    }
+    if (hour > solar.getHour()) {
+      return true;
+    } else if (hour < solar.getHour()) {
+      return false;
+    }
+    if (minute > solar.getMinute()) {
+      return true;
+    } else if (minute < solar.getMinute()) {
+      return false;
+    }
+    return second > solar.second;
+  }
+
+  /**
+   * 是否在指定日期之前
+   * @param solar 阳历
+   * @return true/false
+   */
+  public boolean isBefore(Solar solar) {
+    if (year > solar.getYear()) {
+      return false;
+    } else if (year < solar.getYear()) {
+      return true;
+    }
+    if (month > solar.getMonth()) {
+      return false;
+    } else if (month < solar.getMonth()) {
+      return true;
+    }
+    if (day > solar.getDay()) {
+      return false;
+    } else if (day < solar.getDay()) {
+      return true;
+    }
+    if (hour > solar.getHour()) {
+      return false;
+    } else if (hour < solar.getHour()) {
+      return true;
+    }
+    if (minute > solar.getMinute()) {
+      return false;
+    } else if (minute < solar.getMinute()) {
+      return true;
+    }
+    return second < solar.second;
+  }
+
+  /**
+   * 年推移
+   * @param years 年数
+   * @return 阳历
+   */
+  public Solar nextYear(int years) {
+    int y = year + years;
+    int m = month;
+    int d = day;
+    // 2月处理
+    if (2 == m) {
+      if (d > 28) {
+        if (!SolarUtil.isLeapYear(y)) {
+          d -= 28;
+          m++;
+        }
+      }
+    }
+    if (1582 == y && 10 == m) {
+      if (d > 4 && d < 15) {
+        d += 10;
+      }
+    }
+    return fromYmdHms(y, m, d, hour, minute, second);
+  }
+
+  /**
+   * 月推移
+   * @param months 月数
+   * @return 阳历
+   */
+  public Solar nextMonth(int months) {
+    SolarMonth month = SolarMonth.fromYm(year, this.month);
+    month = month.next(months);
+    int y = month.getYear();
+    int m = month.getMonth();
+    int d = day;
+    // 2月处理
+    if (2 == m) {
+      if (d > 28) {
+        if (!SolarUtil.isLeapYear(y)) {
+          d -= 28;
+          m++;
+        }
+      }
+    }
+    if (1582 == y && 10 == m) {
+      if (d > 4 && d < 15) {
+        d += 10;
+      }
+    }
+    return fromYmdHms(y, m, d, hour, minute, second);
+  }
+
+  /**
    * 获取往后推几天的阳历日期，如果要往前推，则天数用负数
    *
    * @param days 天数
    * @return 阳历日期
    */
   public Solar next(int days) {
-    return next(days, false);
+    int y = year;
+    int m = month;
+    int d = day;
+    if (days > 0) {
+      d = day + days;
+      int daysInMonth = SolarUtil.getDaysOfMonth(y, m);
+      while (d > daysInMonth) {
+        d -= daysInMonth;
+        m++;
+        if (m > 12) {
+          m -= 12;
+          y++;
+        }
+        daysInMonth = SolarUtil.getDaysOfMonth(y, m);
+      }
+    } else if (days < 0) {
+      int rest = -days;
+      while (d <= rest) {
+        rest -= d;
+        m--;
+        if (m < 1) {
+          m = 12;
+          y--;
+        }
+        d = SolarUtil.getDaysOfMonth(y, m);
+      }
+      d -= rest;
+    }
+    if (1582 == y && 10 == m) {
+      if (d > 4 && d < 15) {
+        d += 10;
+      }
+    }
+    return fromYmdHms(y, m, d, hour, minute, second);
   }
 
   /**
@@ -578,32 +779,50 @@ public class Solar {
    * @return 阳历日期
    */
   public Solar next(int days, boolean onlyWorkday) {
-    Calendar c = ExactDate.fromYmdHms(year, month, day, hour, minute, second);
-    if (0 != days) {
-      if (!onlyWorkday) {
-        c.add(Calendar.DATE, days);
-      } else {
-        int rest = Math.abs(days);
-        int add = days < 1 ? -1 : 1;
-        while (rest > 0) {
-          c.add(Calendar.DATE, add);
-          boolean work = true;
-          Holiday holiday = HolidayUtil.getHoliday(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH));
-          if (null == holiday) {
-            int week = c.get(Calendar.DAY_OF_WEEK);
-            if (1 == week || 7 == week) {
-              work = false;
-            }
-          } else {
-            work = holiday.isWork();
+    if(!onlyWorkday) {
+      return next(days);
+    }
+    Solar solar = fromYmdHms(year, month, day, hour, minute, second);
+    if (days != 0) {
+      int rest = Math.abs(days);
+      int add = days < 1 ? -1 : 1;
+      while (rest > 0) {
+        solar = solar.next(add);
+        boolean work = true;
+        Holiday holiday = HolidayUtil.getHoliday(solar.getYear(), solar.getMonth(), solar.getDay());
+        if (null == holiday) {
+          int week = solar.getWeek();
+          if (0 == week || 6 == week) {
+            work = false;
           }
-          if (work) {
-            rest--;
-          }
+        } else {
+          work = holiday.isWork();
+        }
+        if (work) {
+          rest -= 1;
         }
       }
     }
-    return new Solar(c);
+    return solar;
+  }
+
+  /**
+   * 小时推移
+   * @param hours 小时数
+   * @return 阳历
+   */
+  public Solar nextHour(int hours) {
+    int h = hour + hours;
+    int n = h < 0 ? -1 : 1;
+    int hour = Math.abs(h);
+    int days = hour / 24 * n;
+    hour = (hour % 24) * n;
+    if (hour < 0) {
+      hour += 24;
+      days--;
+    }
+    Solar solar = next(days);
+    return fromYmdHms(solar.getYear(), solar.getMonth(), solar.getDay(), hour, solar.getMinute(), solar.getSecond());
   }
 
 }

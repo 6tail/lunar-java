@@ -48,10 +48,10 @@ public class SolarWeek {
    * @param start 星期几作为一周的开始，1234560分别代表星期一至星期天
    */
   public SolarWeek(Date date, int start) {
-    Calendar c = ExactDate.fromDate(date);
-    year = c.get(Calendar.YEAR);
-    month = c.get(Calendar.MONTH) + 1;
-    day = c.get(Calendar.DATE);
+    Solar solar = Solar.fromDate(date);
+    year = solar.getYear();
+    month = solar.getMonth();
+    day = solar.getDay();
     this.start = start;
   }
 
@@ -60,6 +60,7 @@ public class SolarWeek {
    *
    * @param start 星期几作为一周的开始，1234560分别代表星期一至星期天
    */
+  @Deprecated
   public SolarWeek(Calendar calendar, int start) {
     year = calendar.get(Calendar.YEAR);
     month = calendar.get(Calendar.MONTH) + 1;
@@ -100,6 +101,7 @@ public class SolarWeek {
    * @param start    星期几作为一周的开始，1234560分别代表星期一至星期天
    * @return 阳历周
    */
+  @Deprecated
   public static SolarWeek fromCalendar(Calendar calendar, int start) {
     return new SolarWeek(calendar, start);
   }
@@ -159,9 +161,7 @@ public class SolarWeek {
    * @return 周序号，从1开始
    */
   public int getIndex() {
-    Calendar c = ExactDate.fromYmd(year, month, 1);
-    int firstDayWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
-    int offset = firstDayWeek - start;
+    int offset = Solar.fromYmd(year, month, 1).getWeek() - start;
     if(offset < 0) {
       offset += 7;
     }
@@ -174,9 +174,7 @@ public class SolarWeek {
    * @return 周序号，从1开始
    */
   public int getIndexInYear() {
-    Calendar c = ExactDate.fromYmd(year, 1, 1);
-    int firstDayWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
-    int offset = firstDayWeek - start;
+    int offset = Solar.fromYmd(year, 1, 1).getWeek() - start;
     if(offset < 0) {
       offset += 7;
     }
@@ -194,15 +192,15 @@ public class SolarWeek {
     if (0 == weeks) {
       return new SolarWeek(year, month, day, start);
     }
+    Solar solar  = Solar.fromYmd(year, month, day);
     if (separateMonth) {
       int n = weeks;
-      Calendar c = ExactDate.fromYmd(year, month, day);
-      SolarWeek week = new SolarWeek(c, start);
+      SolarWeek week = new SolarWeek(solar.getYear(), solar.getMonth(), solar.getDay(), start);
       int month = this.month;
       boolean plus = n > 0;
       while (0 != n) {
-        c.add(Calendar.DATE, plus ? 7 : -7);
-        week = new SolarWeek(c, start);
+        solar = solar.next(plus ? 7 : -7);
+        week = new SolarWeek(solar.getYear(), solar.getMonth(), solar.getDay(), start);
         int weekMonth = week.getMonth();
         if (month != weekMonth) {
           int index = week.getIndex();
@@ -212,8 +210,8 @@ public class SolarWeek {
               week = new SolarWeek(firstDay.getYear(), firstDay.getMonth(), firstDay.getDay(), start);
               weekMonth = week.getMonth();
             } else {
-              c = ExactDate.fromYmd(week.getYear(), week.getMonth(), 1);
-              week = new SolarWeek(c, start);
+              solar = Solar.fromYmd(week.getYear(), week.getMonth(), 1);
+              week = new SolarWeek(solar.getYear(), solar.getMonth(), solar.getDay(), start);
             }
           } else {
             int size = SolarUtil.getWeeksOfMonth(week.getYear(), week.getMonth(), start);
@@ -223,8 +221,8 @@ public class SolarWeek {
               week = new SolarWeek(lastDay.getYear(), lastDay.getMonth(), lastDay.getDay(), start);
               weekMonth = week.getMonth();
             } else {
-              c = ExactDate.fromYmd(week.getYear(), week.getMonth(), SolarUtil.getDaysOfMonth(week.getYear(), week.getMonth()));
-              week = new SolarWeek(c, start);
+              solar = Solar.fromYmd(week.getYear(), week.getMonth(), SolarUtil.getDaysOfMonth(week.getYear(), week.getMonth()));
+              week = new SolarWeek(solar.getYear(), solar.getMonth(), solar.getDay(), start);
             }
           }
           month = weekMonth;
@@ -233,9 +231,8 @@ public class SolarWeek {
       }
       return week;
     } else {
-      Calendar c = ExactDate.fromYmd(year, month, day);
-      c.add(Calendar.DATE, weeks * 7);
-      return new SolarWeek(c, start);
+      solar = solar.next(weeks * 7);
+      return new SolarWeek(solar.getYear(), solar.getMonth(), solar.getDay(), start);
     }
   }
 
@@ -245,14 +242,12 @@ public class SolarWeek {
    * @return 本周第一天的阳历日期
    */
   public Solar getFirstDay() {
-    Calendar c = ExactDate.fromYmd(year, month, day);
-    int week = c.get(Calendar.DAY_OF_WEEK) - 1;
-    int prev = week - start;
+    Solar solar = Solar.fromYmd(year, month, day);
+    int prev = solar.getWeek() - start;
     if (prev < 0) {
       prev += 7;
     }
-    c.add(Calendar.DATE, -prev);
-    return new Solar(c);
+    return solar.next(-prev);
   }
 
   /**

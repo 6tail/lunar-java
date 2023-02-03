@@ -32,13 +32,13 @@ public class SolarYear {
    * 通过日期初始化
    */
   public SolarYear(Date date) {
-    Calendar c = ExactDate.fromDate(date);
-    year = c.get(Calendar.YEAR);
+    year = Solar.fromDate(date).getYear();
   }
 
   /**
    * 通过日历初始化
    */
+  @Deprecated
   public SolarYear(Calendar calendar) {
     year = calendar.get(Calendar.YEAR);
   }
@@ -68,6 +68,7 @@ public class SolarYear {
    * @param calendar 日历
    * @return 阳历年
    */
+  @Deprecated
   public static SolarYear fromCalendar(Calendar calendar) {
     return new SolarYear(calendar);
   }
@@ -113,9 +114,7 @@ public class SolarYear {
    * @return 阳历年
    */
   public SolarYear next(int years) {
-    Calendar c = ExactDate.fromYmd(year, 1, 1);
-    c.add(Calendar.YEAR, years);
-    return new SolarYear(c);
+    return new SolarYear(year + years);
   }
 
   @Override

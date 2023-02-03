@@ -36,14 +36,15 @@ public class SolarHalfYear {
    * 通过日期初始化
    */
   public SolarHalfYear(Date date) {
-    Calendar c = ExactDate.fromDate(date);
-    year = c.get(Calendar.YEAR);
-    month = c.get(Calendar.MONTH) + 1;
+    Solar solar = Solar.fromDate(date);
+    year = solar.getYear();
+    month = solar.getMonth();
   }
 
   /**
    * 通过日历初始化
    */
+  @Deprecated
   public SolarHalfYear(Calendar calendar) {
     year = calendar.get(Calendar.YEAR);
     month = calendar.get(Calendar.MONTH) + 1;
@@ -76,6 +77,7 @@ public class SolarHalfYear {
    * @param calendar 日历
    * @return 阳历半年
    */
+  @Deprecated
   public static SolarHalfYear fromCalendar(Calendar calendar) {
     return new SolarHalfYear(calendar);
   }
@@ -125,12 +127,8 @@ public class SolarHalfYear {
    * @return 推移后的半年
    */
   public SolarHalfYear next(int halfYears) {
-    if (0 == halfYears) {
-      return new SolarHalfYear(year, month);
-    }
-    Calendar c = ExactDate.fromYmd(year, month, 1);
-    c.add(Calendar.MONTH, MONTH_COUNT * halfYears);
-    return new SolarHalfYear(c);
+    SolarMonth m = SolarMonth.fromYm(year, month).next(MONTH_COUNT * halfYears);
+    return new SolarHalfYear(m.getYear(), m.getMonth());
   }
 
   /**

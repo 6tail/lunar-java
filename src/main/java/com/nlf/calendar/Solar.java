@@ -293,9 +293,13 @@ public class Solar {
       offsetYear += 60;
     }
     int startYear = today.getYear() - offsetYear - 1;
-    while (startYear >= baseYear) {
+    while (true) {
       years.add(startYear);
       startYear -= 60;
+      if (startYear < baseYear) {
+        years.add(baseYear);
+        break;
+      }
     }
     int hour = 0;
     String timeZhi = timeGanZhi.substring(1);

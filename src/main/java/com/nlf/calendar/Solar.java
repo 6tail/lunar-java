@@ -86,8 +86,11 @@ public class Solar {
         throw new IllegalArgumentException(String.format("wrong solar year %d month %d day %d", year, month, day));
       }
     }
-    if (hour < 0 || hour > 23) {
-      throw new IllegalArgumentException(String.format("wrong hour %d", hour));
+    if (month < 1 || month > 12) {
+      throw new IllegalArgumentException(String.format("wrong month %d", month));
+    }
+    if (day < 1 || day > 31) {
+      throw new IllegalArgumentException(String.format("wrong day %d", day));
     }
     if (minute < 0 || minute > 59) {
       throw new IllegalArgumentException(String.format("wrong minute %d", minute));
@@ -618,30 +621,35 @@ public class Solar {
   public boolean isAfter(Solar solar) {
     if (year > solar.getYear()) {
       return true;
-    } else if (year < solar.getYear()) {
+    }
+    if (year < solar.getYear()) {
       return false;
     }
     if (month > solar.getMonth()) {
       return true;
-    } else if (month < solar.getMonth()) {
+    }
+    if (month < solar.getMonth()) {
       return false;
     }
     if (day > solar.getDay()) {
       return true;
-    } else if (day < solar.getDay()) {
+    }
+    if (day < solar.getDay()) {
       return false;
     }
     if (hour > solar.getHour()) {
       return true;
-    } else if (hour < solar.getHour()) {
+    }
+    if (hour < solar.getHour()) {
       return false;
     }
     if (minute > solar.getMinute()) {
       return true;
-    } else if (minute < solar.getMinute()) {
+    }
+    if (minute < solar.getMinute()) {
       return false;
     }
-    return second > solar.second;
+    return second > solar.getSecond();
   }
 
   /**
@@ -652,30 +660,35 @@ public class Solar {
   public boolean isBefore(Solar solar) {
     if (year > solar.getYear()) {
       return false;
-    } else if (year < solar.getYear()) {
+    }
+    if (year < solar.getYear()) {
       return true;
     }
     if (month > solar.getMonth()) {
       return false;
-    } else if (month < solar.getMonth()) {
+    }
+    if (month < solar.getMonth()) {
       return true;
     }
     if (day > solar.getDay()) {
       return false;
-    } else if (day < solar.getDay()) {
+    }
+    if (day < solar.getDay()) {
       return true;
     }
     if (hour > solar.getHour()) {
       return false;
-    } else if (hour < solar.getHour()) {
+    }
+    if (hour < solar.getHour()) {
       return true;
     }
     if (minute > solar.getMinute()) {
       return false;
-    } else if (minute < solar.getMinute()) {
+    }
+    if (minute < solar.getMinute()) {
       return true;
     }
-    return second < solar.second;
+    return second < solar.getSecond();
   }
 
   /**
@@ -691,8 +704,7 @@ public class Solar {
     if (2 == m) {
       if (d > 28) {
         if (!SolarUtil.isLeapYear(y)) {
-          d -= 28;
-          m++;
+          d = 28;
         }
       }
     }
@@ -719,8 +731,7 @@ public class Solar {
     if (2 == m) {
       if (d > 28) {
         if (!SolarUtil.isLeapYear(y)) {
-          d -= 28;
-          m++;
+          d = 28;
         }
       }
     }
@@ -742,33 +753,36 @@ public class Solar {
     int y = year;
     int m = month;
     int d = day;
+    if (1582 == y && 10 == m) {
+      if (d > 4) {
+        d -= 10;
+      }
+    }
     if (days > 0) {
-      d = day + days;
+      d += days;
       int daysInMonth = SolarUtil.getDaysOfMonth(y, m);
       while (d > daysInMonth) {
         d -= daysInMonth;
         m++;
         if (m > 12) {
-          m -= 12;
+          m = 1;
           y++;
         }
         daysInMonth = SolarUtil.getDaysOfMonth(y, m);
       }
     } else if (days < 0) {
-      int rest = -days;
-      while (d <= rest) {
-        rest -= d;
+      while (d + days <= 0) {
         m--;
         if (m < 1) {
           m = 12;
           y--;
         }
-        d = SolarUtil.getDaysOfMonth(y, m);
+        d += SolarUtil.getDaysOfMonth(y, m);
       }
-      d -= rest;
+      d += days;
     }
     if (1582 == y && 10 == m) {
-      if (d > 4 && d < 15) {
+      if (d > 4 ) {
         d += 10;
       }
     }

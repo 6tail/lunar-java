@@ -1,5 +1,6 @@
 package test;
 
+import com.nlf.calendar.Lunar;
 import com.nlf.calendar.Solar;
 import com.nlf.calendar.util.SolarUtil;
 import org.junit.Assert;
@@ -143,6 +144,31 @@ public class SolarTest {
   public void test22(){
     int days = SolarUtil.getDaysBetween(1582, 1, 1, 1583, 1, 1);
     Assert.assertEquals(355, days);
+  }
+
+  @Test
+  public void test23(){
+    Solar solar = Solar.fromYmd(1991, 5, 12);
+    Lunar lunar = solar.getLunar();
+    Assert.assertEquals("壬午", lunar.getDayInGanZhi());
+  }
+
+  @Test
+  public void test24(){
+    Solar solar = new Solar(1582, 10, 15);
+    Assert.assertEquals("1582-09-30", solar.next(-5).toYmd());
+  }
+
+  @Test
+  public void test25(){
+    Solar solar = new Solar(1582, 10, 15);
+    Assert.assertEquals("1582-10-04", solar.next(-1).toYmd());
+  }
+
+  @Test
+  public void test26(){
+    Solar solar = new Solar(1582, 10, 15);
+    Assert.assertEquals("1582-09-29", solar.next(-6).toYmd());
   }
 
 }

@@ -139,4 +139,34 @@ public class YearTest {
     Assert.assertEquals("八运",year.getYun());
   }
 
+  @Test
+  public void test18(){
+    LunarYear year = new LunarYear(2023);
+    Assert.assertEquals(384, year.getDayCount());
+  }
+
+  @Test
+  public void test19(){
+    LunarYear year = new LunarYear(1517);
+    Assert.assertEquals(384, year.getDayCount());
+  }
+
+  @Test
+  public void test20(){
+    LunarYear year = new LunarYear(1518);
+    Assert.assertEquals(355, year.getDayCount());
+  }
+
+  @Test
+  public void test21(){
+    LunarYear year = new LunarYear(2022);
+    Assert.assertEquals(355, year.getDayCount());
+  }
+
+  @Test
+  public void test22(){
+    LunarYear year = new LunarYear(2021);
+    Assert.assertEquals(354, year.getDayCount());
+  }
+
 }

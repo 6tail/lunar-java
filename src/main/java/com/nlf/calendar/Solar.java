@@ -92,6 +92,9 @@ public class Solar {
     if (day < 1 || day > 31) {
       throw new IllegalArgumentException(String.format("wrong day %d", day));
     }
+    if (hour < 0 || hour > 23) {
+      throw new IllegalArgumentException(String.format("wrong hour %d", hour));
+    }
     if (minute < 0 || minute > 59) {
       throw new IllegalArgumentException(String.format("wrong minute %d", minute));
     }
@@ -296,31 +299,37 @@ public class Solar {
       offsetYear += 60;
     }
     int startYear = today.getYear() - offsetYear - 1;
-    while (true) {
+    int minYear = baseYear - 2;
+    while (startYear >= minYear) {
       years.add(startYear);
       startYear -= 60;
-      if (startYear < baseYear) {
-        years.add(baseYear);
-        break;
-      }
     }
-    int hour = 0;
+    List<Integer> hours = new ArrayList<Integer>(2);
     String timeZhi = timeGanZhi.substring(1);
     for(int i = 0, j = LunarUtil.ZHI.length; i < j; i++){
       if(LunarUtil.ZHI[i].equals(timeZhi)){
-        hour = (i - 1) * 2;
+        hours.add((i - 1) * 2);
       }
     }
-    for (Integer y : years) {
-      inner: for (int x = 0; x < 3; x++) {
-        int year = y + x;
-        Solar solar = fromYmdHms(year, 1, 1, hour, 0, 0);
-        while (solar.getYear() == year) {
+    if ("子".equals(timeZhi)) {
+      hours.add(23);
+    }
+    for (int hour: hours) {
+      for (Integer y : years) {
+        int maxYear = y + 3;
+        int year = y;
+        int month = 11;
+        if (year < baseYear) {
+          year = baseYear;
+          month = 1;
+        }
+        Solar solar = fromYmdHms(year, month, 1, hour, 0, 0);
+        while (solar.getYear() <= maxYear) {
           Lunar lunar = solar.getLunar();
           String dgz = (2 == sect) ? lunar.getDayInGanZhiExact2() : lunar.getDayInGanZhiExact();
           if (lunar.getYearInGanZhiExact().equals(yearGanZhi) && lunar.getMonthInGanZhiExact().equals(monthGanZhi) && dgz.equals(dayGanZhi) && lunar.getTimeInGanZhi().equals(timeGanZhi)) {
             l.add(solar);
-            break inner;
+            break;
           }
           solar = solar.next(1);
         }
@@ -722,8 +731,7 @@ public class Solar {
    * @return 阳历
    */
   public Solar nextMonth(int months) {
-    SolarMonth month = SolarMonth.fromYm(year, this.month);
-    month = month.next(months);
+    SolarMonth month = SolarMonth.fromYm(year, this.month).next(months);
     int y = month.getYear();
     int m = month.getMonth();
     int d = day;
@@ -803,7 +811,7 @@ public class Solar {
     Solar solar = fromYmdHms(year, month, day, hour, minute, second);
     if (days != 0) {
       int rest = Math.abs(days);
-      int add = days < 1 ? -1 : 1;
+      int add = days < 0 ? -1 : 1;
       while (rest > 0) {
         solar = solar.next(add);
         boolean work = true;

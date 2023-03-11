@@ -90,12 +90,11 @@ public class HolidayUtil {
   private static List<Holiday> findHolidaysForward(String key){
     List<Holiday> l = new ArrayList<Holiday>();
     String s = findForward(key);
-    if(null==s) {
-      return l;
-    }
-    while(s.startsWith(key)){
-      l.add(buildHolidayForward(s));
-      s = s.substring(SIZE);
+    if(null!=s) {
+      while (s.startsWith(key)) {
+        l.add(buildHolidayForward(s));
+        s = s.substring(SIZE);
+      }
     }
     return l;
   }
@@ -103,14 +102,12 @@ public class HolidayUtil {
   private static List<Holiday> findHolidaysBackward(String key){
     List<Holiday> l = new ArrayList<Holiday>();
     String s = findBackward(key);
-    if(null==s) {
-      return l;
+    if(null!=s) {
+      while (s.endsWith(key)) {
+        l.add(0, buildHolidayBackward(s));
+        s = s.substring(0, s.length() - SIZE);
+      }
     }
-    while(s.endsWith(key)){
-      l.add(buildHolidayBackward(s));
-      s = s.substring(0,s.length()-SIZE);
-    }
-    Collections.reverse(l);
     return l;
   }
 

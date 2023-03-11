@@ -134,7 +134,9 @@ public class LunarYear {
     // 冬至前的初一
     double w = ShouXingUtil.calcShuo(jq[0]);
     if (w > jq[0]) {
-      w -= 29.5306;
+      if (currentYear != 41 && currentYear != 193 && currentYear != 288 && currentYear != 345 && currentYear != 918 && currentYear != 1013) {
+        w -= 29.5306;
+      }
     }
     // 递推每月初一
     for (int i = 0, j = hs.length; i < j; i++) {
@@ -145,39 +147,41 @@ public class LunarYear {
       dayCounts[i] = (int) (hs[i + 1] - hs[i]);
     }
 
-    Integer currentYearLeap = LEAP.get(currentYear);
-    if (null == currentYearLeap) {
-      currentYearLeap = -1;
-      if (hs[13] <= jq[24]) {
-        int i = 1;
-        while (hs[i + 1] > jq[2 * i] && i < 13) {
-          i++;
-        }
-        currentYearLeap = i;
-      }
-    }
-
     int prevYear = currentYear - 1;
-    Integer prevYearLeap = LEAP.get(prevYear);
-    prevYearLeap = null == prevYearLeap ? -1 : prevYearLeap - 12;
+
+    int leapYear = -1;
+    int leapIndex = -1;
+
+    Integer leap = LEAP.get(currentYear);
+    if (null == leap) {
+      leap = LEAP.get(prevYear);
+      if (null == leap) {
+        if (hs[13] <= jq[24]) {
+          int i = 1;
+          while (hs[i + 1] > jq[2 * i] && i < 13) {
+            i++;
+          }
+          leapYear = currentYear;
+          leapIndex = i;
+        }
+      } else {
+        leapYear = prevYear;
+        leapIndex = leap - 12;
+      }
+    } else {
+      leapYear = currentYear;
+      leapIndex = leap;
+    }
 
     int y = prevYear;
     int m = 11;
     for (int i = 0, j = dayCounts.length; i < j; i++) {
       int cm = m;
-      boolean isNextLeap = false;
-      if (y == currentYear && i == currentYearLeap) {
+      if (y == leapYear && i == leapIndex) {
         cm = -cm;
-      } else if (y == prevYear && i == prevYearLeap) {
-        cm = -cm;
-      }
-      if (y == currentYear && i + 1 == currentYearLeap) {
-        isNextLeap = true;
-      } else if (y == prevYear && i + 1 == prevYearLeap) {
-        isNextLeap = true;
       }
       this.months.add(new LunarMonth(y, cm, dayCounts[i], hs[i] + Solar.J2000));
-      if (!isNextLeap) {
+      if (y != leapYear || i + 1 != leapIndex) {
         m++;
       }
       if (m == 13) {
@@ -194,6 +198,35 @@ public class LunarYear {
    */
   public int getYear() {
     return year;
+  }
+
+  /**
+   * 获取总天数
+   * @return 天数
+   */
+  public int getDayCount() {
+    int n = 0;
+    for (LunarMonth m : months) {
+      if (m.getYear() == year) {
+        n += m.getDayCount();
+      }
+    }
+    return n;
+  }
+
+  /**
+   * 获取当年的农历月们
+   *
+   * @return 农历月们
+   */
+  public List<LunarMonth> getMonthsInYear() {
+    List<LunarMonth> l = new ArrayList<LunarMonth>();
+    for (LunarMonth m : months) {
+      if (m.getYear() == year) {
+        l.add(m);
+      }
+    }
+    return l;
   }
 
   /**

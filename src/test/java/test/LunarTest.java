@@ -459,4 +459,172 @@ public class LunarTest {
     Assert.assertEquals("1582-10-15", lunar.getSolar().toString());
   }
 
+  @Test
+  public void test64() {
+    Lunar lunar = Lunar.fromYmd(1518, 1, 1);
+    Assert.assertEquals("1518-02-10", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test65() {
+    Lunar lunar = Lunar.fromYmd(793, 1, 1);
+    Assert.assertEquals("0793-02-15", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test66() {
+    Lunar lunar = Lunar.fromYmd(2025, -6, 1);
+    Assert.assertEquals("2025-07-25", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test67() {
+    Lunar lunar = Lunar.fromYmd(2025, 6, 1);
+    Assert.assertEquals("2025-06-25", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test68() {
+    Lunar lunar = Lunar.fromYmd(193, 1, 1);
+    Assert.assertEquals("0193-02-19", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test69() {
+    Lunar lunar = Lunar.fromYmd(288, 1, 1);
+    Assert.assertEquals("0288-02-19", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test70() {
+    Lunar lunar = Lunar.fromYmd(755, 1, 1);
+    Assert.assertEquals("0755-02-16", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test71() {
+    Lunar lunar = Lunar.fromYmd(41, 1, 1);
+    Assert.assertEquals("0041-02-20", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test72() {
+    Lunar lunar = Lunar.fromYmd(57, 1, 1);
+    Assert.assertEquals("0057-02-23", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test73() {
+    Lunar lunar = Lunar.fromYmd(345, 1, 1);
+    Assert.assertEquals("0345-02-18", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test74() {
+    Lunar lunar = Lunar.fromYmd(459, 1, 1);
+    Assert.assertEquals("0459-02-18", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test75() {
+    Lunar lunar = Lunar.fromYmd(497, 1, 1);
+    Assert.assertEquals("0497-02-18", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test76() {
+    Lunar lunar = Lunar.fromYmd(516, 1, 1);
+    Assert.assertEquals("0516-02-18", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test77() {
+    Lunar lunar = Lunar.fromYmd(554, 1, 1);
+    Assert.assertEquals("0554-02-18", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test78() {
+    Lunar lunar = Lunar.fromYmd(698, 1, 1);
+    Assert.assertEquals("0698-02-16", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test79() {
+    Lunar lunar = Lunar.fromYmd(793, 1, 1);
+    Assert.assertEquals("0793-02-15", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test80() {
+    Lunar lunar = Lunar.fromYmd(918, 1, 1);
+    Assert.assertEquals("0918-02-14", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test81() {
+    Lunar lunar = Lunar.fromYmd(1013, 1, 1);
+    Assert.assertEquals("1013-02-13", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test82() {
+    Lunar lunar = Lunar.fromYmd(1051, 1, 1);
+    Assert.assertEquals("1051-02-14", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test83() {
+    Lunar lunar = Lunar.fromYmd(1070, 1, 1);
+    Assert.assertEquals("1070-02-14", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test84() {
+    Lunar lunar = Lunar.fromYmd(1127, 1, 1);
+    Assert.assertEquals("1127-02-13", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test85() {
+    Lunar lunar = Lunar.fromYmd(1146, 1, 1);
+    Assert.assertEquals("1146-02-13", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test86() {
+    Lunar lunar = Lunar.fromYmd(1165, 1, 1);
+    Assert.assertEquals("1165-02-13", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test87() {
+    Lunar lunar = Lunar.fromYmd(1423, 1, 1);
+    Assert.assertEquals("1423-02-11", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test88() {
+    Lunar lunar = Lunar.fromYmd(1442, 1, 1);
+    Assert.assertEquals("1442-02-11", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test89() {
+    Lunar lunar = Lunar.fromYmd(1461, 1, 1);
+    Assert.assertEquals("1461-02-10", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test90() {
+    Lunar lunar = Lunar.fromYmd(1556, 1, 1);
+    Assert.assertEquals("1556-02-11", lunar.getSolar().toString());
+  }
+
+  @Test
+  public void test91() {
+    Lunar lunar = Lunar.fromYmd(1537, 1, 1);
+    Assert.assertEquals("1537-02-10", lunar.getSolar().toString());
+  }
+
 }

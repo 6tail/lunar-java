@@ -185,8 +185,7 @@ public class EightChar {
   }
 
   private String getDiShi(int zhiIndex) {
-    int offset = CHANG_SHENG_OFFSET.get(getDayGan());
-    int index = offset + (getDayGanIndex() % 2 == 0 ? zhiIndex : -zhiIndex);
+    int index = CHANG_SHENG_OFFSET.get(getDayGan()) + (getDayGanIndex() % 2 == 0 ? zhiIndex : -zhiIndex);
     if (index >= 12) {
       index -= 12;
     }

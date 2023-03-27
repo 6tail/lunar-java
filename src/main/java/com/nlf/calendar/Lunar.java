@@ -1776,9 +1776,7 @@ public class Lunar {
    * @return 值日天神
    */
   public String getDayTianShen() {
-    String monthZhi = getMonthZhi();
-    int offset = LunarUtil.ZHI_TIAN_SHEN_OFFSET.get(monthZhi);
-    return LunarUtil.TIAN_SHEN[(dayZhiIndex + offset) % 12 + 1];
+    return LunarUtil.TIAN_SHEN[(dayZhiIndex + LunarUtil.ZHI_TIAN_SHEN_OFFSET.get(getMonthZhi())) % 12 + 1];
   }
 
   /**
@@ -1787,9 +1785,7 @@ public class Lunar {
    * @return 值时天神
    */
   public String getTimeTianShen() {
-    String dayZhi = getDayZhiExact();
-    int offset = LunarUtil.ZHI_TIAN_SHEN_OFFSET.get(dayZhi);
-    return LunarUtil.TIAN_SHEN[(timeZhiIndex + offset) % 12 + 1];
+    return LunarUtil.TIAN_SHEN[(timeZhiIndex + LunarUtil.ZHI_TIAN_SHEN_OFFSET.get(getDayZhiExact())) % 12 + 1];
   }
 
   /**

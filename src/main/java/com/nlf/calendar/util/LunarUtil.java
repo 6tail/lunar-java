@@ -123,7 +123,7 @@ public class LunarUtil{
   /** 日 */
   public static final String[] DAY = {"","初一","初二","初三","初四","初五","初六","初七","初八","初九","初十","十一","十二","十三","十四","十五","十六","十七","十八","十九","二十","廿一","廿二","廿三","廿四","廿五","廿六","廿七","廿八","廿九","三十"};
   /** 月相，朔月也叫新月，望月也叫满月 */
-  public static final String[] YUE_XIANG = {"","朔","既朔","蛾眉新","蛾眉新","蛾眉","夕月","上弦","上弦","九夜","宵","宵","宵","渐盈凸","小望","望","既望","立待","居待","寝待","更待","渐亏凸","下弦","下弦","有明","有明","蛾眉残","蛾眉残","残","晓","晦"};
+  public static final String[] YUE_XIANG = {"","朔","既朔","蛾眉新","蛾眉新","蛾眉","夕","上弦","上弦","九夜","宵","宵","宵","渐盈凸","小望","望","既望","立待","居待","寝待","更待","渐亏凸","下弦","下弦","有明","有明","蛾眉残","蛾眉残","残","晓","晦"};
   /** 农历日期对应的节日 */
   public static final Map<String,String> FESTIVAL = new HashMap<String,String>(){
     private static final long serialVersionUID = -1;
@@ -1118,8 +1118,7 @@ public class LunarUtil{
       boolean matched = false;
       String months = left.substring(0, left.indexOf(":"));
       for (int i = 0, j = months.length(); i < j; i += 2) {
-        String m = months.substring(i, i + 2);
-        if (m.equals(month)) {
+        if (month.equals(months.substring(i, i + 2))) {
           matched = true;
           break;
         }
@@ -1128,8 +1127,7 @@ public class LunarUtil{
         String ys = left.substring(left.indexOf(":") + 1);
         ys = ys.substring(0, ys.indexOf(","));
         for (int i = 0, j = ys.length(); i < j; i += 2) {
-          String m = ys.substring(i, i + 2);
-          l.add(YI_JI[Integer.parseInt(m,16)]);
+          l.add(YI_JI[Integer.parseInt(ys.substring(i, i + 2),16)]);
         }
         break;
       }

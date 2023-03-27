@@ -31,6 +31,10 @@ public class LunarMonth {
    */
   private final double firstJulianDay;
 
+  private final int index;
+
+  private final int zhiIndex;
+
   /**
    * 初始化
    *
@@ -39,11 +43,13 @@ public class LunarMonth {
    * @param dayCount       天数
    * @param firstJulianDay 初一的儒略日
    */
-  public LunarMonth(int lunarYear, int lunarMonth, int dayCount, double firstJulianDay) {
+  public LunarMonth(int lunarYear, int lunarMonth, int dayCount, double firstJulianDay, int index) {
     this.year = lunarYear;
     this.month = lunarMonth;
     this.dayCount = dayCount;
     this.firstJulianDay = firstJulianDay;
+    this.index = index;
+    this.zhiIndex = (index - 1 + LunarUtil.BASE_MONTH_ZHI_INDEX) % 12;
   }
 
   /**
@@ -93,6 +99,31 @@ public class LunarMonth {
     return dayCount;
   }
 
+  public int getIndex() {
+    return index;
+  }
+
+  public int getZhiIndex() {
+    return zhiIndex;
+  }
+
+  public int getGanIndex() {
+    int offset = (LunarYear.fromYear(year).getGanIndex() + 1) % 5 * 2;
+    return (index - 1 + offset) % 10;
+  }
+
+  public String getGan() {
+    return LunarUtil.GAN[getGanIndex() + 1];
+  }
+
+  public String getZhi() {
+    return LunarUtil.ZHI[zhiIndex + 1];
+  }
+
+  public String getGanZhi() {
+    return getGan() + getZhi();
+  }
+
   /**
    * 获取初一的儒略日
    *
@@ -102,6 +133,46 @@ public class LunarMonth {
     return firstJulianDay;
   }
 
+  public String getPositionXi() {
+    return LunarUtil.POSITION_XI[getGanIndex() + 1];
+  }
+
+  public String getPositionXiDesc() {
+    return LunarUtil.POSITION_DESC.get(getPositionXi());
+  }
+
+  public String getPositionYangGui() {
+    return LunarUtil.POSITION_YANG_GUI[getGanIndex() + 1];
+  }
+
+  public String getPositionYangGuiDesc() {
+    return LunarUtil.POSITION_DESC.get(getPositionYangGui());
+  }
+
+  public String getPositionYinGui() {
+    return LunarUtil.POSITION_YIN_GUI[getGanIndex() + 1];
+  }
+
+  public String getPositionYinGuiDesc() {
+    return LunarUtil.POSITION_DESC.get(getPositionYinGui());
+  }
+
+  public String getPositionFu(int sect) {
+    return (1 == sect ? LunarUtil.POSITION_FU : LunarUtil.POSITION_FU_2)[getGanIndex() + 1];
+  }
+
+  public String getPositionFuDesc(int sect) {
+    return LunarUtil.POSITION_DESC.get(getPositionFu(sect));
+  }
+
+  public String getPositionCai() {
+    return LunarUtil.POSITION_CAI[getGanIndex() + 1];
+  }
+
+  public String getPositionCaiDesc() {
+    return LunarUtil.POSITION_DESC.get(getPositionCai());
+  }
+  
   /**
    * 获取太岁方位
    *
@@ -121,7 +192,7 @@ public class LunarMonth {
         p = "坤";
         break;
       default:
-        p = LunarUtil.POSITION_GAN[Solar.fromJulianDay(this.getFirstJulianDay()).getLunar().getMonthGanIndex()];
+        p = LunarUtil.POSITION_GAN[Solar.fromJulianDay(getFirstJulianDay()).getLunar().getMonthGanIndex()];
     }
     return p;
   }

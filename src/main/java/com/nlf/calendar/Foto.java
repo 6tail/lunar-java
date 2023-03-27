@@ -74,9 +74,26 @@ public class Foto {
     return lunar.getDayInChinese();
   }
 
+  /**
+   * 获取因果犯忌
+   * @return 因果犯忌
+   */
   public List<FotoFestival> getFestivals() {
     List<FotoFestival> l = new ArrayList<FotoFestival>();
     List<FotoFestival> fs = FotoUtil.FESTIVAL.get(getMonth() + "-" + getDay());
+    if (null != fs) {
+      l.addAll(fs);
+    }
+    return l;
+  }
+
+  /**
+   * 获取纪念日
+   * @return 纪念日
+   */
+  public List<String> getOtherFestivals() {
+    List<String> l = new ArrayList<String>();
+    List<String> fs = FotoUtil.OTHER_FESTIVAL.get(getMonth() + "-" + getDay());
     if (null != fs) {
       l.addAll(fs);
     }

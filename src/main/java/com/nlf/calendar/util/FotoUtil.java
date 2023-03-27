@@ -263,6 +263,46 @@ public class FotoUtil {
   };
 
   /**
+   * 纪念日
+   */
+  public static final Map<String, List<String>> OTHER_FESTIVAL = new HashMap<String, List<String>>() {
+    private static final long serialVersionUID = -1;
+
+    {
+      put("1-1", Collections.nCopies(1, "弥勒菩萨圣诞"));
+      put("1-6", Collections.nCopies(1, "定光佛圣诞"));
+      put("2-8", Collections.nCopies(1, "释迦牟尼佛出家"));
+      put("2-15", Collections.nCopies(1, "释迦牟尼佛涅槃"));
+      put("2-19", Collections.nCopies(1, "观世音菩萨圣诞"));
+      put("2-21", Collections.nCopies(1, "普贤菩萨圣诞"));
+      put("3-16", Collections.nCopies(1, "准提菩萨圣诞"));
+      put("4-4", Collections.nCopies(1, "文殊菩萨圣诞"));
+      put("4-8", Collections.nCopies(1, "释迦牟尼佛圣诞"));
+      put("4-15", Collections.nCopies(1, "佛吉祥日"));
+      put("4-28", Collections.nCopies(1, "药王菩萨圣诞"));
+      put("5-13", Collections.nCopies(1, "伽蓝菩萨圣诞"));
+      put("6-3", Collections.nCopies(1, "韦驮菩萨圣诞"));
+      put("6-19", Collections.nCopies(1, "观音菩萨成道"));
+      put("7-13", Collections.nCopies(1, "大势至菩萨圣诞"));
+      put("7-15", Collections.nCopies(1, "佛欢喜日"));
+      put("7-24", Collections.nCopies(1, "龙树菩萨圣诞"));
+      put("7-30", Collections.nCopies(1, "地藏菩萨圣诞"));
+      put("8-15", Collections.nCopies(1, "月光菩萨圣诞"));
+      put("8-22", Collections.nCopies(1, "燃灯佛圣诞"));
+      put("9-9", Collections.nCopies(1, "摩利支天菩萨圣诞"));
+      put("9-19", Collections.nCopies(1, "观世音菩萨出家"));
+      put("9-30", Collections.nCopies(1, "药师琉璃光佛圣诞"));
+      put("10-5", Collections.nCopies(1, "达摩祖师圣诞"));
+      put("10-20", Collections.nCopies(1, "文殊菩萨出家"));
+      put("11-17", Collections.nCopies(1, "阿弥陀佛圣诞"));
+      put("11-19", Collections.nCopies(1, "日光菩萨圣诞"));
+      put("12-8", Collections.nCopies(1, "释迦牟尼佛成道"));
+      put("12-23", Collections.nCopies(1, "监斋菩萨圣诞"));
+      put("12-29", Collections.nCopies(1, "华严菩萨圣诞"));
+    }
+  };
+
+  /**
    * 27星宿，佛教从印度传入中国，印度把28星宿改为27星宿，把牛宿(牛金牛)纳入了女宿(女土蝠)。
    */
   public static final String[] XIU_27 = {"角", "亢", "氐", "房", "心", "尾", "箕", "斗", "女", "虚", "危", "室", "壁", "奎", "娄", "胃", "昴", "毕", "觜", "参", "井", "鬼", "柳", "星", "张", "翼", "轸"};

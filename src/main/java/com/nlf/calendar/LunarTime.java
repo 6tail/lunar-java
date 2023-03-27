@@ -206,9 +206,7 @@ public class LunarTime {
    * @return 值时天神
    */
   public String getTianShen() {
-    String dayZhi = lunar.getDayZhiExact();
-    int offset = LunarUtil.ZHI_TIAN_SHEN_OFFSET.get(dayZhi);
-    return LunarUtil.TIAN_SHEN[(zhiIndex + offset) % 12 + 1];
+    return LunarUtil.TIAN_SHEN[(zhiIndex + LunarUtil.ZHI_TIAN_SHEN_OFFSET.get(lunar.getDayZhiExact())) % 12 + 1];
   }
 
   /**

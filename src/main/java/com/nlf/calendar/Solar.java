@@ -306,9 +306,10 @@ public class Solar {
     }
     List<Integer> hours = new ArrayList<Integer>(2);
     String timeZhi = timeGanZhi.substring(1);
-    for(int i = 0, j = LunarUtil.ZHI.length; i < j; i++){
+    for(int i = 1, j = LunarUtil.ZHI.length; i < j; i++){
       if(LunarUtil.ZHI[i].equals(timeZhi)){
         hours.add((i - 1) * 2);
+        break;
       }
     }
     if ("子".equals(timeZhi)) {

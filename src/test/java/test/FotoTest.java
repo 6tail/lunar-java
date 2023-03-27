@@ -5,6 +5,9 @@ import com.nlf.calendar.Lunar;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 佛历测试
  *
@@ -26,6 +29,14 @@ public class FotoTest {
     Assert.assertEquals("貉", foto.getAnimal());
     Assert.assertEquals("东", foto.getGong());
     Assert.assertEquals("青龙", foto.getShou());
+  }
+
+  @Test
+  public void test2() {
+    Foto foto = Foto.fromLunar(Lunar.fromYmd(2021, 3, 16));
+    List<String> expected = new ArrayList<String>();
+    expected.add("准提菩萨圣诞");
+    Assert.assertEquals(expected, foto.getOtherFestivals());
   }
 
 }

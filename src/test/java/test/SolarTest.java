@@ -48,7 +48,7 @@ public class SolarTest {
 
   @Test
   public void test10(){
-    Assert.assertFalse(SolarUtil.isLeapYear(1500));
+    Assert.assertTrue(SolarUtil.isLeapYear(1500));
   }
 
   @Test

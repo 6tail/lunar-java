@@ -627,4 +627,22 @@ public class LunarTest {
     Assert.assertEquals("1537-02-10", lunar.getSolar().toString());
   }
 
+  @Test
+  public void test92() {
+    Lunar lunar = Solar.fromYmd(917, 12, 1).getLunar();
+    Assert.assertEquals("九一七年闰十月十四", lunar.toString());
+  }
+
+  @Test
+  public void test93() {
+    Lunar lunar = Solar.fromYmd(917, 12, 31).getLunar();
+    Assert.assertEquals("九一七年冬月十五", lunar.toString());
+  }
+
+  @Test
+  public void test94() {
+    Lunar lunar = Solar.fromYmd(918, 1, 1).getLunar();
+    Assert.assertEquals("九一七年冬月十六", lunar.toString());
+  }
+
 }

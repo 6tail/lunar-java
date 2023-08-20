@@ -218,6 +218,9 @@ public class SolarUtil {
    * @return true/false 闰年/非闰年
    */
   public static boolean isLeapYear(int year) {
+    if (year < 1600) {
+      return year % 4 == 0;
+    }
     return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
   }
 

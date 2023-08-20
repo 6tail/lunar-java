@@ -21,30 +21,30 @@ public class JieQiTest {
     Map<String,String> jieQi = new HashMap<String, String>(){
       private static final long serialVersionUID = 1L;
       {
-        put("冬至","2021-12-21 23:59:09");
-        put("小寒","2022-01-05 17:13:54");
-        put("大寒","2022-01-20 10:38:56");
-        put("立春","2022-02-04 04:50:36");
-        put("雨水","2022-02-19 00:42:50");
-        put("惊蛰","2022-03-05 22:43:34");
-        put("春分","2022-03-20 23:33:15");
-        put("清明","2022-04-05 03:20:03");
-        put("谷雨","2022-04-20 10:24:07");
-        put("立夏","2022-05-05 20:25:46");
-        put("小满","2022-05-21 09:22:25");
-        put("芒种","2022-06-06 00:25:37");
-        put("夏至","2022-06-21 17:13:40");
-        put("小暑","2022-07-07 10:37:49");
-        put("大暑","2022-07-23 04:06:49");
-        put("立秋","2022-08-07 20:28:57");
-        put("处暑","2022-08-23 11:15:59");
-        put("白露","2022-09-07 23:32:07");
-        put("秋分","2022-09-23 09:03:31");
-        put("寒露","2022-10-08 15:22:16");
-        put("霜降","2022-10-23 18:35:31");
-        put("立冬","2022-11-07 18:45:18");
-        put("小雪","2022-11-22 16:20:18");
-        put("大雪","2022-12-07 11:46:04");
+        put("冬至","2021-12-21 23:59:18");
+        put("小寒","2022-01-05 17:14:03");
+        put("大寒","2022-01-20 10:39:05");
+        put("立春","2022-02-04 04:50:45");
+        put("雨水","2022-02-19 00:43:00");
+        put("惊蛰","2022-03-05 22:43:43");
+        put("春分","2022-03-20 23:33:24");
+        put("清明","2022-04-05 03:20:13");
+        put("谷雨","2022-04-20 10:24:16");
+        put("立夏","2022-05-05 20:25:56");
+        put("小满","2022-05-21 09:22:35");
+        put("芒种","2022-06-06 00:25:47");
+        put("夏至","2022-06-21 17:13:50");
+        put("小暑","2022-07-07 10:37:59");
+        put("大暑","2022-07-23 04:06:58");
+        put("立秋","2022-08-07 20:29:07");
+        put("处暑","2022-08-23 11:16:09");
+        put("白露","2022-09-07 23:32:17");
+        put("秋分","2022-09-23 09:03:41");
+        put("寒露","2022-10-08 15:22:26");
+        put("霜降","2022-10-23 18:35:41");
+        put("立冬","2022-11-07 18:45:28");
+        put("小雪","2022-11-22 16:20:28");
+        put("大雪","2022-12-07 11:46:15");
       }
     };
 
@@ -177,13 +177,13 @@ public class JieQiTest {
   @Test
   public void test7() {
     Lunar lunar = Lunar.fromYmd(2012, 9, 1);
-    Assert.assertEquals("2012-09-07 13:29:00", lunar.getJieQiTable().get("白露").toYmdHms());
+    Assert.assertEquals("2012-09-07 13:29:01", lunar.getJieQiTable().get("白露").toYmdHms());
   }
 
   @Test
   public void test8() {
     Lunar lunar = Lunar.fromYmd(2050, 12, 1);
-    Assert.assertEquals("2050-12-07 06:41:00", lunar.getJieQiTable().get("DA_XUE").toYmdHms());
+    Assert.assertEquals("2050-12-07 06:41:13", lunar.getJieQiTable().get("DA_XUE").toYmdHms());
   }
 
   @Test
@@ -192,6 +192,12 @@ public class JieQiTest {
     Assert.assertEquals("冬至", solar.getLunar().getJieQi());
     Assert.assertEquals("", solar.getLunar().getJie());
     Assert.assertEquals("冬至", solar.getLunar().getQi());
+  }
+
+  @Test
+  public void test10() {
+    Lunar lunar = Solar.fromYmd(2023, 6, 1).getLunar();
+    Assert.assertEquals("2022-12-22 05:48:11", lunar.getJieQiTable().get("冬至").toYmdHms());
   }
 
 }

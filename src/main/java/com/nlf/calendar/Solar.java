@@ -186,6 +186,10 @@ public class Solar {
       minute -= 60;
       hour++;
     }
+    if (hour > 23) {
+      hour -= 24;
+      day += 1;
+    }
     this.year = year;
     this.month = month;
     this.day = day;
@@ -852,4 +856,54 @@ public class Solar {
     return fromYmdHms(solar.getYear(), solar.getMonth(), solar.getDay(), hour, solar.getMinute(), solar.getSecond());
   }
 
+  /**
+   * 获取薪资比例(感谢 https://gitee.com/smr1987)
+   * @return 薪资比例：1/2/3
+   */
+  public int getSalaryRate() {
+    // 元旦节
+    if (month == 1 && day == 1) {
+      return 3;
+    }
+    // 劳动节
+    if (month == 5 && day == 1) {
+      return 3;
+    }
+    // 国庆
+    if (month == 10 && day >= 1 && day <= 3) {
+      return 3;
+    }
+    Lunar lunar = getLunar();
+    // 春节
+    if (lunar.getMonth() == 1 && lunar.getDay() >= 1 && lunar.getDay() <= 3) {
+      return 3;
+    }
+    // 端午
+    if (lunar.getMonth() == 5 && lunar.getDay() == 5) {
+      return 3;
+    }
+    // 中秋
+    if (lunar.getMonth() == 8 && lunar.getDay() == 15) {
+      return 3;
+    }
+    // 清明
+    if ("清明".equals(lunar.getJieQi())) {
+      return 3;
+    }
+    Holiday holiday = HolidayUtil.getHoliday(year, month, day);
+    if (null != holiday) {
+      // 法定假日非上班
+      if (!holiday.isWork()) {
+        return 2;
+      }
+    } else {
+      // 周末
+      int week = getWeek();
+      if (week == 6 || week == 0) {
+        return 2;
+      }
+    }
+    // 工作日
+    return 1;
+  }
 }

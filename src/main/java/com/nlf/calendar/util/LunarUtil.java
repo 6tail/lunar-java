@@ -159,7 +159,7 @@ public class LunarUtil{
       put("6-6",Collections.nCopies(1,"天贶节"));
       put("6-24",Collections.nCopies(1,"观莲节"));
       put("6-25",Collections.nCopies(1,"五谷母节"));
-      put("7-14",Collections.nCopies(1,"中元节"));
+      put("7-15",Collections.nCopies(1,"中元节"));
       put("7-22",Collections.nCopies(1,"财神节"));
       put("7-29",Collections.nCopies(1,"地藏节"));
       put("8-1",Collections.nCopies(1,"天灸日"));

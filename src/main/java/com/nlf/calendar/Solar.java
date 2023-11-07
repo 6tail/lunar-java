@@ -358,26 +358,7 @@ public class Solar {
    * @return 0123456
    */
   public int getWeek() {
-    Solar start = fromYmd(1582, 10, 15);
-    int y = year;
-    int m = month;
-    int d = day;
-    Solar current = fromYmd(y, m, d);
-    // 蔡勒公式
-    if (m < 3) {
-      m += 12;
-      y--;
-    }
-    int c = y / 100;
-    y = y - c * 100;
-    int x = y + y / 4 + c / 4 - 2 * c;
-    int w;
-    if (current.isBefore(start)) {
-      w = (x + 13 * (m + 1) / 5 + d + 2) % 7;
-    } else {
-      w = (x + 26 * (m + 1) / 10 + d - 1) % 7;
-    }
-    return (w + 7) % 7;
+    return ((int)getJulianDay() + 7000002) % 7;
   }
 
   /**

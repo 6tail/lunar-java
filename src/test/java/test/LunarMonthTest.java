@@ -53,4 +53,10 @@ public class LunarMonthTest {
     Assert.assertEquals("壬寅", month.getGanZhi());
   }
 
+  @Test
+  public void test6(){
+    LunarMonth month = LunarMonth.fromYm(2023, 9);
+    Assert.assertEquals("癸亥", month.getGanZhi());
+  }
+
 }

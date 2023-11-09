@@ -358,7 +358,7 @@ public class Solar {
    * @return 0123456
    */
   public int getWeek() {
-    return ((int)getJulianDay() + 7000002) % 7;
+    return ((int)(getJulianDay() + 0.5) + 7000001) % 7;
   }
 
   /**

@@ -97,4 +97,16 @@ public class WeekTest {
     Assert.assertEquals(3, solar.getWeek());
   }
 
+  @Test
+  public void test10(){
+    Assert.assertEquals(6, Solar.fromYmd(1961, 9, 30).getWeek());
+    Assert.assertEquals(6, Solar.fromYmdHms(1961, 9, 30, 23, 59, 59).getWeek());
+    Assert.assertEquals(6, Solar.fromYmdHms(1961, 9, 30, 20, 0, 0).getWeek());
+  }
+
+  @Test
+  public void test11(){
+    Assert.assertEquals(3, Solar.fromYmdHms(2021, 9, 15, 20, 0, 0).getWeek());
+  }
+
 }

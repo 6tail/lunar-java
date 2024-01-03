@@ -145,14 +145,14 @@ public class EightChar {
    * @return 十神
    */
   public String getYearShiShenGan() {
-    return LunarUtil.SHI_SHEN_GAN.get(getDayGan() + getYearGan());
+    return LunarUtil.SHI_SHEN.get(getDayGan() + getYearGan());
   }
 
   private List<String> getShiShenZhi(String zhi) {
     List<String> hideGan = LunarUtil.ZHI_HIDE_GAN.get(zhi);
     List<String> l = new ArrayList<String>(hideGan.size());
     for (String gan : hideGan) {
-      l.add(LunarUtil.SHI_SHEN_ZHI.get(getDayGan() + gan));
+      l.add(LunarUtil.SHI_SHEN.get(getDayGan() + gan));
     }
     return l;
   }
@@ -264,7 +264,7 @@ public class EightChar {
    * @return 十神
    */
   public String getMonthShiShenGan() {
-    return LunarUtil.SHI_SHEN_GAN.get(getDayGan() + getMonthGan());
+    return LunarUtil.SHI_SHEN.get(getDayGan() + getMonthGan());
   }
 
   /**
@@ -426,7 +426,7 @@ public class EightChar {
    * @return 十神
    */
   public String getTimeShiShenGan() {
-    return LunarUtil.SHI_SHEN_GAN.get(getDayGan() + getTimeGan());
+    return LunarUtil.SHI_SHEN.get(getDayGan() + getTimeGan());
   }
 
   /**

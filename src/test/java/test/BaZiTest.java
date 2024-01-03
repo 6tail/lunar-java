@@ -406,4 +406,35 @@ public class BaZiTest {
     expected.add("1959-12-17 16:00:00");
     Assert.assertEquals(expected, actual);
   }
+
+  @Test
+  public void test17() {
+    Solar solar = new Solar(1986, 5, 29, 13, 37, 0);
+    Lunar lunar = solar.getLunar();
+    EightChar eightChar = lunar.getEightChar();
+    Assert.assertEquals("辛丑", eightChar.getShenGong());
+  }
+
+  @Test
+  public void test18() {
+    Solar solar = new Solar(2023, 10, 8, 18, 37, 0);
+    Lunar lunar = solar.getLunar();
+    EightChar eightChar = lunar.getEightChar();
+    Assert.assertEquals("己未", eightChar.getShenGong());
+  }
+
+  @Test
+  public void test19() {
+    List<Solar> l = Solar.fromBaZi("丁丑","癸卯","癸丑","辛酉");
+    List<String> actual = new ArrayList<String>();
+    for (Solar solar : l) {
+      actual.add(solar.toYmdHms());
+    }
+
+    List<String> expected = new ArrayList<String>();
+    expected.add("1997-03-12 18:00:00");
+    expected.add("1937-03-27 18:00:00");
+    Assert.assertEquals(expected, actual);
+  }
+
 }

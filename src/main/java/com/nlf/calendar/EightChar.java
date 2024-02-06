@@ -499,22 +499,8 @@ public class EightChar {
    * @return 命宫
    */
   public String getMingGong() {
-    int monthZhiIndex = 0;
-    int timeZhiIndex = 0;
-    String monthZhi = getMonthZhi();
-    String timeZhi = getTimeZhi();
-    for (int i = 0, j = MONTH_ZHI.length; i < j; i++) {
-      if (monthZhi.equals(MONTH_ZHI[i])) {
-        monthZhiIndex = i;
-        break;
-      }
-    }
-    for (int i = 0, j = MONTH_ZHI.length; i < j; i++) {
-      if (timeZhi.equals(MONTH_ZHI[i])) {
-        timeZhiIndex = i;
-        break;
-      }
-    }
+    int monthZhiIndex = LunarUtil.find(getMonthZhi(), MONTH_ZHI, 0);
+    int timeZhiIndex = LunarUtil.find(getTimeZhi(), MONTH_ZHI, 0);
     int offset = monthZhiIndex + timeZhiIndex;
     offset = (offset >= 14 ? 26 : 14) - offset;
     int ganIndex = (lunar.getYearGanIndexExact() + 1) * 2 + offset;
@@ -539,22 +525,8 @@ public class EightChar {
    * @return 身宫
    */
   public String getShenGong() {
-    int monthZhiIndex = 0;
-    int timeZhiIndex = 0;
-    String monthZhi = getMonthZhi();
-    String timeZhi = getTimeZhi();
-    for (int i = 0, j = MONTH_ZHI.length; i < j; i++) {
-      if (monthZhi.equals(MONTH_ZHI[i])) {
-        monthZhiIndex = i;
-        break;
-      }
-    }
-    for (int i = 0, j = MONTH_ZHI.length; i < j; i++) {
-      if (timeZhi.equals(LunarUtil.ZHI[i])) {
-        timeZhiIndex = i;
-        break;
-      }
-    }
+    int monthZhiIndex = LunarUtil.find(getMonthZhi(), MONTH_ZHI, 0);
+    int timeZhiIndex = LunarUtil.find(getTimeZhi(), LunarUtil.ZHI, 0);
     int offset = monthZhiIndex + timeZhiIndex;
     while (offset > 12) {
       offset -= 12;

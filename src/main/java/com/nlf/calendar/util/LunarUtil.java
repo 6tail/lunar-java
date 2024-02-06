@@ -809,9 +809,13 @@ public class LunarUtil{
    * @return 甲子序号
    */
   public static int getJiaZiIndex(String ganZhi){
-    for(int i=0,j=LunarUtil.JIA_ZI.length;i<j;i++){
-      if(LunarUtil.JIA_ZI[i].equals(ganZhi)){
-        return i;
+    return find(ganZhi, JIA_ZI, 0);
+  }
+
+  public static int find(String name, String[] names, int offset) {
+    for(int i=0,j=names.length;i<j;i++){
+      if(names[i].equals(name)){
+        return i + offset;
       }
     }
     return -1;
@@ -1020,22 +1024,8 @@ public class LunarUtil{
    * @return 旬下标，0-5
    */
   protected static int getXunIndex(String ganZhi){
-    String gan = ganZhi.substring(0,1);
-    String zhi = ganZhi.substring(1);
-    int ganIndex = 0;
-    int zhiIndex = 0;
-    for(int i=0,j=GAN.length;i<j;i++){
-      if(GAN[i].equals(gan)){
-        ganIndex = i;
-        break;
-      }
-    }
-    for(int i=0,j=ZHI.length;i<j;i++){
-      if(ZHI[i].equals(zhi)){
-        zhiIndex = i;
-        break;
-      }
-    }
+    int ganIndex = find(ganZhi.substring(0, 1), GAN, 0);
+    int zhiIndex = find(ganZhi.substring(1), ZHI, 0);
     int diff = ganIndex - zhiIndex;
     if(diff<0){
       diff += 12;

@@ -2380,7 +2380,7 @@ public class Lunar {
       Solar solar = entry.getValue();
       String day = wholeDay ? solar.toYmd() : solar.toYmdHms();
       if (forward) {
-        if (day.compareTo(today) < 0) {
+        if (day.compareTo(today) <= 0) {
           continue;
         }
         if (null == near) {

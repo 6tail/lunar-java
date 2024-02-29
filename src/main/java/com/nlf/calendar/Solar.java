@@ -302,7 +302,7 @@ public class Solar {
       m += 12;
     }
     // 月天干要一致
-    if (((LunarUtil.find(yearGanZhi.substring(0, 1), LunarUtil.GAN, -1) + 1) * 2 + m) % 10 != LunarUtil.find(monthGanZhi.substring(0,1), LunarUtil.GAN, -1)) {
+    if (((LunarUtil.find(yearGanZhi.substring(0, 1), LunarUtil.GAN, -1) + 1) * 2 + m) % 10 != LunarUtil.find(monthGanZhi.substring(0, 1), LunarUtil.GAN, -1)) {
       return l;
     }
     // 1年的立春是辛酉，序号57
@@ -315,6 +315,10 @@ public class Solar {
     m *= 2;
     // 时辰地支转时刻，子时按零点算
     int h = LunarUtil.find(timeGanZhi.substring(1), LunarUtil.ZHI, -1) * 2;
+    int[] hours = {h};
+    if (0 == h && 2 == sect) {
+      hours = new int[]{0, 23};
+    }
     int startYear = baseYear - 1;
 
     // 结束年
@@ -330,8 +334,6 @@ public class Solar {
         // 节令推移，年干支和月干支就都匹配上了
         Solar solarTime = jieQiList.get(4 + m);
         if (solarTime.getYear() >= baseYear) {
-          int mi = 0;
-          int s = 0;
           // 日干支和节令干支的偏移值
           Lunar lunar = solarTime.getLunar();
           String dgz = (2 == sect) ? lunar.getDayInGanZhiExact2() : lunar.getDayInGanZhiExact();
@@ -342,17 +344,22 @@ public class Solar {
           if (d > 0) {
             // 从节令推移天数
             solarTime = solarTime.next(d);
-          } else if (h == solarTime.getHour()) {
-            // 如果正好是节令当天，且小时和节令的小时数相等的极端情况，把分钟和秒钟带上
-            mi = solarTime.getMinute();
-            s = solarTime.getSecond();
           }
-          // 验证一下
-          Solar solar = Solar.fromYmdHms(solarTime.getYear(), solarTime.getMonth(), solarTime.getDay(), h, mi, s);
-          lunar = solar.getLunar();
-          dgz = (2 == sect) ? lunar.getDayInGanZhiExact2() : lunar.getDayInGanZhiExact();
-          if (lunar.getYearInGanZhiExact().equals(yearGanZhi) && lunar.getMonthInGanZhiExact().equals(monthGanZhi) && dgz.equals(dayGanZhi) && lunar.getTimeInGanZhi().equals(timeGanZhi)) {
-            l.add(solar);
+          for (int hour : hours) {
+            int mi = 0;
+            int s = 0;
+            if (d == 0 && hour == solarTime.getHour()) {
+              // 如果正好是节令当天，且小时和节令的小时数相等的极端情况，把分钟和秒钟带上
+              mi = solarTime.getMinute();
+              s = solarTime.getSecond();
+            }
+            // 验证一下
+            Solar solar = Solar.fromYmdHms(solarTime.getYear(), solarTime.getMonth(), solarTime.getDay(), hour, mi, s);
+            lunar = solar.getLunar();
+            dgz = (2 == sect) ? lunar.getDayInGanZhiExact2() : lunar.getDayInGanZhiExact();
+            if (lunar.getYearInGanZhiExact().equals(yearGanZhi) && lunar.getMonthInGanZhiExact().equals(monthGanZhi) && dgz.equals(dayGanZhi) && lunar.getTimeInGanZhi().equals(timeGanZhi)) {
+              l.add(solar);
+            }
           }
         }
       }
@@ -376,7 +383,7 @@ public class Solar {
    * @return 0123456
    */
   public int getWeek() {
-    return ((int)(getJulianDay() + 0.5) + 7000001) % 7;
+    return ((int) (getJulianDay() + 0.5) + 7000001) % 7;
   }
 
   /**
@@ -601,6 +608,7 @@ public class Solar {
 
   /**
    * 阳历日期相减，获得相差天数
+   *
    * @param solar 阳历
    * @return 天数
    */
@@ -610,6 +618,7 @@ public class Solar {
 
   /**
    * 阳历日期相减，获得相差分钟数
+   *
    * @param solar 阳历
    * @return 分钟数
    */
@@ -628,6 +637,7 @@ public class Solar {
 
   /**
    * 是否在指定日期之后
+   *
    * @param solar 阳历
    * @return true/false
    */
@@ -667,6 +677,7 @@ public class Solar {
 
   /**
    * 是否在指定日期之前
+   *
    * @param solar 阳历
    * @return true/false
    */
@@ -706,6 +717,7 @@ public class Solar {
 
   /**
    * 年推移
+   *
    * @param years 年数
    * @return 阳历
    */
@@ -729,6 +741,7 @@ public class Solar {
 
   /**
    * 月推移
+   *
    * @param months 月数
    * @return 阳历
    */
@@ -789,7 +802,7 @@ public class Solar {
       d += days;
     }
     if (1582 == y && 10 == m) {
-      if (d > 4 ) {
+      if (d > 4) {
         d += 10;
       }
     }
@@ -804,7 +817,7 @@ public class Solar {
    * @return 阳历日期
    */
   public Solar next(int days, boolean onlyWorkday) {
-    if(!onlyWorkday) {
+    if (!onlyWorkday) {
       return next(days);
     }
     Solar solar = fromYmdHms(year, month, day, hour, minute, second);
@@ -833,6 +846,7 @@ public class Solar {
 
   /**
    * 小时推移
+   *
    * @param hours 小时数
    * @return 阳历
    */
@@ -852,6 +866,7 @@ public class Solar {
 
   /**
    * 获取薪资比例(感谢 https://gitee.com/smr1987)
+   *
    * @return 薪资比例：1/2/3
    */
   public int getSalaryRate() {

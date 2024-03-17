@@ -335,9 +335,7 @@ public class Solar {
         Solar solarTime = jieQiList.get(4 + m);
         if (solarTime.getYear() >= baseYear) {
           // 日干支和节令干支的偏移值
-          Lunar lunar = solarTime.getLunar();
-          String dgz = (2 == sect) ? lunar.getDayInGanZhiExact2() : lunar.getDayInGanZhiExact();
-          int d = LunarUtil.getJiaZiIndex(dayGanZhi) - LunarUtil.getJiaZiIndex(dgz);
+          int d = LunarUtil.getJiaZiIndex(dayGanZhi) - LunarUtil.getJiaZiIndex(solarTime.getLunar().getDayInGanZhiExact2());
           if (d < 0) {
             d += 60;
           }
@@ -355,8 +353,8 @@ public class Solar {
             }
             // 验证一下
             Solar solar = Solar.fromYmdHms(solarTime.getYear(), solarTime.getMonth(), solarTime.getDay(), hour, mi, s);
-            lunar = solar.getLunar();
-            dgz = (2 == sect) ? lunar.getDayInGanZhiExact2() : lunar.getDayInGanZhiExact();
+            Lunar lunar = solar.getLunar();
+            String dgz = (2 == sect) ? lunar.getDayInGanZhiExact2() : lunar.getDayInGanZhiExact();
             if (lunar.getYearInGanZhiExact().equals(yearGanZhi) && lunar.getMonthInGanZhiExact().equals(monthGanZhi) && dgz.equals(dayGanZhi) && lunar.getTimeInGanZhi().equals(timeGanZhi)) {
               l.add(solar);
             }

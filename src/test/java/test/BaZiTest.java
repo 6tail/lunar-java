@@ -530,4 +530,17 @@ public class BaZiTest {
     Assert.assertEquals(expected, actual);
   }
 
+  @Test
+  public void test31() {
+    List<Solar> l = Solar.fromBaZi("丁卯","丁未","甲申","乙丑", 1, 1900);
+    List<String> actual = new ArrayList<String>();
+    for (Solar solar : l) {
+      actual.add(solar.toYmdHms());
+    }
+
+    List<String> expected = new ArrayList<String>();
+    expected.add("1987-08-03 02:00:00");
+    Assert.assertEquals(expected, actual);
+  }
+
 }

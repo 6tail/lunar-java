@@ -89,8 +89,12 @@ public class Solar {
     if (month < 1 || month > 12) {
       throw new IllegalArgumentException(String.format("wrong month %d", month));
     }
-    if (day < 1 || day > 31) {
+    if (day < 1) {
       throw new IllegalArgumentException(String.format("wrong day %d", day));
+    }
+    int days = SolarUtil.getDaysOfMonth(year, month);
+    if (day > days) {
+      throw new IllegalArgumentException(String.format("only %d days in solar year %d month %d", days, year, month));
     }
     if (hour < 0 || hour > 23) {
       throw new IllegalArgumentException(String.format("wrong hour %d", hour));

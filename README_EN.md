@@ -12,7 +12,7 @@ lunar is a calendar library for Solar and Chinese Lunar.
 <dependency>
   <groupId>cn.6tail</groupId>
   <artifactId>lunar</artifactId>
-  <version>1.3.14</version>
+  <version>1.3.15</version>
 </dependency>
 ```
 

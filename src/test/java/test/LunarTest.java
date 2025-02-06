@@ -7,8 +7,7 @@ import org.junit.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * 农历测试
@@ -409,7 +408,7 @@ public class LunarTest {
     Lunar lunar = solar.getLunar();
     Assert.assertEquals("甲辰", lunar.getMonthInGanZhi());
     Assert.assertEquals("癸卯", lunar.getMonthInGanZhiExact());
-    Assert.assertEquals(4, lunar.getDayJi().size());
+    Assert.assertEquals("[出火, 入宅, 安葬, 伐木]", lunar.getDayJi().toString());
   }
 
   @Test

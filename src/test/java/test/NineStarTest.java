@@ -56,7 +56,7 @@ public class NineStarTest {
     @Test
     public void test8() {
         LunarMonth m = LunarMonth.fromYm(2022, 1);
-        Assert.assertEquals("二黒土天璇", m.getNineStar().toString());
+        Assert.assertEquals("二黑土天璇", m.getNineStar().toString());
     }
 
     @Test
@@ -75,6 +75,14 @@ public class NineStarTest {
     public void test11() {
         Lunar d = Lunar.fromYmdHms(2011, 5, 3, 23, 0,0);
         Assert.assertEquals("七赤金摇光", d.getTimeNineStar().toString());
+    }
+
+    @Test
+    public void test12() {
+        LunarMonth m = LunarMonth.fromYm(2024, 11);
+        Assert.assertEquals("四绿木天权", m.getNineStar().toString());
+        m = LunarMonth.fromYm(2024, 12);
+        Assert.assertEquals("三碧木天玑", m.getNineStar().toString());
     }
 
 }

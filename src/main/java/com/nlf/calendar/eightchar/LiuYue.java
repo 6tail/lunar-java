@@ -9,7 +9,7 @@ import com.nlf.calendar.util.LunarUtil;
  */
 public class LiuYue {
   /**
-   * 序数，0-9
+   * 序数，0-11
    */
   private final int index;
 

@@ -18,7 +18,7 @@ public class NineStar {
   /**
    * 七色
    */
-  public static final String[] COLOR = {"白", "黒", "碧", "绿", "黄", "白", "赤", "白", "紫"};
+  public static final String[] COLOR = {"白", "黑", "碧", "绿", "黄", "白", "赤", "白", "紫"};
 
   /**
    * 五行

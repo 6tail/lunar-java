@@ -650,4 +650,11 @@ public class LunarTest {
     Assert.assertEquals("闭", lunar.getZhiXing());
   }
 
+  @Test
+  public void test96() {
+    Lunar lunar = Solar.fromYmd(2025, 2, 7).getLunar();
+    Assert.assertEquals("[嫁娶, 祭祀, 祈福, 出行, 解除, 出火, 拆卸, 动土, 入宅, 移徙, 安床, 上梁, 栽种, 纳畜, 破土, 启钻, 安葬]", lunar.getDayYi().toString());
+    Assert.assertEquals("[开市, 立券, 理发, 作灶]", lunar.getDayJi().toString());
+  }
+
 }

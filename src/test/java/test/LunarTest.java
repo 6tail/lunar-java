@@ -657,4 +657,25 @@ public class LunarTest {
     Assert.assertEquals("[开市, 立券, 理发, 作灶]", lunar.getDayJi().toString());
   }
 
+  @Test
+  public void test97() {
+    Lunar lunar = Solar.fromYmd(2025, 3, 5).getLunar();
+    Assert.assertEquals("[破屋, 坏垣, 求医, 治病]", lunar.getDayYi().toString());
+    Assert.assertEquals("[诸事不宜]", lunar.getDayJi().toString());
+  }
+
+  @Test
+  public void test98() {
+    Lunar lunar = Solar.fromYmd(2025, 5, 3).getLunar();
+    Assert.assertEquals("[祭祀, 祈福, 求嗣, 斋醮, 沐浴, 纳畜, 入殓, 破土, 安葬]", lunar.getDayYi().toString());
+    Assert.assertEquals("[移徙, 入宅, 嫁娶, 出行, 安床]", lunar.getDayJi().toString());
+  }
+
+  @Test
+  public void test99() {
+    Lunar lunar = Solar.fromYmd(2025, 5, 4).getLunar();
+    Assert.assertEquals("[纳采, 祭祀, 祈福, 求嗣, 斋醮, 出行, 起基, 盖屋, 定磉, 安门, 入殓, 安葬]", lunar.getDayYi().toString());
+    Assert.assertEquals("[嫁娶, 开市, 纳财, 出火]", lunar.getDayJi().toString());
+  }
+
 }

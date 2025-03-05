@@ -830,7 +830,7 @@ public class LunarUtil{
     Matcher matcher = Pattern.compile(day + "=(.[^;]+?);").matcher(DAY_YI_JI);
     while (matcher.find()) {
       String v = matcher.group(1);
-      if (Pattern.compile(month + "[\\w{2}]*:").matcher(v).find()) {
+      if (Pattern.compile(month + "(?:\\w{2})*:").matcher(v).find()) {
         matcher = Pattern.compile(pattern).matcher(v);
         if (matcher.find()) {
           String s = matcher.group(1);

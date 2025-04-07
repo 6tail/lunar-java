@@ -1347,11 +1347,11 @@ public class Lunar {
 
   protected String getDayPositionTaiSui(String dayInGanZhi, int yearZhiIndex) {
     String p;
-    if ("甲子,乙丑,丙寅,丁卯,戊辰,已巳".contains(dayInGanZhi)) {
+    if ("甲子,乙丑,丙寅,丁卯,戊辰,己巳".contains(dayInGanZhi)) {
       p = "震";
-    } else if ("丙子,丁丑,戊寅,已卯,庚辰,辛巳".contains(dayInGanZhi)) {
+    } else if ("丙子,丁丑,戊寅,己卯,庚辰,辛巳".contains(dayInGanZhi)) {
       p = "离";
-    } else if ("戊子,已丑,庚寅,辛卯,壬辰,癸巳".contains(dayInGanZhi)) {
+    } else if ("戊子,己丑,庚寅,辛卯,壬辰,癸巳".contains(dayInGanZhi)) {
       p = "中";
     } else if ("庚子,辛丑,壬寅,癸卯,甲辰,乙巳".contains(dayInGanZhi)) {
       p = "兑";

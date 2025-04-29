@@ -527,12 +527,15 @@ public class EightChar {
   public String getShenGong() {
     int monthZhiIndex = LunarUtil.find(getMonthZhi(), MONTH_ZHI, 0);
     int timeZhiIndex = LunarUtil.find(getTimeZhi(), LunarUtil.ZHI, 0);
-    int offset = (monthZhiIndex + timeZhiIndex - 1) % 12;
+    int offset = monthZhiIndex + timeZhiIndex;
+    if (offset > 12) {
+      offset -= 12;
+    }
     int ganIndex = (lunar.getYearGanIndexExact() + 1) * 2 + offset;
     while (ganIndex > 10) {
       ganIndex -= 10;
     }
-    return LunarUtil.GAN[ganIndex + 1] + MONTH_ZHI[offset + 1];
+    return LunarUtil.GAN[ganIndex] + MONTH_ZHI[offset];
   }
 
   /**

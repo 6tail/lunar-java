@@ -678,4 +678,11 @@ public class LunarTest {
     Assert.assertEquals("[嫁娶, 开市, 纳财, 出火]", lunar.getDayJi().toString());
   }
 
+  @Test
+  public void test100() {
+    Solar solar = new Solar(2025, 9, 16);
+    Lunar lunar = solar.getLunar();
+    Assert.assertEquals("[时德, 阳德, 民日, 玉宇, 司命]", lunar.getDayJiShen().toString());
+    Assert.assertEquals("[河魁, 死神, 天吏, 致死, 往亡]", lunar.getDayXiongSha().toString());
+  }
 }

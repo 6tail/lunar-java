@@ -1889,7 +1889,7 @@ public class Lunar {
    * @return 日吉神
    */
   public List<String> getDayJiShen() {
-    return LunarUtil.getDayJiShen(getMonth(), getDayInGanZhi());
+    return LunarUtil.getDayJiShen(getMonthZhiIndex(), getDayInGanZhi());
   }
 
   /**
@@ -1898,7 +1898,7 @@ public class Lunar {
    * @return 日凶煞
    */
   public List<String> getDayXiongSha() {
-    return LunarUtil.getDayXiongSha(getMonth(), getDayInGanZhi());
+    return LunarUtil.getDayXiongSha(getMonthZhiIndex(), getDayInGanZhi());
   }
 
   /**

@@ -7,7 +7,7 @@
     <groupId>cn.6tail</groupId>
     <artifactId>lunar</artifactId>
     <packaging>jar</packaging>
-    <version>1.7.4</version>
+    <version>1.7.5</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <url>https://github.com/6tail/lunar-java</url>
     <description>a calendar library for Solar and Chinese Lunar</description>
@@ -30,18 +30,6 @@
         <developerConnection>scm:git:git@github.com:6tail/lunar-java.git</developerConnection>
         <url>git@github.com:6tail/lunar-java.git</url>
     </scm>
-    <distributionManagement>
-        <snapshotRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Sonatype Nexus snapshot repository</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>sonatype-nexus-staging</id>
-            <name>Sonatype Nexus release repository</name>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
     <properties>
         <encoding>UTF-8</encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -49,30 +37,29 @@
         <source-version>1.5</source-version>
         <target-version>1.5</target-version>
         <creator>6tail</creator>
+        <junit-version>4.13.2</junit-version>
         <maven-compiler-plugin-version>3.3</maven-compiler-plugin-version>
+        <maven-jar-plugin-version>3.3.0</maven-jar-plugin-version>
         <maven-surefire-plugin-version>2.5</maven-surefire-plugin-version>
         <maven-javadoc-plugin-version>2.9</maven-javadoc-plugin-version>
         <maven-source-plugin-version>2.4</maven-source-plugin-version>
         <maven-release-plugin-version>2.2.2</maven-release-plugin-version>
         <maven-gpg-plugin-version>1.6</maven-gpg-plugin-version>
+        <maven-deploy-plugin-version>3.1.2</maven-deploy-plugin-version>
+        <maven-assembly-plugin-version>2.2-beta-5</maven-assembly-plugin-version>
+        <central-publishing-maven-plugin-version>0.7.0</central-publishing-maven-plugin-version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13.2</version>
+            <version>${junit-version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <build>
-        <testSourceDirectory>src/test/java</testSourceDirectory>
-        <testResources>
-            <testResource>
-                <directory>src/test/resources</directory>
-            </testResource>
-        </testResources>
-        <testOutputDirectory>target/test-classes</testOutputDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -82,6 +69,23 @@
                     <source>${source-version}</source>
                     <target>${target-version}</target>
                     <encoding>${encoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar-plugin-version}</version>
+                <configuration>
+                    <archive>
+                        <index>true</index>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Created-By>${creator}</Created-By>
+                            <Built-By>${creator}</Built-By>
+                        </manifestEntries>
+                    </archive>
                 </configuration>
             </plugin>
             <plugin>
@@ -99,7 +103,6 @@
                 <version>${maven-javadoc-plugin-version}</version>
                 <executions>
                     <execution>
-                        <id>attach-javadocs</id>
                         <goals>
                             <goal>jar</goal>
                         </goals>
@@ -117,7 +120,6 @@
                 <version>${maven-source-plugin-version}</version>
                 <executions>
                     <execution>
-                        <id>attach-sources</id>
                         <goals>
                             <goal>jar-no-fork</goal>
                         </goals>
@@ -141,7 +143,6 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>sign-artifacts</id>
                         <phase>verify</phase>
                         <goals>
                             <goal>sign</goal>
@@ -152,7 +153,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.2-beta-5</version>
+                <version>${maven-assembly-plugin-version}</version>
                 <configuration>
                     <appendAssemblyId>false</appendAssemblyId>
                     <finalName>${project.artifactId}-${project.version}</finalName>
@@ -166,6 +167,33 @@
                         </manifestEntries>
                     </archive>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>${maven-deploy-plugin-version}</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>${central-publishing-maven-plugin-version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <autoPublish>true</autoPublish>
+                    <publishingServerId>central</publishingServerId>
+                    <deploymentName>${project.groupId}-${project.artifactId}-${project.version}</deploymentName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>publish</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
         <finalName>${project.artifactId}-${project.version}</finalName>

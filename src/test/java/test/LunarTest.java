@@ -685,4 +685,12 @@ public class LunarTest {
     Assert.assertEquals("[时德, 阳德, 民日, 玉宇, 司命]", lunar.getDayJiShen().toString());
     Assert.assertEquals("[河魁, 死神, 天吏, 致死, 往亡]", lunar.getDayXiongSha().toString());
   }
+
+  @Test
+  public void test101() {
+    Solar solar = new Solar(2025, 12, 15);
+    Lunar lunar = solar.getLunar();
+    Assert.assertEquals("[阳德, 六仪, 续世, 解神, 司命]", lunar.getDayJiShen().toString());
+    Assert.assertEquals("[月破, 大耗, 灾煞, 天火, 厌对, 招摇, 五虚, 血忌]", lunar.getDayXiongSha().toString());
+  }
 }

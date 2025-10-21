@@ -22,14 +22,14 @@ public class LunarMonthTest {
   public void test1(){
     LunarMonth month = LunarMonth.fromYm(2023, -2);
     Assert.assertEquals(3, month.getIndex());
-    Assert.assertEquals("丙辰", month.getGanZhi());
+    Assert.assertEquals("乙卯", month.getGanZhi());
   }
 
   @Test
   public void test2(){
     LunarMonth month = LunarMonth.fromYm(2023, 3);
     Assert.assertEquals(4, month.getIndex());
-    Assert.assertEquals("丁巳", month.getGanZhi());
+    Assert.assertEquals("丙辰", month.getGanZhi());
   }
 
   @Test
@@ -43,7 +43,7 @@ public class LunarMonthTest {
   public void test4(){
     LunarMonth month = LunarMonth.fromYm(2023, 12);
     Assert.assertEquals(13, month.getIndex());
-    Assert.assertEquals("丙寅", month.getGanZhi());
+    Assert.assertEquals("乙丑", month.getGanZhi());
   }
 
   @Test
@@ -56,7 +56,7 @@ public class LunarMonthTest {
   @Test
   public void test6(){
     LunarMonth month = LunarMonth.fromYm(2023, 9);
-    Assert.assertEquals("癸亥", month.getGanZhi());
+    Assert.assertEquals("壬戌", month.getGanZhi());
   }
 
 }
